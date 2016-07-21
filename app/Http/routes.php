@@ -1,6 +1,6 @@
 <?php
 
-//Route::get('sites', 'SitesController@index');
+Route::get('sites', 'SitesController@index');
 //Route::get('locations', 'LocationsController@index');
 //Route::get('doors', 'DoorsController@index');
 //Route::get('advisors', 'AdvisorsController@index');
@@ -9,14 +9,5 @@
 //Route::get('reports', 'ReportsController@index');
 //Route::get('complains', 'ComplainsController@index');
 
-//Route::get('login', 'HomeController@login');
-//Route::get('/', 'HomeController@index');
-
-Route::get('/', function () {
-    return view('index');
-});
-
-
-Route::get('login', function () {
-    return view('login');
-});
+Route::get('login', 'HomeController@login');
+Route::get('/', 'HomeController@index');
