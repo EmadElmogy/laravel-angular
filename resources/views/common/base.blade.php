@@ -85,7 +85,8 @@
                     <div class="category-content no-padding">
                         <ul class="navigation navigation-main navigation-accordion">
 
-                            <li class="navigation-header"><span>Main Menu</span> <i class="icon-menu" title="Main pages"></i></li>
+                            <li class="navigation-header"><span>Main Menu</span>
+                                <i class="icon-menu" title="Main pages"></i></li>
                             <li class="active">
                                 <a href="{{url('/')}}"><i class="icon-home4"></i><span>Dashboard</span></a>
                             </li>
@@ -124,30 +125,7 @@
         <!-- Main content -->
         <div class="content-wrapper">
 
-            <!-- Page header -->
-            <div class="page-header">
-                <div class="page-header-content">
-                    <div class="page-title">
-                        <h4><i class="icon-arrow-left52 position-left"></i>
-                            <span class="text-semibold">Home</span> - Dashboard</h4>
-                    </div>
-
-                    <div class="heading-elements">
-                        <div class="heading-btn-group">
-                            <a href="#" class="btn btn-link btn-float has-text"><i class="icon-plus-circle2 text-primary"></i><span>Add New</span></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /page header -->
-
-
-            <!-- Content area -->
-            <div class="content">
-
-
-            </div>
-            <!-- /content area -->
+            @yield('body')
 
         </div>
         <!-- /main content -->
