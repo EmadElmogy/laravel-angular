@@ -727,4 +727,38 @@ $(function() {
     $('#reset').on('click', function() {
         validator.resetForm();
     });
+
+    $(document).on('click', '.deleter', function (ev) {
+        ev.preventDefault();
+
+        var that = $(this),
+            deletee;
+
+        swal({
+            title: "Are you sure",
+            text: "Are you sure you want to delete this Item?",
+            type: "warning",
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            showCancelButton: true
+        }, function (isConfirm) {
+            if (isConfirm) {
+                deletee = that.closest('tr');
+
+                if (!deletee.length)
+                    deletee = that.closest('.deletee');
+
+                $.ajax({
+                    url: that.attr('href'),
+                    type: 'DELETE',
+                    success: function (result) {
+                        deletee.remove();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        swal('', jqXHR.responseJSON.data, 'error');
+                    }
+                });
+            }
+        });
+    });
 });

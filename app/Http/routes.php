@@ -3,6 +3,7 @@
 Route::get('sites', 'SitesController@index');
 Route::get('sites/item/{item_id?}', 'SitesController@item');
 Route::post('sites/item/{item_id?}', 'SitesController@store');
+Route::delete('sites/item/{item_id?}', 'SitesController@deleteItem');
 
 //Route::get('locations', 'LocationsController@index');
 //Route::get('doors', 'DoorsController@index');
