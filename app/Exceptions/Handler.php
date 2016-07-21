@@ -3,7 +3,6 @@
 namespace App\Exceptions;
 
 use Exception;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -45,6 +44,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if ($e instanceof ValidationException) {
+            if ($request->ajax() || $request->is('api*') || $request->wantsJson()) {
+                return response(['data' => null, 'error' => $e->getMessage()], 400);
+            } else {
+                return redirect()->back()->with('validationErrors', $e->getMessage())->withInput();
+            }
+        }
+
         // Handling all other exceptions
         if ($request->ajax() || $request->is('api*', 'internal-api*') || $request->wantsJson()) {
             return response(['data' => null, 'error' => $e->getMessage()], 500);

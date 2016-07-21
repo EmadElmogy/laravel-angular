@@ -723,6 +723,9 @@ $(function() {
     });
 
 
+    $('.select2').select2({
+    });
+
     // Reset form
     $('#reset').on('click', function() {
         validator.resetForm();

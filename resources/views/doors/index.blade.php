@@ -1,0 +1,66 @@
+@extends('common.base')
+
+@section('browser_subtitle', 'Doors')
+
+@section('body')
+
+    <div class="page-header">
+        <div class="page-header-content">
+            <div class="page-title"><h4>Doors Management</h4></div>
+
+            <div class="heading-elements">
+                <div class="heading-btn-group">
+                    <a href="{{url('doors/item')}}" class="btn btn-link btn-float has-text"><i class="icon-plus-circle2 text-primary"></i><span>Add New</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+
+        <div class="row">
+            <div class="col-md-12">
+
+                @if(session('success'))
+                    <div class="alert alert-success" role="alert">
+                        Saving operation completed successfully.
+                    </div>
+                @endif
+
+
+                <div class="panel panel-flat">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped">
+                            <thead>
+                            <tr>
+                                <th style="width:20%">Name</th>
+                                <th style="width:20%">Site</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @forelse($items as $item)
+                                <tr>
+                                    <td class="v-align-middle semi-bold">{{$item->name}}</td>
+                                    <td class="v-align-middle semi-bold">{{$item->site->name}}</td>
+                                    <td class="v-align-middle text-right text-nowrap">
+                                        <a href="{{url('doors/item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-pencil5"></i></a>
+                                        <a href="{{url('doors/item/'.$item->id)}}" class="btn btn-danger btn-xs deleter"><i class="icon-trash"></i></a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="41" class="text-center">No records were found.</td>
+                                </tr>
+                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+@stop
