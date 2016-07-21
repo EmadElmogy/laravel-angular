@@ -1,6 +1,9 @@
 <?php
 
 Route::get('sites', 'SitesController@index');
+Route::get('sites/item/{item_id?}', 'SitesController@item');
+Route::post('sites/item/{item_id?}', 'SitesController@store');
+
 //Route::get('locations', 'LocationsController@index');
 //Route::get('doors', 'DoorsController@index');
 //Route::get('advisors', 'AdvisorsController@index');

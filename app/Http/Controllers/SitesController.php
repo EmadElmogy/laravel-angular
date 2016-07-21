@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Repos\SitesRepo;
 
 use App\Http\Requests;
 
 class SitesController extends BaseController
 {
+    /**
+     * @param \App\Repos\SitesRepo $repo
+     */
+    public function __construct(SitesRepo $repo)
+    {
+
+        $this->repo = $repo;
+    }
+
     /**
      *
      * @return \Illuminate\Http\Response
