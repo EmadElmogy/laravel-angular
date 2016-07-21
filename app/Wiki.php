@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Variation extends Model
+class Wiki extends Model
 {
     protected $table = 'wikis';
     protected $guarded = ['id'];

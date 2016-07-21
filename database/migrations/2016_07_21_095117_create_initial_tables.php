@@ -63,7 +63,7 @@ class CreateInitialTables extends Migration
 
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('category_id')->unsigned()->nullable();
+            $table->integer('category_id')->unsigned();
             $table->string('name');
             $table->string('image');
 
@@ -72,7 +72,7 @@ class CreateInitialTables extends Migration
 
         Schema::create('variations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('product_id')->unsigned()->nullable();
+            $table->integer('product_id')->unsigned();
             $table->string('name');
             $table->string('barcode');
 
@@ -81,8 +81,8 @@ class CreateInitialTables extends Migration
 
         Schema::create('complains', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('door_id')->unsigned()->nullable();
-            $table->integer('advisor_id')->unsigned()->nullable();
+            $table->integer('door_id')->unsigned();
+            $table->integer('advisor_id')->unsigned();
             $table->text('comment');
 
             $table->foreign('door_id')->references('id')->on('doors')->onDelete('cascade');
