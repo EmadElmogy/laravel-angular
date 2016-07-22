@@ -33,23 +33,9 @@ class CreateInitialTables extends Migration
             $table->string('username');
             $table->string('password');
             $table->tinyInteger('day_off')->unisgned();
+            $table->tinyInteger('title')->unisgned();
 
             $table->foreign('door_id')->references('id')->on('doors')->onDelete('cascade');
-        });
-
-        Schema::create('advisors_titles', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-        });
-
-        Schema::create('advisor_titles', function (Blueprint $table) {
-            $table->integer('advisor_id')->unsigned();
-            $table->integer('title_id')->unsigned();
-
-            $table->primary(['advisor_id', 'title_id'], 'advisor_title_pri');
-
-            $table->foreign('advisor_id')->references('id')->on('advisors')->onDelete('cascade');
-            $table->foreign('title_id')->references('id')->on('advisors_titles')->onDelete('cascade');
         });
 
         Schema::create('categories', function (Blueprint $table) {

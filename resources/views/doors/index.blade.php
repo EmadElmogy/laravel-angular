@@ -23,6 +23,7 @@
 
                 @if(session('success'))
                     <div class="alert alert-success" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"><span>×</span><span class="sr-only">Close</span></button>
                         Saving operation completed successfully.
                     </div>
                 @endif

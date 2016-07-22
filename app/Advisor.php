@@ -30,9 +30,15 @@ class Advisor extends Model
         7 => 'Friday',
     ];
 
-    public function titles()
+    public static $TITLES = [
+        1 => 'Make up',
+        2 => 'Skin & Hair',
+        3 => 'Shared',
+    ];
+
+    public function door()
     {
-        return $this->belongsToMany(AdvisorTitle::class, 'advisor_titles', 'advisor_id', 'title_id');
+        return $this->belongsTo(Door::class);
     }
 
     public function getDayNameAttribute()
