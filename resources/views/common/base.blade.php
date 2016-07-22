@@ -106,6 +106,9 @@
                             <li class="{{request()->is('products*') ? 'active' : ''}}">
                                 <a href="{{url('products')}}"><i class="icon-box"></i><span>Products</span></a>
                             </li>
+                            <li class="{{request()->is('variations*') ? 'active' : ''}}">
+                                <a href="{{url('variations')}}"><i class="icon-server"></i><span>Products Variations</span></a>
+                            </li>
                             <li class="{{request()->is('reports*') ? 'active' : ''}}">
                                 <a href="{{url('reports')}}"><i class="icon-chart"></i><span>Reports</span></a>
                             </li>

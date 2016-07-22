@@ -20,7 +20,16 @@ Route::get('categories/item/{item_id?}', 'CategoriesController@item');
 Route::post('categories/item/{item_id?}', 'CategoriesController@store');
 Route::delete('categories/item/{item_id?}', 'CategoriesController@deleteItem');
 
-//Route::get('products', 'ProductsController@index');
+Route::get('products', 'ProductsController@index');
+Route::get('products/item/{item_id?}', 'ProductsController@item');
+Route::post('products/item/{item_id?}', 'ProductsController@store');
+Route::delete('products/item/{item_id?}', 'ProductsController@deleteItem');
+
+Route::get('variations', 'VariationsController@index');
+Route::get('variations/item/{item_id?}', 'VariationsController@item');
+Route::post('variations/item/{item_id?}', 'VariationsController@store');
+Route::delete('variations/item/{item_id?}', 'VariationsController@deleteItem');
+
 //Route::get('reports', 'ReportsController@index');
 //Route::get('complains', 'ComplainsController@index');
 //Route::get('wikis', 'WikisController@index');

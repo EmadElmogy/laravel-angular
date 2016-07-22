@@ -85,3 +85,24 @@ function getQueryLog()
 {
     return DB::getQueryLog();
 }
+
+/**
+ * @param $parentsCollection
+ * @param $relationshipName
+ * @param string $parentNameField
+ * @param string $childIdField
+ * @param string $childNameField
+ * @return array
+ */
+function groupedSelectBoxArrayBuilder($parentsCollection, $relationshipName, $parentNameField = 'name', $childIdField = 'id', $childNameField = 'name')
+{
+    $output = [];
+
+    foreach ($parentsCollection as $parent) {
+        foreach ($parent->{$relationshipName} as $child) {
+            $output[$parent->{$parentNameField}][$child->{$childIdField}] = $child->{$childNameField};
+        }
+    }
+
+    return $output;
+}
