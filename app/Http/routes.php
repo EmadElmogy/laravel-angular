@@ -30,8 +30,9 @@ Route::get('variations/item/{item_id?}', 'VariationsController@item');
 Route::post('variations/item/{item_id?}', 'VariationsController@store');
 Route::delete('variations/item/{item_id?}', 'VariationsController@deleteItem');
 
+Route::get('complains', 'ComplainsController@index');
+
 //Route::get('reports', 'ReportsController@index');
-//Route::get('complains', 'ComplainsController@index');
 //Route::get('wikis', 'WikisController@index');
 
 Route::get('login', 'HomeController@login');

@@ -115,6 +115,9 @@
                             <li class="{{request()->is('complains*') ? 'active' : ''}}">
                                 <a href="{{url('complains')}}"><i class="icon-bubble-notification"></i><span>Complains</span></a>
                             </li>
+                            <li class="{{request()->is('wikis*') ? 'active' : ''}}">
+                                <a href="{{url('wikis')}}"><i class="icon-help"></i><span>Wiki</span></a>
+                            </li>
 
                         </ul>
                     </div>
