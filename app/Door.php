@@ -34,4 +34,9 @@ class Door extends Model
     {
         return $this->hasMany(Complain::class, 'door_id');
     }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'door_id');
+    }
 }
