@@ -24,4 +24,14 @@ class Report extends Model
     {
         return $this->belongsToMany(Variation::class, 'report_products', 'report_id', 'variation_id')->withPivot('sales', 'date');
     }
+
+    public function door()
+    {
+        return $this->belongsTo(Door::class, 'door_id');
+    }
+
+    public function advisor()
+    {
+        return $this->belongsTo(Advisor::class, 'advisor_id');
+    }
 }
