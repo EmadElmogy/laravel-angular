@@ -87,8 +87,6 @@ class CreateInitialTables extends Migration
         Schema::drop('variations');
         Schema::drop('products');
         Schema::drop('categories');
-        Schema::drop('advisor_titles');
-        Schema::drop('advisors_titles');
         Schema::drop('advisors');
         Schema::drop('doors');
         Schema::drop('sites');

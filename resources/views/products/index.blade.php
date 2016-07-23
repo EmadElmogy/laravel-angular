@@ -53,8 +53,8 @@
                             <thead>
                             <tr>
                                 <th style="width:20%"></th>
-                                <th style="width:20%">Name</th>
-                                <th style="width:20%">Category</th>
+                                <th>Name</th>
+                                <th>Category</th>
                                 <th></th>
                             </tr>
                             </thead>

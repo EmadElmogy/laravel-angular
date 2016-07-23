@@ -1,16 +1,16 @@
 @extends('common.base')
 
-@section('browser_subtitle', 'Sites')
+@section('browser_subtitle', 'Wikis')
 
 @section('body')
 
     <div class="page-header">
         <div class="page-header-content">
-            <div class="page-title"><h4>Sites Management</h4></div>
+            <div class="page-title"><h4>Wikis Management</h4></div>
 
             <div class="heading-elements">
                 <div class="heading-btn-group">
-                    <a href="{{url('sites/item')}}" class="btn btn-link btn-float has-text"><i class="icon-plus-circle2 text-primary"></i><span>Add New</span></a>
+                    <a href="{{url('wikis/item')}}" class="btn btn-link btn-float has-text"><i class="icon-plus-circle2 text-primary"></i><span>Add New</span></a>
                 </div>
             </div>
         </div>
@@ -34,17 +34,19 @@
                         <table class="table table-hover table-striped">
                             <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Title</th>
+                                <th>Type</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($items as $item)
                                 <tr>
-                                    <td class="v-align-middle semi-bold">{{$item->name}}</td>
+                                    <td class="v-align-middle semi-bold">{{$item->title}}</td>
+                                    <td class="v-align-middle semi-bold">{{$item->typeName}}</td>
                                     <td class="v-align-middle text-right text-nowrap">
-                                        <a href="{{url('sites/item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-pencil5"></i></a>
-                                        <a href="{{url('sites/item/'.$item->id)}}" class="btn btn-danger btn-xs deleter"><i class="icon-trash"></i></a>
+                                        <a href="{{url('wikis/item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-pencil5"></i></a>
+                                        <a href="{{url('wikis/item/'.$item->id)}}" class="btn btn-danger btn-xs deleter"><i class="icon-trash"></i></a>
                                     </td>
                                 </tr>
                             @empty

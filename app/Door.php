@@ -24,4 +24,14 @@ class Door extends Model
     {
         return $this->belongsTo(Site::class, 'site_id');
     }
+
+    public function advisors()
+    {
+        return $this->hasMany(Advisor::class, 'door_id');
+    }
+
+    public function complains()
+    {
+        return $this->hasMany(Complain::class, 'door_id');
+    }
 }

@@ -32,8 +32,12 @@ Route::delete('variations/item/{item_id?}', 'VariationsController@deleteItem');
 
 Route::get('complains', 'ComplainsController@index');
 
+Route::get('wikis', 'WikisController@index');
+Route::get('wikis/item/{item_id?}', 'WikisController@item');
+Route::post('wikis/item/{item_id?}', 'WikisController@store');
+Route::delete('wikis/item/{item_id?}', 'WikisController@deleteItem');
+
 //Route::get('reports', 'ReportsController@index');
-//Route::get('wikis', 'WikisController@index');
 
 Route::get('login', 'HomeController@login');
 Route::get('/', 'HomeController@index');

@@ -34,8 +34,8 @@
                         <table class="table table-hover table-striped">
                             <thead>
                             <tr>
-                                <th style="width:20%">Name</th>
-                                <th style="width:20%">Site</th>
+                                <th>Name</th>
+                                <th>Site</th>
                                 <th></th>
                             </tr>
                             </thead>
