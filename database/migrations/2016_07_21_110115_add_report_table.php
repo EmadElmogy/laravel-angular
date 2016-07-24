@@ -25,15 +25,12 @@ class AddReportTable extends Migration
         Schema::create('report_products', function (Blueprint $table) {
             $table->integer('report_id')->unsigned();
             $table->integer('variation_id')->unsigned();
-            $table->integer('product_id')->unsigned();
-            $table->timestamp('date');
             $table->integer('sales');
 
             $table->primary(['report_id', 'variation_id'], 'report_product_pri');
 
             $table->foreign('report_id')->references('id')->on('reports')->onDelete('cascade');
             $table->foreign('variation_id')->references('id')->on('variations')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }
 

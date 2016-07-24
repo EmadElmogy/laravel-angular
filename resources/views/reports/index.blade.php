@@ -6,7 +6,7 @@
 
     <div class="page-header">
         <div class="page-header-content">
-            <div class="page-title"><h4>Reports</h4></div>
+            <div class="page-title"><h4>Daily Reports</h4></div>
         </div>
     </div>
 

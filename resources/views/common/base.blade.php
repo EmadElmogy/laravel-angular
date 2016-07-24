@@ -87,9 +87,7 @@
                         <ul class="navigation navigation-main navigation-accordion">
 
                             <li class="navigation-header"><span>Main Menu</span>
-                                <i class="icon-menu" title="Main pages"></i></li>
-                            <li class="{{request()->is('/') ? 'active' : ''}}">
-                                <a href="{{url('/')}}"><i class="icon-home4"></i><span>Dashboard</span></a>
+                                <i class="icon-menu" title="Main pages"></i>
                             </li>
                             <li class="{{request()->is('site*') ? 'active' : ''}}">
                                 <a href="{{url('sites')}}"><i class="icon-city"></i><span>Sites</span></a>
@@ -109,8 +107,21 @@
                             <li class="{{request()->is('variations*') ? 'active' : ''}}">
                                 <a href="{{url('variations')}}"><i class="icon-server"></i><span>Products Variations</span></a>
                             </li>
-                            <li class="{{request()->is('reports*') ? 'active' : ''}}">
-                                <a href="{{url('reports')}}"><i class="icon-chart"></i><span>Reports</span></a>
+                            <li class="{{request()->is('reports','reports/item*') ? 'active' : ''}}">
+                                <a href="{{url('reports')}}"><i class="icon-stats-growth"></i><span>Daily Reports</span></a>
+                            </li>
+                            <li class="{{request()->is('reports/sales*') ? 'active' : ''}}">
+                                <a href="#"><i class="icon-pie-chart3"></i> <span>Sales Reports</span></a>
+                                <ul>
+                                    <li class="{{request()->is('reports/sales/products') ? 'active' : ''}}">
+                                        <a href="{{url('reports/sales/products')}}">By Product</a></li>
+                                    <li class="{{request()->is('reports/sales/categories') ? 'active' : ''}}">
+                                        <a href="{{url('reports/sales/categories')}}">By Category</a></li>
+                                    <li class="{{request()->is('reports/sales/doors') ? 'active' : ''}}">
+                                        <a href="{{url('reports/sales/doors')}}">By Door</a></li>
+                                    <li class="{{request()->is('reports/sales/advisors') ? 'active' : ''}}">
+                                        <a href="{{url('reports/sales/advisors')}}">By Advisor</a></li>
+                                </ul>
                             </li>
                             <li class="{{request()->is('complains*') ? 'active' : ''}}">
                                 <a href="{{url('complains')}}"><i class="icon-bubble-notification"></i><span>Complains</span></a>

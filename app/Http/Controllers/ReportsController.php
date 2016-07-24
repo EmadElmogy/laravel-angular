@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repos\ReportsRepo;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 
 class ReportsController extends BaseController
 {
@@ -39,5 +40,110 @@ class ReportsController extends BaseController
         $item = $this->bringOrNew($this->repo, $item_id);
 
         return view('reports.show', compact('item'));
+    }
+
+    /**
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function byProducts()
+    {
+        $results = DB::table('report_products')
+            ->join('variations', 'variations.id', '=', 'report_products.variation_id')
+            ->join('products', 'products.id', '=', 'variations.product_id')
+            ->join('reports', 'reports.id', '=', 'report_products.report_id')
+            ->groupBy('variation_id')
+            ->select('products.name as product_name', 'variations.name as variation_name', 'variations.barcode as barcode')
+            ->selectRaw('SUM(sales) as sales')
+            ->orderBy('sales', 'DESC')
+            ->when(request('door_id'), function ($q) {
+                return $q->where('reports.door_id', request('door_id'));
+            })
+            ->when(request('from_date') && ! request('to_date'), function ($q) {
+                return $q->whereDate('reports.date', '=', request('from_date'));
+            })
+            ->when(request('from_date') && request('to_date'), function ($q) {
+                return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
+            })
+            ->get();
+
+        return view('reports.by-products', compact('results'));
+    }
+
+    /**
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function byCategories()
+    {
+        $results = DB::table('report_products')
+            ->join('variations', 'variations.id', '=', 'report_products.variation_id')
+            ->join('products', 'products.id', '=', 'variations.product_id')
+            ->join('categories', 'categories.id', '=', 'products.category_id')
+            ->join('reports', 'reports.id', '=', 'report_products.report_id')
+            ->groupBy('categories.id')
+            ->select('categories.name as category_name')
+            ->selectRaw('SUM(sales) as sales')
+            ->orderBy('sales', 'DESC')
+            ->when(request('door_id'), function ($q) {
+                return $q->where('reports.door_id', request('door_id'));
+            })
+            ->when(request('from_date') && ! request('to_date'), function ($q) {
+                return $q->whereDate('reports.date', '=', request('from_date'));
+            })
+            ->when(request('from_date') && request('to_date'), function ($q) {
+                return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
+            })
+            ->get();
+
+        return view('reports.by-categories', compact('results'));
+    }
+
+    /**
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function byDoors()
+    {
+        $results = DB::table('report_products')
+            ->join('reports', 'reports.id', '=', 'report_products.report_id')
+            ->join('doors', 'doors.id', '=', 'reports.door_id')
+            ->groupBy('reports.door_id')
+            ->select('doors.name as door_name')
+            ->selectRaw('SUM(sales) as sales')
+            ->orderBy('sales', 'DESC')
+            ->when(request('from_date') && ! request('to_date'), function ($q) {
+                return $q->whereDate('reports.date', '=', request('from_date'));
+            })
+            ->when(request('from_date') && request('to_date'), function ($q) {
+                return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
+            })
+            ->get();
+
+        return view('reports.by-doors', compact('results'));
+    }
+
+    /**
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function byAdvisors()
+    {
+        $results = DB::table('report_products')
+            ->join('reports', 'reports.id', '=', 'report_products.report_id')
+            ->join('advisors', 'advisors.id', '=', 'reports.advisor_id')
+            ->groupBy('reports.advisor_id')
+            ->select('advisors.name as advisor_name')
+            ->selectRaw('SUM(sales) as sales')
+            ->orderBy('sales', 'DESC')
+            ->when(request('from_date') && ! request('to_date'), function ($q) {
+                return $q->whereDate('reports.date', '=', request('from_date'));
+            })
+            ->when(request('from_date') && request('to_date'), function ($q) {
+                return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
+            })
+            ->get();
+
+        return view('reports.by-advisors', compact('results'));
     }
 }

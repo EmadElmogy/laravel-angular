@@ -40,9 +40,7 @@ class DatabaseSeeder extends Seeder
 
             foreach ($variations as $variation) {
                 $report->variations()->attach($variation->id, [
-                    'product_id' => $variation->product_id,
                     'sales' => rand(10, 100),
-                    'date' => $report->date,
                 ]);
             }
         });

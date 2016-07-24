@@ -22,7 +22,7 @@ class Report extends Model
 
     public function variations()
     {
-        return $this->belongsToMany(Variation::class, 'report_products', 'report_id', 'variation_id')->withPivot('sales', 'date');
+        return $this->belongsToMany(Variation::class, 'report_products', 'report_id', 'variation_id')->withPivot('sales');
     }
 
     public function door()
