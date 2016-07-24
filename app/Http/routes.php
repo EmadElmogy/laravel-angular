@@ -9,9 +9,10 @@ Route::group(['prefix' => 'api/v1'], function () {
         Route::get('/categories', 'ApiController@categories');
         Route::get('/products', 'ApiController@products');
         Route::get('/complains', 'ApiController@complains');
-        Route::post('/complains', 'ApiController@new-complain');
+        Route::post('/complains', 'ApiController@newComplain');
         Route::get('/reports', 'ApiController@reports');
-        Route::post('/reports', 'ApiController@new-report');
+        Route::get('/report/{report_id}', 'ApiController@report');
+        Route::post('/reports', 'ApiController@newReport');
     });
 });
 
@@ -69,6 +70,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('settings', 'SettingsController@save');
 });
 
+Route::get('api-docs', 'DocsController@index');
 Route::get('login', 'HomeController@login');
 Route::post('login', 'HomeController@postLogin');
 Route::get('logout', 'HomeController@logout');

@@ -9,17 +9,25 @@ class AdvisorTransformer extends AbstractTransformer
 {
     public function transformModel(Model $item)
     {
-        $output = array_except($item->toArray(), []);
+        $output = array_except($item->toArray(), ['door_id']);
 
-        $output['day_off'] = [
-            'name' => $item->dayName,
-            'id' => $item->day_off,
-        ];
+        if($item->day_off){
+            $output['day_off'] = [
+                'name' => $item->dayName,
+                'id' => $item->day_off,
+            ];
+        }
+        
+        if($item->title){
+            $output['title'] = [
+                'name' => $item->titleName,
+                'id' => $item->title,
+            ];
+        }
 
-        $output['title'] = [
-            'name' => $item->titleName,
-            'id' => $item->title,
-        ];
+        if ($this->isRelationshipLoaded($item, 'door')) {
+            $output['door'] = DoorTransformer::transform($item->door);
+        }
 
         return $output;
     }
