@@ -45,4 +45,9 @@ class Advisor extends Model
     {
         return static::$DAYS[$this->day_off];
     }
+
+    public function getTitleNameAttribute()
+    {
+        return static::$TITLES[$this->title];
+    }
 }

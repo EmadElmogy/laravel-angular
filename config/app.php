@@ -150,6 +150,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Themsaid\Transformers\TransformersServiceProvider::class,
 
         /*
          * Application Service Providers...

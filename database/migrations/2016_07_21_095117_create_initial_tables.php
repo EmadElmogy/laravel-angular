@@ -34,6 +34,7 @@ class CreateInitialTables extends Migration
             $table->string('password');
             $table->tinyInteger('day_off')->unisgned();
             $table->tinyInteger('title')->unisgned();
+            $table->string('api_token', 60)->unique();
 
             $table->foreign('door_id')->references('id')->on('doors')->onDelete('cascade');
         });

@@ -40,6 +40,8 @@ class AdvisorsRepo extends AbstractRepo
      */
     public function create($data)
     {
+        $data['api_token'] = str_random(40);
+
         return parent::create($data);
     }
 

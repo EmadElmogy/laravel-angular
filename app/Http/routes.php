@@ -1,5 +1,20 @@
 <?php
 
+Route::group(['prefix' => 'api/v1'], function () {
+    Route::post('/auth', 'ApiController@login');
+
+    Route::group(['middleware' => 'auth:api'], function () {
+        Route::get('/wiki', 'ApiController@wiki');
+        Route::get('/sites', 'ApiController@sites');
+        Route::get('/categories', 'ApiController@categories');
+        Route::get('/products', 'ApiController@products');
+        Route::get('/complains', 'ApiController@complains');
+        Route::post('/complains', 'ApiController@new-complain');
+        Route::get('/reports', 'ApiController@reports');
+        Route::post('/reports', 'ApiController@new-report');
+    });
+});
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('admins', 'UsersController@index');
     Route::get('admins/item/{item_id?}', 'UsersController@item');

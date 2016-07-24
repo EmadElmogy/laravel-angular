@@ -9,6 +9,7 @@ $factory->define(App\Advisor::class, function (Faker\Generator $faker) {
         'password' => 12345,
         'day_off' => $faker->numberBetween(1, 6),
         'title' => $faker->numberBetween(1, 3),
+        'api_token' => str_random(40),
     ];
 });
 
