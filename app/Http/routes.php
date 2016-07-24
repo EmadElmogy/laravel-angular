@@ -38,6 +38,7 @@ Route::post('wikis/item/{item_id?}', 'WikisController@store');
 Route::delete('wikis/item/{item_id?}', 'WikisController@deleteItem');
 
 Route::get('reports', 'ReportsController@index');
+Route::get('reports/item/{item_id}', 'ReportsController@item');
 
 Route::get('login', 'HomeController@login');
 Route::get('/', 'HomeController@index');

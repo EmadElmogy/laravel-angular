@@ -68,8 +68,9 @@ abstract class AbstractRepo
      */
     public function findAll($filters = [], $with = [], $returnResults = true)
     {
-        $query = $this->filter($filters);
-        $query = $query->with($with);
+        $query = $this->filter($filters)
+            ->with($with)
+            ->orderBy('id', 'DESC');
 
         return $returnResults ? $query->get() : $query;
     }
