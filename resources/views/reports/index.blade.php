@@ -61,7 +61,7 @@
                             @forelse($items as $item)
                                 <tr>
                                     <td class="v-align-middle semi-bold">
-                                        <a href="{{url('reports/item/'.$item->id)}}">{{$item->date}}</a>
+                                        <a href="{{url('reports/item/'.$item->id)}}">{{$item->date->toDateString()}}</a>
                                     </td>
                                     <td class="v-align-middle semi-bold">{{$item->door->name}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->advisor->name}}</td>

@@ -43,7 +43,7 @@
 <!-- Main navbar -->
 <div class="navbar navbar-inverse">
     <div class="navbar-header">
-        <a class="navbar-brand" href="index.html"><img src="{{asset('assets/images/logo_light.png')}}" alt=""></a>
+        <span class="navbar-brand"><img src="{{asset('assets/images/logo_light.png')}}" alt=""></span>
 
         <ul class="nav navbar-nav visible-xs-block">
             <li><a data-toggle="collapse" data-target="#navbar-mobile"><i class="icon-tree5"></i></a></li>
@@ -107,12 +107,11 @@
                             <li class="{{request()->is('variations*') ? 'active' : ''}}">
                                 <a href="{{url('variations')}}"><i class="icon-server"></i><span>Products Variations</span></a>
                             </li>
-                            <li class="{{request()->is('reports','reports/item*') ? 'active' : ''}}">
-                                <a href="{{url('reports')}}"><i class="icon-stats-growth"></i><span>Daily Reports</span></a>
-                            </li>
-                            <li class="{{request()->is('reports/sales*') ? 'active' : ''}}">
-                                <a href="#"><i class="icon-pie-chart3"></i> <span>Sales Reports</span></a>
+                            <li class="{{request()->is('reports*') ? 'active' : ''}}">
+                                <a href="#"><i class="icon-pie-chart3"></i> <span>Reports</span></a>
                                 <ul>
+                                    <li class="{{request()->is('reports') ? 'active' : ''}}">
+                                        <a href="{{url('reports')}}">Daily Reports</a></li>
                                     <li class="{{request()->is('reports/sales/products') ? 'active' : ''}}">
                                         <a href="{{url('reports/sales/products')}}">By Product</a></li>
                                     <li class="{{request()->is('reports/sales/categories') ? 'active' : ''}}">
@@ -129,7 +128,9 @@
                             <li class="{{request()->is('wikis*') ? 'active' : ''}}">
                                 <a href="{{url('wikis')}}"><i class="icon-help"></i><span>Wiki</span></a>
                             </li>
-
+                            <li class="{{request()->is('settings*') ? 'active' : ''}}">
+                                <a href="{{url('settings')}}"><i class="icon-cogs"></i><span>Settings</span></a>
+                            </li>
                         </ul>
                     </div>
                 </div>

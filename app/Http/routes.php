@@ -44,5 +44,8 @@ Route::get('reports/sales/categories', 'ReportsController@byCategories');
 Route::get('reports/sales/doors', 'ReportsController@byDoors');
 Route::get('reports/sales/advisors', 'ReportsController@byAdvisors');
 
+Route::get('settings', 'SettingsController@index');
+Route::post('settings', 'SettingsController@save');
+
 Route::get('login', 'HomeController@login');
 Route::get('/', 'HomeController@index');
