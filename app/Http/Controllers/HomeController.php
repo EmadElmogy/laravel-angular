@@ -13,7 +13,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('index');
+        if (auth()->check()) {
+            return redirect('reports');
+        }
+
+        return redirect('login');
     }
 
     /**
@@ -22,5 +26,36 @@ class HomeController extends Controller
     public function login()
     {
         return view('login');
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function postLogin(Request $request)
+    {
+        validate($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if (auth()->attempt(['email' => $request->input('email'), 'password' => $request->input('password')], true)) {
+            return redirect()->intended('/')->with('loginSuccess', true);
+        }
+
+        return redirect('login')->with('loginFailed', true);
+    }
+
+    /**
+     * @param $request
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function logout(Request $request)
+    {
+        auth()->logout();
+
+        return redirect('login')->with('loggedOutSuccessfully', true);
     }
 }
