@@ -14,4 +14,14 @@ class User extends Authenticatable
     protected $casts = [
         'id' => 'integer',
     ];
+
+    public $validationRules = [
+        'name' => 'required',
+        'email' => 'required',
+    ];
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
 }

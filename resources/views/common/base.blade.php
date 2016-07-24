@@ -86,8 +86,8 @@
                     <div class="category-content no-padding">
                         <ul class="navigation navigation-main navigation-accordion">
 
-                            <li class="navigation-header"><span>Main Menu</span>
-                                <i class="icon-menu" title="Main pages"></i>
+                            <li class="{{request()->is('admins*') ? 'active' : ''}}">
+                                <a href="{{url('admins')}}"><i class="icon-users"></i><span>Admins</span></a>
                             </li>
                             <li class="{{request()->is('site*') ? 'active' : ''}}">
                                 <a href="{{url('sites')}}"><i class="icon-city"></i><span>Sites</span></a>

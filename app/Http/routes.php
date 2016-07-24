@@ -1,5 +1,10 @@
 <?php
 
+Route::get('admins', 'UsersController@index');
+Route::get('admins/item/{item_id?}', 'UsersController@item');
+Route::post('admins/item/{item_id?}', 'UsersController@store');
+Route::delete('admins/item/{item_id?}', 'UsersController@deleteItem');
+
 Route::get('sites', 'SitesController@index');
 Route::get('sites/item/{item_id?}', 'SitesController@item');
 Route::post('sites/item/{item_id?}', 'SitesController@store');
