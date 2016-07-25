@@ -46,7 +46,7 @@ $factory->define(App\Site::class, function (Faker\Generator $faker) {
 $factory->define(App\Product::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->company,
-        'image' => 'image.png',
+        'image' => 'image.jpg',
     ];
 });
 
