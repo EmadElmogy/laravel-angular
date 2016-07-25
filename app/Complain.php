@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Complain extends Model
 {
-    protected $table = 'Complains';
+    protected $table = 'complains';
     protected $guarded = ['id'];
     protected $hidden = [];
     protected $dates = [];
