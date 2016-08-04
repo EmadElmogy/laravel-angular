@@ -41,6 +41,11 @@ class Advisor extends Model
         return $this->belongsTo(Door::class);
     }
 
+    public function attendance()
+    {
+        return $this->hasMany(Attendance::class, 'advisor_id');
+    }
+
     public function getDayNameAttribute()
     {
         return static::$DAYS[$this->day_off];

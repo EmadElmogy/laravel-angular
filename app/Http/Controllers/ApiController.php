@@ -37,9 +37,33 @@ class ApiController extends Controller
             return response('Unauthorized.', 401);
         }
 
+        $advisor->attendance()->whereNull('logout_time')->update(['logout_time' => Carbon::now()]);
+
+        $advisor->attendance()->create([
+            'login_time' => Carbon::now(),
+            'door_id' => $advisor->door_id,
+        ]);
+
         return response([
             'advisor' => AdvisorTransformer::transform($advisor)
         ]);
+    }
+
+    /**
+     *
+     */
+    public function logout()
+    {
+        auth()->guard('api')->user()->attendance()->whereNull('logout_time')->update([
+            'logout_time' => Carbon::now(),
+            'door_id' => auth()->guard('api')->user()->door_id
+        ]);
+
+        auth()->guard('api')->user()->update([
+            'api_token' => str_random(40)
+        ]);
+
+        return response(['logged_out' => true]);
     }
 
     /**

@@ -4,6 +4,7 @@ Route::group(['prefix' => 'api/v1'], function () {
     Route::post('/auth', 'ApiController@login');
 
     Route::group(['middleware' => 'auth:api'], function () {
+        Route::post('/logout', 'ApiController@logout');
         Route::get('/wiki', 'ApiController@wiki');
         Route::get('/sites', 'ApiController@sites');
         Route::get('/categories', 'ApiController@categories');
