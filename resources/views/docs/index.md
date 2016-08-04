@@ -52,6 +52,18 @@ In all future requests you need to provide the following header:
 
 `Authorization: Bearer {{API_TOKEN_HERE}}`
 
+## Logging Out
+
+> Response
+
+```json
+{
+    "logged_out": true
+}
+```
+
+`POST {{url}}/api/v1/logout`
+
 # List Sites
 
 > Response
