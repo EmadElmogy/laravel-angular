@@ -34,15 +34,6 @@
                     <fieldset class="content-group">
 
                         <div class="form-group">
-                            <label class="control-label col-lg-2">Complains Emails</label>
-                            <div class="col-lg-10">
-                                <textarea name="complains_emails" rows="3" class="form-control">{{ old('complains_emails', @\App\Setting::whereKey('complains_emails')->first()->value)}}</textarea>
-                                <span class="help-block">List of emails that will receive notifications on every new complain sent.</span>
-                                <span class="help-block">Add a single email per line.</span>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
                             <label class="control-label col-lg-2">Reports Emails</label>
                             <div class="col-lg-10">
                                 <textarea name="reports_emails" rows="3" class="form-control">{{ old('reports_emails', @\App\Setting::whereKey('reports_emails')->first()->value)}}</textarea>
@@ -50,6 +41,17 @@
                                 <span class="help-block">Add a single email per line.</span>
                             </div>
                         </div>
+
+                        @foreach(\App\Complain::$TYPES as $id => $typeName)
+                            <div class="form-group">
+                                <label class="control-label col-lg-2">{{$typeName}} complains emails</label>
+                                <div class="col-lg-10">
+                                    <textarea name="complains_emails_{{$id}}" rows="3" class="form-control">{{ old('complains_emails_'.$id, @\App\Setting::whereKey('complains_emails_'.$id)->first()->value)}}</textarea>
+                                    <span class="help-block">List of emails that will receive notifications on {{$typeName}} complains.</span>
+                                    <span class="help-block">Add a single email per line.</span>
+                                </div>
+                            </div>
+                        @endforeach
 
                     </fieldset>
 

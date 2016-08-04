@@ -17,6 +17,15 @@ class Complain extends Model
 
     public $validationRules = [
         'comment' => 'required',
+        'type' => 'in:1,2,3,4,5',
+    ];
+
+    public static $TYPES = [
+        1 => 'Consumer',
+        2 => 'Product',
+        3 => 'Maintenance',
+        4 => 'Competition',
+        5 => 'Others',
     ];
 
     public function advisor()
@@ -27,5 +36,10 @@ class Complain extends Model
     public function door()
     {
         return $this->belongsTo(Door::class, 'door_id');
+    }
+
+    public function getTypeNameAttribute()
+    {
+        return static::$TYPES[$this->type];
     }
 }

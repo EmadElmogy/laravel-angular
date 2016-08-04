@@ -222,7 +222,8 @@ You can filter using URL query parameters for the following filters:
 
 ```json
 {
-    "comment": "This is the complain body....."
+    "comment": "This is the complain body.....",
+    "type": 1
 }
 ```
 
@@ -247,6 +248,14 @@ You can filter using URL query parameters for the following filters:
 ```
 
 `POST {{url}}/api/v1/complains`
+
+### Complain Types are:
+
+- 1: Consumer
+- 2: Product
+- 3: Maintenance
+- 4: Competition
+- 5: Others
 
 # Reports
 

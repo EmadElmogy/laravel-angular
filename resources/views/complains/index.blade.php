@@ -54,6 +54,7 @@
                                 <th style="width:15%">Advisor</th>
                                 <th style="width:15%">Door</th>
                                 <th style="width:15%">Date</th>
+                                <th>Type</th>
                                 <th>Comment</th>
                                 <th></th>
                             </tr>
@@ -64,6 +65,7 @@
                                     <td class="v-align-middle semi-bold">{{$item->advisor->name}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->door->name}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->date}}</td>
+                                    <td class="v-align-middle semi-bold">{{$item->typeName}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->comment}}</td>
                                     <td class="v-align-middle text-right text-nowrap">
                                         <a href="{{url('categories/item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-pencil5"></i></a>

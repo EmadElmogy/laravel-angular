@@ -139,10 +139,11 @@ class ApiController extends Controller
      */
     public function newComplain()
     {
-        validate(request()->all(), ['comment' => 'required']);
+        validate(request()->all(), (new Complain)->validationRules);
 
         $item = Complain::create(
             [
+                'type' => request('type'),
                 'comment' => request('comment'),
                 'advisor_id' => auth()->guard('api')->user()->id,
                 'door_id' => auth()->guard('api')->user()->door_id,
