@@ -97,7 +97,13 @@
                                 <a href="{{url('doors')}}"><i class="icon-store2"></i><span>Doors</span></a>
                             </li>
                             <li class="{{request()->is('advisors*') ? 'active' : ''}}">
-                                <a href="{{url('advisors')}}"><i class="icon-man-woman"></i><span>Beauty Advisors</span></a>
+                                <a href="#"><i class="icon-man-woman"></i> <span>Beauty Advisors</span></a>
+                                <ul>
+                                    <li class="{{request()->is('advisors') ? 'active' : ''}}">
+                                        <a href="{{url('advisors')}}">All Advisors</a></li>
+                                    <li class="{{request()->is('advisors/attendance') ? 'active' : ''}}">
+                                        <a href="{{url('advisors/attendance')}}">Attendance</a></li>
+                                </ul>
                             </li>
                             <li class="{{request()->is('categories*') ? 'active' : ''}}">
                                 <a href="{{url('categories')}}"><i class="icon-tree6"></i><span>Categories</span></a>
