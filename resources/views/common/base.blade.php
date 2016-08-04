@@ -118,7 +118,7 @@
                                 <a href="#"><i class="icon-pie-chart3"></i> <span>Reports</span></a>
                                 <ul>
                                     <li class="{{request()->is('reports') ? 'active' : ''}}">
-                                        <a href="{{url('reports')}}">Daily Reports</a></li>
+                                        <a href="{{url('reports')}}">Sales Reports</a></li>
                                     <li class="{{request()->is('reports/sales/products') ? 'active' : ''}}">
                                         <a href="{{url('reports/sales/products')}}">By Product</a></li>
                                     <li class="{{request()->is('reports/sales/categories') ? 'active' : ''}}">

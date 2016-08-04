@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Advisor;
 use App\Category;
 use App\Complain;
+use App\Customer;
 use App\Product;
 use App\Report;
 use App\Site;
 use App\Transformers\AdvisorTransformer;
 use App\Transformers\CategoryTransformer;
 use App\Transformers\ComplainTransformer;
+use App\Transformers\CustomerTransformer;
 use App\Transformers\ProductTransformer;
 use App\Transformers\ReportTransformer;
 use App\Transformers\SiteTransformer;
@@ -166,6 +168,22 @@ class ApiController extends Controller
     /**
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
      */
+    public function customers()
+    {
+        return response([
+            'customers' => CustomerTransformer::transform(
+                Customer::select('*')
+                    ->when(request('mobile'), function ($q) {
+                        return $q->where('mobile', 'LIKE', '%'.request('mobile').'%');
+                    })
+                    ->get()
+            )
+        ]);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function reports()
     {
         $filters = array_filter(request()->only(['door_id', 'advisor_id']));
@@ -218,8 +236,15 @@ class ApiController extends Controller
             'product_variations.*.sales' => 'required|numeric',
         ]);
 
+        $newCustomerData = request('new_customer');
+
+        $customer = request('customer_id')
+            ? Customer::findOrFail(request('customer_id'))
+            : $newCustomerData ? Customer::create(request('new_customer')) : null;
+
         $item = Report::create(
             [
+                'customer_id' => $customer ? $customer->id : null,
                 'advisor_id' => auth()->guard('api')->user()->id,
                 'door_id' => auth()->guard('api')->user()->door_id,
                 'date' => Carbon::now()->toDateTimeString()
@@ -237,6 +262,7 @@ class ApiController extends Controller
                 $q->select('id', 'name');
             },
             'door',
+            'customer',
             'variations.product',
         ]);
 

@@ -257,6 +257,30 @@ You can filter using URL query parameters for the following filters:
 - 4: Competition
 - 5: Others
 
+# Customers
+
+> Response
+
+```json
+{
+    "customers": [
+        {
+            "id": 1,
+            "name": "John Smith",
+            "mobile": "1001976453",
+            "area": "Ibiza",
+            "email": "john@mail.com"
+        }
+    ]
+}
+```
+
+`GET {{url}}/api/v1/customers`
+
+You can filter using URL query parameters for the following filters:
+
+- `mobile`
+
 # Reports
 
 ## List Reports
@@ -338,7 +362,14 @@ You can filter using URL query parameters for the following filters:
             "variation_id": 1,
             "sales": 12345.3
         }
-    ]
+    ],
+    "customer_id": null ,
+    "new_customer": {
+        "name": "John Smith",
+        "mobile": 1234,
+        "area": "Ibiza",
+        "email": "mail@mail.com"
+    }
 }
 ```
 
@@ -376,3 +407,7 @@ You can filter using URL query parameters for the following filters:
 ```
 
 `POST {{url}}/api/v1/reports`
+
+When sending a sales report you can optionally send customer details, if the customer already exists in the system you can send the `customer_id` field, if not you need to set the `customer_id` field to `null` and set the `new_customer` instead as you can see in the payload.
+
+If both `customer_id` and `new_customer` are null, the report will be submitted without customer details.

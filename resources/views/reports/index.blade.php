@@ -54,6 +54,7 @@
                                 <th>Date</th>
                                 <th>Door</th>
                                 <th>Advisor</th>
+                                <th>Customer</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -65,6 +66,7 @@
                                     </td>
                                     <td class="v-align-middle semi-bold">{{$item->door->name}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->advisor->name}}</td>
+                                    <td class="v-align-middle semi-bold">{{$item->customer ? "{$item->customer->name} ({$item->customer->mobile})" : ''}}</td>
                                     <td class="v-align-middle text-right text-nowrap">
                                         <a href="{{url('reports/item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-file-eye"></i></a>
                                     </td>

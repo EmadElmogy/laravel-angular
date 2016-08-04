@@ -30,6 +30,11 @@ class Report extends Model
         return $this->belongsTo(Door::class, 'door_id');
     }
 
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
+
     public function advisor()
     {
         return $this->belongsTo(Advisor::class, 'advisor_id');
