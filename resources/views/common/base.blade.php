@@ -114,11 +114,12 @@
                             <li class="{{request()->is('variations*') ? 'active' : ''}}">
                                 <a href="{{url('variations')}}"><i class="icon-server"></i><span>Products Variations</span></a>
                             </li>
-                            <li class="{{request()->is('reports*') ? 'active' : ''}}">
+                            <li class="{{request()->is('reports') ? 'active' : ''}}">
+                                <a href="{{url('reports')}}"><i class="icon-cart2"></i><span>Orders</span></a>
+                            </li>
+                            <li class="{{request()->is('reports/*') ? 'active' : ''}}">
                                 <a href="#"><i class="icon-pie-chart3"></i> <span>Reports</span></a>
                                 <ul>
-                                    <li class="{{request()->is('reports') ? 'active' : ''}}">
-                                        <a href="{{url('reports')}}">Sales Reports</a></li>
                                     <li class="{{request()->is('reports/sales/products') ? 'active' : ''}}">
                                         <a href="{{url('reports/sales/products')}}">By Product</a></li>
                                     <li class="{{request()->is('reports/sales/categories') ? 'active' : ''}}">
