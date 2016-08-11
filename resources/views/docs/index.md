@@ -103,6 +103,7 @@ The response will contain an array of sites with their doors.
                 "id": 1
             },
             "name": "Eyes",
+            "image": "http://loreal.dev/uploads/image.png",
             "sub_categories": [
                 {
                     "id": 4,
@@ -110,7 +111,8 @@ The response will contain an array of sites with their doors.
                         "name": "L'Oreal Paris",
                         "id": 2
                     },
-                    "name": "Eye Liners"
+                    "name": "Eye Liners",
+                    "image": "http://loreal.dev/uploads/image.png"
                 }
             ]
         }

@@ -53,6 +53,18 @@
                             </div>
                         @endif
 
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">Image</label>
+                            <div class="col-lg-3">
+                                @if($item->image)
+                                    <img src="{{url('uploads/'.$item->image)}}" style="width:100%">
+                                @endif
+                            </div>
+                            <div class="col-lg-7">
+                                <input type="file" class="form-control" name="image">
+                            </div>
+                        </div>
+
                     </fieldset>
 
 

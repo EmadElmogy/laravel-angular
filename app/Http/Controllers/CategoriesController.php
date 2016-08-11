@@ -51,6 +51,10 @@ class CategoriesController extends BaseController
 
         $data['parent_id'] = $data['parent_id'] ?: null;
 
+        request()->file('image')->move('uploads', $image = uniqid().'.'.request()->file('image')->getClientOriginalExtension());
+
+        $data['image'] = $image;
+
         $item = $this->repo->update($item, $data);
 
         return redirect('categories')->with('success', true);
