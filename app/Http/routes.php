@@ -13,7 +13,7 @@ Route::group(['prefix' => 'api/v1'], function () {
         Route::post('/complains', 'ApiController@newComplain');
         Route::get('/customers', 'ApiController@customers');
         Route::get('/reports', 'ApiController@reports');
-        Route::get('/report/{report_id}', 'ApiController@report');
+        Route::get('/reports/{report_id}', 'ApiController@report');
         Route::post('/reports', 'ApiController@newReport');
     });
 });

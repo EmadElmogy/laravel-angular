@@ -83,8 +83,15 @@ class ApiController extends Controller
      */
     public function categories()
     {
+        $skip = request('skip', 0);
+        $take = request('per_page', 100);
+
         return response([
-            'categories' => CategoryTransformer::transform(Category::whereNull('parent_id')->with('children')->get())
+            'categories' => CategoryTransformer::transform(Category::whereNull('parent_id')
+                ->with('children')
+                ->skip($skip)
+                ->take($take)
+                ->get())
         ]);
     }
 
@@ -93,12 +100,17 @@ class ApiController extends Controller
      */
     public function products()
     {
+        $skip = request('skip', 0);
+        $take = request('per_page', 100);
+
         return response([
             'products' => ProductTransformer::transform(
                 Product::with('variations')
                     ->when(request('category_id'), function ($q) {
                         return $q->where('category_id', request('category_id'));
                     })
+                    ->skip($skip)
+                    ->take($take)
                     ->get()
             )
         ]);
@@ -109,8 +121,12 @@ class ApiController extends Controller
      */
     public function wiki()
     {
+        $skip = request('skip', 0);
+        $take = request('per_page', 100);
+
         return response([
-            'categories' => WikiTransformer::transform(Wiki::all())
+            'categories' => WikiTransformer::transform(Wiki::skip($skip)
+                ->take($take)->get())
         ]);
     }
 
@@ -145,6 +161,7 @@ class ApiController extends Controller
 
         $item = Complain::create(
             [
+                'image' => request('image'),
                 'type' => request('type'),
                 'comment' => request('comment'),
                 'advisor_id' => auth()->guard('api')->user()->id,

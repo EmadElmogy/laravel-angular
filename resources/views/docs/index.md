@@ -124,6 +124,11 @@ The response will contain an array of sites with their doors.
 
 The response will contain an array of categories with their sub categories.
 
+You can paginate the results using the following parameters:
+
+- `skip` how many items to skip before starting the count.
+- `per_page` how many items to show per page.
+
 # List Products
 
 > Response
@@ -152,6 +157,12 @@ The response will contain an array of categories with their sub categories.
 The response will contain an array of products with their variations, you can filter the results by category using URL parameters:
 
 e.g. `GET {{url}}/api/v1/products?category_id=7364`
+
+You can paginate the results using the following parameters:
+
+- `skip` how many items to skip before starting the count.
+- `per_page` how many items to show per page.
+
 
 # List Wiki
 
@@ -183,6 +194,12 @@ e.g. `GET {{url}}/api/v1/products?category_id=7364`
 ```
 
 `GET {{url}}/api/v1/wiki`
+
+You can paginate the results using the following parameters:
+
+- `skip` how many items to skip before starting the count.
+- `per_page` how many items to show per page.
+
 
 # Complains
 
@@ -234,6 +251,7 @@ You can filter using URL query parameters for the following filters:
 ```json
 {
     "complain": {
+        "image": "base64 string here",
         "comment": "This is the complain body.....",
         "date": "2016-07-25 00:03:06",
         "id": 21,
