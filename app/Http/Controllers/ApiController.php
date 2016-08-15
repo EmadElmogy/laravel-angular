@@ -257,7 +257,7 @@ class ApiController extends Controller
 
         $customer = request('customer_id')
             ? Customer::findOrFail(request('customer_id'))
-            : $newCustomerData ? Customer::create(request('new_customer')) : null;
+            : ($newCustomerData ? Customer::create(request('new_customer')) : null);
 
         $item = Report::create(
             [
