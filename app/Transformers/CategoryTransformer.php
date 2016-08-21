@@ -19,7 +19,7 @@ class CategoryTransformer extends AbstractTransformer
         ];
 
         if ($this->isRelationshipLoaded($item, 'children')) {
-            $output['sub_categories'] = transform($item->children);
+            $output['sub_categories'] = CategoryTransformer::transform($item->children);
         }
 
         return $output;
