@@ -12,7 +12,7 @@ class ComplainTransformer extends AbstractTransformer
         $output = array_except($item->toArray(), ['door_id', 'advisor_id']);
 
         if ($this->isRelationshipLoaded($item, 'door')) {
-            $output['door'] = transform($item->door);
+            $output['door'] = DoorTransformer::transform($item->door);
         }
 
         if ($this->isRelationshipLoaded($item, 'advisor')) {

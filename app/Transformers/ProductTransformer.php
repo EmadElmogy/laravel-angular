@@ -14,11 +14,11 @@ class ProductTransformer extends AbstractTransformer
         $output['image'] = url('uploads/'.$item->image);
 
         if ($this->isRelationshipLoaded($item, 'category')) {
-            $output['category'] = transform($item->category);
+            $output['category'] = CategoryTransformer::transform($item->category);
         }
 
         if ($this->isRelationshipLoaded($item, 'variations')) {
-            $output['variations'] = transform($item->variations);
+            $output['variations'] = VariationTransformer::transform($item->variations);
         }
 
         return $output;
