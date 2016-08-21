@@ -50,10 +50,6 @@ class DoorsRepo extends AbstractRepo
     {
         $item = $this->findOneByOrFail(['id' => $id]);
 
-        if ($item->doors()->count('id')) {
-            throw new SystemException('Site can not be removed because it has doors.');
-        }
-
         return parent::delete($id);
     }
 }

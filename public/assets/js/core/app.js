@@ -758,7 +758,7 @@ $(function() {
                         deletee.remove();
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
-                        swal('', jqXHR.responseJSON.data, 'error');
+                        swal('', "Error!", 'error');
                     }
                 });
             }

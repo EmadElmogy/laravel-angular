@@ -19,6 +19,7 @@ use App\Transformers\SiteTransformer;
 use App\Transformers\WikiTransformer;
 use App\Wiki;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ApiController extends Controller
 {
@@ -285,6 +286,44 @@ class ApiController extends Controller
 
         return response([
             'report' => ReportTransformer::transform($item)
+        ]);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @throws \App\Exceptions\ValidationException
+     */
+    public function stock()
+    {
+        validate(request()->all(), [
+            'product_variations' => 'required|array|min:1',
+            'product_variations.*.variation_id' => 'required|exists:variations,id',
+            'product_variations.*.stock' => 'required|numeric',
+        ]);
+
+        $doorId = auth()->guard('api')->user()->door_id;
+
+        foreach (request('product_variations') as $variation) {
+            $record = DB::table('variations_stock')->where([
+                'variation_id' => $variation['variation_id'],
+                'door_id' => $doorId,
+            ]);
+
+            if ($current = $record->first()) {
+                $record->update([
+                    'stock' => $variation['stock'] + $current->stock
+                ]);
+            } else {
+                DB::table('variations_stock')->insert([
+                    'variation_id' => $variation['variation_id'],
+                    'door_id' => $doorId,
+                    'stock' => $variation['stock'],
+                ]);
+            }
+        }
+
+        return response([
+            'success' => true
         ]);
     }
 }

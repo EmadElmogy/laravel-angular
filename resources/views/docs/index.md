@@ -431,3 +431,28 @@ You can filter using URL query parameters for the following filters:
 When sending a sales report you can optionally send customer details, if the customer already exists in the system you can send the `customer_id` field, if not you need to set the `customer_id` field to `null` and set the `new_customer` instead as you can see in the payload.
 
 If both `customer_id` and `new_customer` are null, the report will be submitted without customer details.
+
+## Update Stock
+
+> Payload
+
+```json
+{
+    "product_variations": [
+        {
+            "variation_id": 1,
+            "stock": 23
+        }
+    ]
+}
+```
+
+> Response
+
+```json
+{
+    "success": true
+}
+```
+
+`POST {{url}}/api/v1/stock`
