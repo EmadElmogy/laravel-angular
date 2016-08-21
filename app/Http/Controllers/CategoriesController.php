@@ -49,7 +49,7 @@ class CategoriesController extends BaseController
 
         $data = request()->all();
 
-        $data['parent_id'] = $data['parent_id'] && $data['parent_id'] != 'null' ? $data['parent_id'] : null;
+        $data['parent_id'] = @$data['parent_id'] && @$data['parent_id'] != 'null' ? $data['parent_id'] : null;
 
         if (request()->file('image')) {
             request()->file('image')->move('uploads', $image = uniqid().'.'.request()->file('image')->getClientOriginalExtension());
