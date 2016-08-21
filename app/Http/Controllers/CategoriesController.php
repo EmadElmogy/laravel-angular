@@ -49,11 +49,13 @@ class CategoriesController extends BaseController
 
         $data = request()->all();
 
-        $data['parent_id'] = $data['parent_id'] ?: null;
+        $data['parent_id'] = $data['parent_id'] && $data['parent_id'] != 'null' ? $data['parent_id'] : null;
 
-        request()->file('image')->move('uploads', $image = uniqid().'.'.request()->file('image')->getClientOriginalExtension());
+        if (request()->file('image')) {
+            request()->file('image')->move('uploads', $image = uniqid().'.'.request()->file('image')->getClientOriginalExtension());
 
-        $data['image'] = $image;
+            $data['image'] = $image;
+        }
 
         $item = $this->repo->update($item, $data);
 

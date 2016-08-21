@@ -49,9 +49,11 @@ class ProductsController extends BaseController
 
         $data = request()->all();
 
-        request()->file('image')->move('uploads', $image = uniqid().'.'.request()->file('image')->getClientOriginalExtension());
+        if (request()->file('image')) {
+            request()->file('image')->move('uploads', $image = uniqid().'.'.request()->file('image')->getClientOriginalExtension());
 
-        $data['image'] = $image;
+            $data['image'] = $image;
+        }
 
         $item = $this->repo->update($item, $data);
 
