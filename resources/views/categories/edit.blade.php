@@ -21,7 +21,7 @@
 
         <div class="panel panel-flat">
             <div class="panel-body">
-                <form role="form" method="post" autocomplete="off" class="form-horizontal form-validate-jquery">
+                <form role="form" method="post" autocomplete="off" class="form-horizontal form-validate-jquery" enctype="multipart/form-data">
                     {{csrf_field()}}
 
                     <fieldset class="content-group">
