@@ -70,6 +70,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('reports/sales/doors', 'ReportsController@byDoors');
     Route::get('reports/sales/advisors', 'ReportsController@byAdvisors');
 
+    Route::get('stock', 'StockController@index');
+    Route::get('stock/{branchId}', 'StockController@item');
+    Route::post('stock/{branchId}', 'StockController@store');
+
     Route::get('settings', 'SettingsController@index');
     Route::post('settings', 'SettingsController@save');
 });

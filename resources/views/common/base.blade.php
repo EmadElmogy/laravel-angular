@@ -108,14 +108,20 @@
                             <li class="{{request()->is('categories*') ? 'active' : ''}}">
                                 <a href="{{url('categories')}}"><i class="icon-tree6"></i><span>Categories</span></a>
                             </li>
-                            <li class="{{request()->is('products*') ? 'active' : ''}}">
-                                <a href="{{url('products')}}"><i class="icon-box"></i><span>Products</span></a>
-                            </li>
-                            <li class="{{request()->is('variations*') ? 'active' : ''}}">
-                                <a href="{{url('variations')}}"><i class="icon-server"></i><span>Products Variations</span></a>
+                            <li class="{{request()->is('products/*', 'variations/*') ? 'active' : ''}}">
+                                <a href="#"><i class="icon-box"></i> <span>Products</span></a>
+                                <ul>
+                                    <li class="{{request()->is('products*') ? 'active' : ''}}">
+                                        <a href="{{url('products')}}">Products</a></li>
+                                    <li class="{{request()->is('variations*') ? 'active' : ''}}">
+                                        <a href="{{url('variations')}}">Variations</a></li>
+                                </ul>
                             </li>
                             <li class="{{request()->is('reports') ? 'active' : ''}}">
                                 <a href="{{url('reports')}}"><i class="icon-cart2"></i><span>Orders</span></a>
+                            </li>
+                            <li class="{{request()->is('stock') ? 'active' : ''}}">
+                                <a href="{{url('stock')}}"><i class="icon-table"></i><span>Stock</span></a>
                             </li>
                             <li class="{{request()->is('reports/*') ? 'active' : ''}}">
                                 <a href="#"><i class="icon-pie-chart3"></i> <span>Reports</span></a>
