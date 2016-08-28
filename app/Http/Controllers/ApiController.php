@@ -269,10 +269,23 @@ class ApiController extends Controller
             ]
         );
 
+        $doorId = auth()->guard('api')->user()->door_id;
+
         foreach (request('product_variations') as $variation) {
             $item->variations()->attach($variation['variation_id'], [
                 'sales' => $variation['sales']
             ]);
+
+            $record = DB::table('variations_stock')->where([
+                'variation_id' => $variation['variation_id'],
+                'door_id' => $doorId,
+            ]);
+
+            if ($current = $record->first()) {
+                $record->update([
+                    'stock' => $current->stock - $variation['sales']
+                ]);
+            }
         }
 
         $item->load([
