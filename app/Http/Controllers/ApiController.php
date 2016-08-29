@@ -339,4 +339,40 @@ class ApiController extends Controller
             'success' => true
         ]);
     }
+
+    /**
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     * @throws \App\Exceptions\ValidationException
+     */
+    public function newCustomer()
+    {
+        validate(request()->all(), [
+            'name' => 'required',
+            'email' => 'required',
+        ]);
+
+        $customer = Customer::create(
+            array_only(request()->json()->all(), ['name', 'email', 'mobile', 'area'])
+        );
+
+        return response([
+            'customer' => CustomerTransformer::transform($customer)
+        ]);
+    }
+
+    /**
+     * @return \Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function brands()
+    {
+        return response([
+            'brands' => collect(Category::$BRANDS)->map(function ($item, $key) {
+                return (object) [
+                    'id' => $key,
+                    'name' => $item,
+                    'image' => Category::$BRANDIMAGES[$key],
+                ];
+            })->values()
+        ]);
+    }
 }

@@ -25,6 +25,11 @@ class Category extends Model
         2 => 'Maybelline',
     ];
 
+    public static $BRANDIMAGES = [
+        1 => 'http://4.bp.blogspot.com/-eoWkCLylN00/VVi6XJ0b9NI/AAAAAAAACc4/Vd64-uu1S1U/s1600/Loreal-paris-logo-vector.png',
+        2 => 'https://stuffled.com/vector/wp-content/uploads/sites/5/2014/07/Maybelline_Logo-vector-image.png',
+    ];
+
     public function parent()
     {
         return $this->belongsTo(Category::class, 'parent_id');

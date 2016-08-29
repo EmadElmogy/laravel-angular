@@ -277,30 +277,6 @@ You can filter using URL query parameters for the following filters:
 - 4: Competition
 - 5: Others
 
-# Customers
-
-> Response
-
-```json
-{
-    "customers": [
-        {
-            "id": 1,
-            "name": "John Smith",
-            "mobile": "1001976453",
-            "area": "Ibiza",
-            "email": "john@mail.com"
-        }
-    ]
-}
-```
-
-`GET {{url}}/api/v1/customers`
-
-You can filter using URL query parameters for the following filters:
-
-- `mobile`
-
 # Reports
 
 ## List Reports
@@ -456,3 +432,81 @@ If both `customer_id` and `new_customer` are null, the report will be submitted 
 ```
 
 `POST {{url}}/api/v1/stock`
+
+# Customers
+
+## All customers
+
+> Response
+
+```json
+{
+    "customers": [
+        {
+            "id": 1,
+            "name": "John Smith",
+            "mobile": "1001976453",
+            "area": "Ibiza",
+            "email": "john@mail.com"
+        }
+    ]
+}
+```
+
+`GET {{url}}/api/v1/customers`
+
+You can filter using URL query parameters for the following filters:
+
+- `mobile`
+
+## Add new customer
+
+> Payload
+
+```json
+{
+    "name": "John Smith",
+        "mobile": 1234,
+        "area": "Ibiza",
+        "email": "mail@mail.com"
+}
+```
+
+> Response
+
+```json
+{
+    "customer": {
+        "name": "John Smith",
+        "mobile": 1234,
+        "area": "Ibiza",
+        "email": "mail@mail.com",
+        "id": 4
+    }
+}
+```
+
+`POST {{url}}/api/v1/new-customer`
+
+# Brands
+
+## All Brands
+
+> Response
+
+```json
+{
+    "brands": [
+        {
+            "id": 1,
+            "name": "L'Oreal Paris",
+            "image": "http://4.bp.blogspot.com/-eoWkCLylN00/VVi6XJ0b9NI/AAAAAAAACc4/Vd64-uu1S1U/s1600/Loreal-paris-logo-vector.png"
+        },
+        {
+            "id": 2,
+            "name": "Maybelline",
+            "image": "https://stuffled.com/vector/wp-content/uploads/sites/5/2014/07/Maybelline_Logo-vector-image.png"
+        }
+    ]
+}
+```
