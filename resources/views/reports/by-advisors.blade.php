@@ -32,6 +32,9 @@
                             </button>
                         </div>
                     </form>
+                    <div style="line-height: 6em;">
+                        <a href="{{route('excelbyAdvisor')}}" class="btn btn-success">Export to csv</a>
+                    </div>
                 </div>
 
                 <div class="panel panel-flat">

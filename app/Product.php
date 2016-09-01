@@ -17,6 +17,7 @@ class Product extends Model
 
     public $validationRules = [
         'name' => 'required',
+        'price' => 'required|numeric',
         'category_id' => 'required',
     ];
 

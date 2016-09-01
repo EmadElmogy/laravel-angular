@@ -8,6 +8,7 @@ Route::group(['prefix' => 'api/v1'], function () {
         Route::get('/wiki', 'ApiController@wiki');
         Route::get('/sites', 'ApiController@sites');
         Route::get('/categories', 'ApiController@categories');
+        Route::get('/categories/{brand_id}', 'ApiController@brand_categories');
         Route::get('/products', 'ApiController@products');
         Route::get('/complains', 'ApiController@complains');
         Route::post('/complains', 'ApiController@newComplain');
@@ -49,6 +50,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('categories/item/{item_id?}', 'CategoriesController@store');
     Route::delete('categories/item/{item_id?}', 'CategoriesController@deleteItem');
 
+    Route::get('customers', 'customersController@index');
+    Route::get('customers/item/{item_id}', 'customersController@item');
+    Route::post('customers/item/{item_id?}', 'customersController@store');
+    Route::delete('customers/item/{item_id?}', 'customersController@deleteItem');
+
+
+
     Route::get('products', 'ProductsController@index');
     Route::get('products/item/{item_id?}', 'ProductsController@item');
     Route::post('products/item/{item_id?}', 'ProductsController@store');
@@ -72,6 +80,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('reports/sales/categories', 'ReportsController@byCategories');
     Route::get('reports/sales/doors', 'ReportsController@byDoors');
     Route::get('reports/sales/advisors', 'ReportsController@byAdvisors');
+    Route::get('reports/sales/product_excel','ReportsController@excelbyProduct')->name('excelbyProduct');
+    Route::get('reports/sales/excelbyCategory','ReportsController@excelbyCategory')->name('excelbyCategory');
+    Route::get('reports/sales/excelbyDoor','ReportsController@excelbyDoor')->name('excelbyDoor');
+    Route::get('reports/sales/excelbyAdvisor','ReportsController@excelbyAdvisor')->name('excelbyAdvisor');
 
     Route::get('stock', 'StockController@index');
     Route::get('stock/{branchId}', 'StockController@item');

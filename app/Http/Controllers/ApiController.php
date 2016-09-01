@@ -8,6 +8,8 @@ use App\Complain;
 use App\Customer;
 use App\Product;
 use App\Report;
+use App\Attendance;
+use App\Door;
 use App\Site;
 use App\Transformers\AdvisorTransformer;
 use App\Transformers\CategoryTransformer;
@@ -35,7 +37,7 @@ class ApiController extends Controller
         ]);
 
         $advisor = Advisor::where(request()->only('username', 'password'))->with('door')->first();
-
+        //dd($advisor->id);
         if (! $advisor) {
             return response('Unauthorized.', 401);
         }
@@ -46,9 +48,24 @@ class ApiController extends Controller
             'login_time' => Carbon::now(),
             'door_id' => $advisor->door_id,
         ]);
+       $door=Door::find($advisor->door_id);
+
+            $door_lat=$door->door_lat;
+            $door_lng=$door->door_lng;
+            if ($door_lng === request()->lng && $door_lat === request()->lat){
+               // echo "equal"; die;
+                $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '1']);
+            }elseif ($door_lng === "0" && $door_lat === "0"){
+                $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '2']);
+            }elseif ($door_lng != request()->lng || $door_lat != request()->lat){
+                $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '0']);
+            }
+
 
         return response([
-            'advisor' => AdvisorTransformer::transform($advisor)
+            'advisor' => AdvisorTransformer::transform($advisor),
+            /*'lng'=>request()->lng,
+            'lat'=>request()->lat,*/
         ]);
     }
 
@@ -65,6 +82,22 @@ class ApiController extends Controller
         auth()->guard('api')->user()->update([
             'api_token' => str_random(40)
         ]);
+
+
+        $door=Door::find(auth()->guard('api')->user()->door_id);
+
+        $door_lat=$door->door_lat;
+        $door_lng=$door->door_lng;
+        //dd(auth()->guard('api')->user());
+        if ($door_lng === request()->lng && $door_lat === request()->lat){
+            // echo "equal"; die;
+            auth()->guard('api')->user()->attendance()->where('advisor_id','=',auth()->guard('api')->user()->id)->update(['sign_out_range' => '1']);
+        }elseif ($door_lng === "0" && $door_lat === "0"){
+            auth()->guard('api')->user()->attendance()->where('advisor_id','=',auth()->guard('api')->user()->id)->update(['sign_out_range' => '2']);
+        }elseif ($door_lng != request()->lng || $door_lat != request()->lat){
+            auth()->guard('api')->user()->attendance()->where('advisor_id','=',auth()->guard('api')->user()->id)->update(['sign_out_range' => '0']);
+        }
+
 
         return response(['logged_out' => true]);
     }
@@ -93,6 +126,20 @@ class ApiController extends Controller
                 ->skip($skip)
                 ->take($take)
                 ->get())
+        ]);
+    }
+
+    public function brand_categories($brand_id){
+        $skip = request('skip', 0);
+        $take = request('per_page', 100);
+        return response([
+            'categories' => CategoryTransformer::transform(
+                Category::whereNull('parent_id')
+                    ->with('children')
+                    ->whereId($brand_id)
+                    ->skip($skip)
+                    ->take($take)
+                    ->get())
         ]);
     }
 

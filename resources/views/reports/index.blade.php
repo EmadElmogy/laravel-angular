@@ -55,11 +55,42 @@
                                 <th>Door</th>
                                 <th>Advisor</th>
                                 <th>Customer</th>
+                                <th>Basket Size</th>
+                                <th>Basket Value</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($items as $item)
+                                <?php $basket_size=\DB::table('report_products')->where('report_id','=',$item->id)->selectRaw('sum(sales) as sum')->first(); ?>
+
+
+                                <?php $report_products=\DB::table('report_products')->where('report_id','=',$item->id)->get(); $basket_value=0; ?>
+                                @foreach($report_products as $report_product)
+                                    <?php $product_variations=\DB::table('variations')->where('id','=',$report_product->variation_id)->first(); ?>
+                                            {{--@foreach($product_variations as $product_variation)--}}
+                                                <?php $prices=\DB::table('products')->where('id','=',$product_variations->product_id)->first(); ?>
+                                                {{--@foreach($prices as $price)--}}
+                                                    {{--{{dd($price)}}--}}
+                                                    <?php
+                                                    $basket_size_items=\DB::table('report_products')->where('report_id','=',$item->id)
+                                                                            ->where('variation_id','=',$report_product->variation_id)
+                                                                            ->first();
+                                                    ?>
+
+                                                    {{--@foreach($basket_size_items as $basket_size_item)--}}
+                                                        {{--{{dd($price->price*$basket_size_item->sales)}}--}}
+                                                        <?php
+                                                        $basket_value=$basket_value+($prices->price*$basket_size_items->sales);
+                                                                //dd($basket_value);
+
+                                                        ?>
+                                                    {{--@endforeach--}}
+                                                    {{--@endforeach--}}
+                                            {{--@endforeach--}}
+
+                                    {{--{{dd($basket_size_items->sales)}}--}}
+                                @endforeach
                                 <tr>
                                     <td class="v-align-middle semi-bold">
                                         <a href="{{url('reports/item/'.$item->id)}}">{{$item->date->toDateString()}}</a>
@@ -67,6 +98,8 @@
                                     <td class="v-align-middle semi-bold">{{@$item->door->name}}</td>
                                     <td class="v-align-middle semi-bold">{{@$item->advisor->name}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->customer ? "{$item->customer->name} ({$item->customer->mobile})" : ''}}</td>
+                                    <td class="v-align-middle semi-bold">{{$basket_size->sum}}</td>
+                                    <td class="v-align-middle semi-bold">{{$basket_value}}</td>
                                     <td class="v-align-middle text-right text-nowrap">
                                         <a href="{{url('reports/item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-file-eye"></i></a>
                                     </td>

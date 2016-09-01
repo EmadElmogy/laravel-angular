@@ -105,6 +105,11 @@
                                         <a href="{{url('advisors/attendance')}}">Attendance</a></li>
                                 </ul>
                             </li>
+
+                            <li class="{{request()->is('customers*') ? 'active' : ''}}">
+                                <a href="{{url('customers')}}"><i class="icon-user"></i><span>Customers</span></a>
+                            </li>
+
                             <li class="{{request()->is('categories*') ? 'active' : ''}}">
                                 <a href="{{url('categories')}}"><i class="icon-tree6"></i><span>Categories</span></a>
                             </li>

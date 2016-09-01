@@ -26,10 +26,21 @@
 
                     <fieldset class="content-group">
 
+                        @if(!$item->id || $item->parent)
+                            <div class="form-group">
+                                <label class="control-label col-lg-2">Parent Category</label>
+                                <div class="col-lg-10">
+                                    <select name="parent_id" class="form-control select2" id="parent_id">
+                                        {!! selectBoxOptionsBuilder(['null'=>'Please Select']+\App\Category::whereNull('parent_id')->pluck('name','id')->toArray(), old('parent_id', $item->parent_id)) !!}
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
+
                         <div class="form-group">
                             <label class="control-label col-lg-2">Brand<span class="text-danger">*</span></label>
                             <div class="col-lg-10">
-                                <select name="brand" class="form-control select2" required="required">
+                                <select name="brand" class="form-control select2" required="required" id="brand_id">
                                     {!! selectBoxOptionsBuilder([''=>'Please Select']+\App\Category::$BRANDS, old('brand', $item->brand)) !!}
                                 </select>
                             </div>
@@ -42,16 +53,16 @@
                             </div>
                         </div>
 
-                        @if(!$item->id || $item->parent)
-                            <div class="form-group">
-                                <label class="control-label col-lg-2">Parent Category</label>
-                                <div class="col-lg-10">
-                                    <select name="parent_id" class="form-control select2">
-                                        {!! selectBoxOptionsBuilder(['null'=>'Please Select']+\App\Category::whereNull('parent_id')->pluck('name','id')->toArray(), old('parent_id', $item->parent_id)) !!}
-                                    </select>
-                                </div>
-                            </div>
-                        @endif
+                        {{--@if(!$item->id || $item->parent)--}}
+                            {{--<div class="form-group">--}}
+                                {{--<label class="control-label col-lg-2">Parent Category</label>--}}
+                                {{--<div class="col-lg-10">--}}
+                                    {{--<select name="parent_id" class="form-control select2">--}}
+                                        {{--{!! selectBoxOptionsBuilder(['null'=>'Please Select']+\App\Category::whereNull('parent_id')->pluck('name','id')->toArray(), old('parent_id', $item->parent_id)) !!}--}}
+                                    {{--</select>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                        {{--@endif--}}
 
                         <div class="form-group">
                             <label class="control-label col-lg-2">Image</label>
@@ -78,4 +89,13 @@
 
 
     </div>
+    <script>
+        $("#parent_id").on('change', function() {
+            //alert('punk');
+            document.getElementById("brand_id").disabled = true;
+
+        });
+
+
+    </script>
 @stop

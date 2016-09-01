@@ -44,6 +44,14 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="control-label col-lg-2">Price<span class="text-danger">*</span></label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" required="required" name="price" value="{{$item->price ?: old('price')}}">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
                             <label class="control-label col-lg-2">Image</label>
                             <div class="col-lg-3">
                                 @if($item->image)

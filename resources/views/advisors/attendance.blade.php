@@ -63,6 +63,8 @@
                                 <th>Door</th>
                                 <th>Clock In</th>
                                 <th>Clock Out</th>
+                                <th>Sign In Range</th>
+                                <th>Sign Out Range</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -72,6 +74,26 @@
                                     <td class="v-align-middle semi-bold">{{$item->door->site->name}}: {{$item->door->name}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->login_time}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->logout_time}}</td>
+                                    @if($item->sign_in_range =='1')
+                                    <td class="v-align-middle semi-bold"><i class="glyphicon glyphicon-check" style="font-size:30px;color:green;"></i></td>
+                                        @elseif($item->sign_in_range =='0')
+                                        <td class="v-align-middle semi-bold"><i class="glyphicon glyphicon-remove-sign" style="font-size:30px;color:red;"></i></td>
+                                        @elseif($item->sign_in_range =='2')
+                                        <td class="v-align-middle semi-bold"><i class="glyphicon glyphicon-globe" style="font-size:30px;color:grey;"></i></td>
+                                        @elseif($item->sign_in_range =='-1')
+                                        <td class="v-align-middle semi-bold"><i class="glyphicon glyphicon-question-sign" style="font-size:30px;color:black;"></i></td>
+
+                                    @endif
+                                    @if($item->sign_out_range =='1')
+                                        <td class="v-align-middle semi-bold"><i class="glyphicon glyphicon-check" style="font-size:30px;color:green;"></i></td>
+                                    @elseif($item->sign_out_range =='0')
+                                        <td class="v-align-middle semi-bold"><i class="glyphicon glyphicon-remove-sign" style="font-size:30px;color:red;"></i></td>
+                                    @elseif($item->sign_out_range =='2')
+                                        <td class="v-align-middle semi-bold"><i class="glyphicon glyphicon-globe" style="font-size:30px;color:grey;"></i></td>
+                                    @elseif($item->sign_out_range =='-1')
+                                        <td class="v-align-middle semi-bold"><i class="glyphicon glyphicon-question-sign" style="font-size:30px;color:black;"></i></td>
+
+                                    @endif
                                 </tr>
                             @empty
                                 <tr>

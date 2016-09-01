@@ -9,7 +9,7 @@ class Customer extends Model
     protected $table = 'customers';
     protected $guarded = ['id'];
     protected $hidden = [];
-    protected $dates = [];
+    protected $dates = ['date'];
     public $timestamps = false;
     protected $casts = [
         'id' => 'integer',

@@ -75,7 +75,7 @@ class AdvisorsController extends BaseController
                 return $q->whereBetween('attendance.login_time', [request('from_date'), request('to_date')]);
             })->
             get();
-
+           // dd($items);
         return view('advisors.attendance', compact('items'));
     }
 }

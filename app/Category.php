@@ -17,7 +17,7 @@ class Category extends Model
 
     public $validationRules = [
         'name' => 'required',
-        'brand' => 'required:in:1,2',
+        //'brand' => 'required:in:1,2',
     ];
 
     public static $BRANDS = [

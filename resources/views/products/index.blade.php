@@ -55,6 +55,7 @@
                                 <th style="width:20%"></th>
                                 <th>Name</th>
                                 <th>Category</th>
+                                <th>Price</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -66,6 +67,7 @@
                                     </td>
                                     <td class="v-align-middle semi-bold">{{$item->name}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->category->parent->name}}: {{$item->category->name}}</td>
+                                    <td class="v-align-middle semi-bold">{{$item->price}}</td>
                                     <td class="v-align-middle text-right text-nowrap">
                                         <a href="{{url('products/item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-pencil5"></i></a>
                                         <a href="{{url('products/item/'.$item->id)}}" class="btn btn-danger btn-xs deleter"><i class="icon-trash"></i></a>
