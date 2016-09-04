@@ -28,9 +28,17 @@ class StockController extends BaseController
      */
     public function item($item_id = null)
     {
+        $filters = request('filters', []);
+//        dd($filters);
         $door = Door::find($item_id);
 
-        $items = Variation::with('product.category')->get();
+        $items = Variation::with('product.category')
+            ->when(@$filters['barcode'], function ($q) {
+             return $q->where('variations.product_id', request('filters.barcode'));
+            })->when(@$filters['product_id'], function ($q) {
+                return $q->where('variations.product_id', request('filters.product_id'));
+            })
+            ->get();
 
         $stock = collect(DB::table('variations_stock')->get());
 

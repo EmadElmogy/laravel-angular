@@ -50,6 +50,12 @@ class WikisController extends BaseController
 
         $data = request()->all();
 
+        if (request()->file('file') && request()->file('file') != null) {
+            request()->file('file')->move('uploads', $file = uniqid().'.'.request()->file('file')->getClientOriginalExtension());
+
+            $data['file'] = $file;
+        }
+
         $item = $this->repo->update($item, $data);
 
         return redirect('wikis')->with('success', true);

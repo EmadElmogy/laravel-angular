@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Report;
 use App\Repos\ReportsRepo;
 
 use App\Http\Requests;
@@ -34,11 +35,49 @@ class ReportsController extends BaseController
         return view('reports.index', compact('items'));
     }
 
+    public function excelindex(){
+        //$filters = request('filters', []);
+
+       // $results = $this->repo->findAll($filters=[], ['door.site', 'advisor'], false)->paginate(40);
+       // $results = Report::all();
+        $results = DB::table('reports')
+            ->join('advisors', 'advisors.id', '=', 'reports.advisor_id')
+            ->join('doors', 'doors.id', '=', 'reports.door_id')
+           ->join('customers', 'customers.id', '=', 'reports.customer_id')
+            //->groupBy('variation_id')
+            ->select('advisors.name as advisor_name', 'doors.name as door_name', 'customers.name as customer_name')
+           // ->selectRaw('SUM(sales) as sales')
+            ->orderBy('reports.id', 'DESC')
+           /* ->when(request('barcode'), function ($q) {
+                return $q->where('variations.barcode', request('barcode'));
+            })*/
+            ->when(request('door_id'), function ($q) {
+                return $q->where('reports.door_id', request('door_id'));
+            })
+            ->when(request('from_date') && ! request('to_date'), function ($q) {
+                return $q->whereDate('reports.date', '=', request('from_date'));
+            })
+            ->when(request('from_date') && request('to_date'), function ($q) {
+                return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
+            })
+            ->get();
+
+        Excel::create('orders', function($excel) use($results) {
+            $excel->sheet('Sheet 1', function($sheet) use($results) {
+                foreach ($results as &$result) {
+                    $result = (array)$result;
+                }
+                $sheet->fromArray($results);
+            });
+        })->export('xls');
+
+    }
+
     /**
      *
      * @return \Illuminate\Http\Response
      */
-    public function item($item_id = null)
+    public function show_item($item_id = null)
     {
         $item = $this->bringOrNew($this->repo, $item_id);
 
@@ -271,4 +310,25 @@ class ReportsController extends BaseController
 
         return view('reports.by-advisors', compact('results'));
     }
+
+    public function item($item_id = null)
+    {
+        $item = $this->bringOrNew($this->repo, $item_id);
+
+        return view('reports.edit', compact('item'));
+    }
+
+
+    public function store($item_id = null)
+    {
+        $item = $this->bringOrNew($this->repo, $item_id);
+
+        $data = request()->all();
+//dd($data);
+        $item = $this->repo->update($item, $data);
+
+        return redirect('reports')->with('success', true);
+    }
+
+
 }

@@ -11,6 +11,27 @@
     </div>
 
     <div class="content">
+        <div class="row mb-20">
+            <form action="">
+
+
+                <div class="col-md-2">
+                    <select name="filters[barcode]" class="form-control select2">
+                        {!! selectBoxOptionsBuilder([''=>'Barcode']+\App\Variation::pluck('barcode','id')->toArray(), request('filters.barcode')) !!}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <select name="filters[product_id]" class="form-control select2">
+                        {!! selectBoxOptionsBuilder([''=>'Product']+\App\Product::pluck('name','id')->toArray(), request('filters.product_id')) !!}
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-info btn-sm">
+                        <i class="icon-filter3 position-left"></i> Filter
+                    </button>
+                </div>
+            </form>
+        </div>
 
         <div class="row">
             <div class="col-md-12">
@@ -36,6 +57,7 @@
                                         <td class="v-align-middle semi-bold">
                                             {{$item->product->category->name}} > {{$item->product->name}} > {{$item->name}}
                                         </td>
+                                        <td>{{$item->barcode}}</td>
                                         <td>
                                             <input type="text" class="form-control"
                                                    name="variation[{{$item->id}}]"

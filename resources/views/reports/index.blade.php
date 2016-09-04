@@ -35,6 +35,11 @@
                                 {!! selectBoxOptionsBuilder([''=>'Advisor']+\App\Advisor::pluck('name','id')->toArray(), request('filters.advisor_id')) !!}
                             </select>
                         </div>
+                        <div class="col-md-2">
+                            <select name="filters[customer_id]" class="form-control select2">
+                                {!! selectBoxOptionsBuilder([''=>'Customer']+\App\Customer::pluck('name','id')->toArray(), request('filters.customer_id')) !!}
+                            </select>
+                        </div>
                         <div class="col-md-3">
                             <input type="date" class="form-control" name="filters[date]" placeholder="Date" value="{{request('filters.date')}}">
                         </div>
@@ -44,6 +49,9 @@
                             </button>
                         </div>
                     </form>
+                    <div style="line-height: 2em;">
+                        <a href="{{route('excelindex')}}" class="btn btn-success">Export to csv</a>
+                    </div>
                 </div>
 
                 <div class="panel panel-flat">
@@ -101,7 +109,10 @@
                                     <td class="v-align-middle semi-bold">{{$basket_size->sum}}</td>
                                     <td class="v-align-middle semi-bold">{{$basket_value}}</td>
                                     <td class="v-align-middle text-right text-nowrap">
-                                        <a href="{{url('reports/item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-file-eye"></i></a>
+                                        <a href="{{url('reports/show_item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-file-eye"></i></a>
+                                        <a href="{{url('reports/item/'.$item->id)}}" class="btn btn-success btn-xs"><i class="icon-pencil5"></i></a>
+                                        <a href="{{url('reports/item/'.$item->id)}}" class="btn btn-danger btn-xs deleter"><i class="icon-trash"></i></a>
+
                                     </td>
                                 </tr>
                             @empty

@@ -17,7 +17,7 @@ class Wiki extends Model
 
     public $validationRules = [
         'title' => 'required',
-        'link' => 'required',
+        //'link' => 'required',
         'type' => 'required:in:1,2',
     ];
 

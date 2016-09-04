@@ -76,7 +76,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('wikis/item/{item_id?}', 'WikisController@deleteItem');
 
     Route::get('reports', 'ReportsController@index');
-    Route::get('reports/item/{item_id}', 'ReportsController@item');
+    Route::get('reports/excelindex', 'ReportsController@excelindex')->name('excelindex');
+    Route::get('reports/item/{item_id?}', 'ReportsController@item');
+    Route::get('reports/show_item/{item_id?}', 'ReportsController@show_item');
+    Route::post('reports/item/{item_id?}', 'ReportsController@store');
+    Route::delete('reports/item/{item_id?}', 'ReportsController@deleteItem');
     Route::get('reports/sales/products', 'ReportsController@byProducts');
     Route::get('reports/sales/categories', 'ReportsController@byCategories');
     Route::get('reports/sales/doors', 'ReportsController@byDoors');
