@@ -34,7 +34,7 @@ class StockController extends BaseController
 
         $items = Variation::with('product.category')
             ->when(@$filters['barcode'], function ($q) {
-             return $q->where('variations.product_id', request('filters.barcode'));
+             return $q->where('variations.id', request('filters.barcode'));
             })->when(@$filters['product_id'], function ($q) {
                 return $q->where('variations.product_id', request('filters.product_id'));
             })
