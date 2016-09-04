@@ -8,7 +8,7 @@
         <div class="page-header-content">
             <div class="page-title">
                 <h4>{{$door->name}} ({{ date('Y-m-d',strtotime($report->date))}})</h4>
-                by {{$advisor_name->name}}
+                by {{@$advisor_name->name}}
             </div>
         </div>
     </div>

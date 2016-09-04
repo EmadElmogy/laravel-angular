@@ -36,6 +36,8 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Site</th>
+                                <th>Door longtiude</th>
+                                <th>Door latitude</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -44,7 +46,10 @@
                                 <tr>
                                     <td class="v-align-middle semi-bold">{{$item->name}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->site->name}}</td>
-                                    <td class="v-align-middle text-right text-nowrap">
+
+<td class="v-align-middle semi-bold">{{$item->door_lng}}</td>
+                                    <td class="v-align-middle semi-bold">{{$item->door_lat}}</td>                           
+         <td class="v-align-middle text-right text-nowrap">
                                         <a href="{{url('doors/item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-pencil5"></i></a>
                                         <a href="{{url('doors/item/'.$item->id)}}" class="btn btn-danger btn-xs deleter"><i class="icon-trash"></i></a>
                                     </td>

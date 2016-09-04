@@ -8,7 +8,7 @@
         <div class="page-header-content">
             <div class="page-title">
                 <h4>{{$item->door->name}} ({{$item->date->toDateString()}})</h4>
-                by {{$item->advisor->name}}
+                by {{@$item->advisor->name}}
             </div>
         </div>
     </div>

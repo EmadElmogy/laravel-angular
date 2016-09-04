@@ -42,7 +42,19 @@
                                 </select>
                             </div>
                         </div>
+                           <div class="form-group">
+                            <label class="control-label col-lg-2">Door longtiude</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" required="required" name="door_lng" value="{{$item->door_lng ?: old('door_lng')}}">
+                            </div>
+                        </div>
 
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">Door latitude</label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" required="required" name="door_lat" value="{{$item->door_lat ?: old('door_lat')}}">
+                            </div>
+                        </div>
 
                     </fieldset>
 

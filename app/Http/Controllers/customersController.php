@@ -32,6 +32,18 @@ class customersController extends BaseController
         return view('customers.index', compact('items'));
     }
 
+public function show_orders($item_id = null){
+      $item1 = $this->bringOrNew($this->repo, $item_id);
+      $items=\DB::table('reports')->where('customer_id','=',$item_id)
+                  ->join('doors','reports.door_id','=','doors.id')
+                  ->join('advisors','reports.advisor_id','=','advisors.id')
+                  ->select('*','advisors.name as advisor_name','doors.name as door_name')
+                  ->paginate(50);
+      //dd($reports);
+      return view('customers.show_orders', compact('items','item1'));
+
+    }
+
     /**
      *
      * @return \Illuminate\Http\Response

@@ -52,6 +52,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('customers', 'customersController@index');
     Route::get('customers/item/{item_id}', 'customersController@item');
+    Route::get('customers/show_orders/{item_id}', 'customersController@show_orders');
     Route::post('customers/item/{item_id?}', 'customersController@store');
     Route::delete('customers/item/{item_id?}', 'customersController@deleteItem');
 

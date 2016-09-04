@@ -49,7 +49,7 @@
                                     <td class="v-align-middle semi-bold">{{$item->area}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->email}}</td>
                                     <td class="v-align-middle text-right text-nowrap">
-                                        <a href="{{url('customers/item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-file-eye"></i></a>
+                                        <a href="{{url('customers/show_orders/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-file-eye"></i></a>
                                         <a href="{{url('customers/item/'.$item->id)}}" class="btn btn-danger btn-xs deleter"><i class="icon-trash"></i></a>
                                     </td>
                                 </tr>
