@@ -67,8 +67,9 @@
 
                                     @if(@$stock->where('variation_id', $item->id)->where('door_id', $door->id)->first()->stock < 3)
                                          <?php
+                                               /*       
                                          $emails=\App\Setting::whereKey('reports_emails')->first()->value;
-                                         $quantity=$stock->where('variation_id', $item->id)->where('door_id', $door->id)->first()->stock;
+                                         $quantity=$stock->where('varia1tion_id', $item->id)->where('door_id', $door->id)->first()->stock;
                                          $variation_stocks=\DB::table('variations_stock')
                                                  ->where('stock','<','3')
                                                  ->join('doors','variations_stock.door_id','=','doors.id')
@@ -93,7 +94,7 @@
 
                                          });
                                         // var_dump( \Mail:: failures()); exit;
-                                                }
+                                                } */
                                           ?>
                                         @endif
 
