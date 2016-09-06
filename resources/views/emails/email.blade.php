@@ -1,10 +1,9 @@
-{{--@foreach($variation_stocks as $variation_stock)
-    <?php $product=\DB::table('products')->where('id','=',$variation_stock->product_id)->first(); ?>
-  Product : {{$product->name}} ,
-    In Door : {{$variation_stock->door_name}} is out of stock ,
-    its Quantity : {{$variation_stock->stock}} . <br>
 
 
-    @endforeach --}}
+ @foreach($variation_stocks as $variation_stock)
+     Product : {{$variation_stock->product_name}} <br>
+     Sku : {{$variation_stock->barcode}} <br>
+     Door : {{$variation_stock->door_name}} <br>
+     Current Stock : {{$variation_stock->stock}}
 
-test mail
+     @endforeach

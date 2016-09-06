@@ -343,16 +343,25 @@ class ApiController extends Controller
             'customer',
             'variations.product',
         ]);
-         if ($current->stock <= 3) {
+
+        $record2 = DB::table('variations_stock')->where([
+            'variation_id' => $variation['variation_id'],
+            'door_id' => $doorId,
+            ])
+            ->join('doors','variations_stock.door_id','=','doors.id')
+            ->join('variations','variations_stock.variation_id','=','variations.id')
+            ->join('products','variations.product_id','=','products.id')->select('*','doors.name as door_name','products.name as product_name','variations.name as variation_name');
+       // die;
+         if ($record->first()->stock <= 3) {
              $emails = \App\Setting::whereKey('reports_emails')->first()->value;
-             $quantity = $current->stock;
+             //$quantity = $record->stock;
              /*$variation_stocks=\DB::table('variations_stock')
                  ->where('stock','<','3')
                  ->join('doors','variations_stock.door_id','=','doors.id')
                  ->join('variations','variations_stock.variation_id','=','variations.id')
                  ->select('*','doors.name as door_name','variations.name as variation_name')
                  ->get();*/
-             $variation_stocks=$current;
+             $variation_stocks=$record2->get();
              if ($variation_stocks) {
                  $string = str_replace(' ', '"', $emails); // Replaces all spaces with quotes.
                  $emails_trimmed = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
@@ -360,10 +369,10 @@ class ApiController extends Controller
                  $matches = array();
                  $pattern = '/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i';
                  $emails_clair = preg_match_all($pattern, $emails, $matches);
-                 \Mail::send('emails.email', ['variation_stocks' => $variation_stocks,'quantity'=>$quantity], function ($m) use ($item, $matches) {
-                     $m->from('mobile@bluecrunch.com', "Out of Stock {{$item->product->name}} ");
+                 \Mail::send('emails.email', ['variation_stocks' => $variation_stocks], function ($m) use ($item, $matches) {
+                     $m->from('mobile@bluecrunch.com', "Stock Notification Alert");
                      foreach ($matches[0] as $match) {
-                         $m->to($match)->subject("Out of Stock {{$item->product->name}} ");
+                         $m->to($match)->subject("Stock Notification Alert");
                      }
 
                  });
