@@ -38,7 +38,7 @@
                             <label class="control-label col-lg-2">Category<span class="text-danger">*</span></label>
                             <div class="col-lg-10">
                                 <select name="category_id" class="form-control select2" required="required">
-                                    {!! selectBoxOptionsBuilder([''=>'Please Select']+groupedSelectBoxArrayBuilder(\App\Category::with('children')->get(), 'children'), old('category_id', $item->category_id)) !!}
+                                    {!! selectBoxOptionsBuilder([''=>'Please Select']+groupedSelectBoxArrayBuilder_products(\App\Category::$BRANDS,\App\Category::with('children')->get(), 'children'), old('category_id', $item->category_id)) !!}
                                 </select>
                             </div>
                         </div>

@@ -93,6 +93,7 @@ function selectBoxOptionsBuilder_parent($options, $selected,$brands='')
             $output .= "<optgroup label=\"$key\">";
 
             foreach ($value as $subKey => $subValue) {
+
                 if (is_array($selected)) {
                     $selectionMarkup = in_array($subKey, $selected) ? 'selected="selected"' : '';
                 } else {
@@ -147,6 +148,38 @@ function groupedSelectBoxArrayBuilder($parentsCollection, $relationshipName, $pa
     foreach ($parentsCollection as $parent) {
         foreach ($parent->{$relationshipName} as $child) {
             $output[$parent->{$parentNameField}][$child->{$childIdField}] = $child->{$childNameField};
+        }
+    }
+
+    return $output;
+}
+
+function groupedSelectBoxArrayBuilder_products($brands,$parentsCollection, $relationshipName, $parentNameField = 'name', $childIdField = 'id', $childNameField = 'name')
+{
+    $output = [];
+
+    foreach ($brands as $brand_key=>$brand_value) {
+        foreach ($parentsCollection as $parent) {
+            foreach ($parent->{$relationshipName} as $child) {
+                if ($brand_key == $parent->brand){
+                    $output[$brand_value.' - '.$parent->{$parentNameField}][$child->{$childIdField}] = $child->{$childNameField};
+              }
+            }
+        }
+    }
+
+    return $output;
+}
+
+function groupedSelectBoxArrayBuilder_brands($brands, $cats, $childIdField = 'id', $childNameField = 'name')
+{
+    $output = [];
+
+    foreach ($brands as $key=>$value) {
+        foreach ($cats as $cat) {
+            if ($key == $cat->brand) {
+                $output[$value][$cat->{$childIdField}] = $cat->{$childNameField};
+            }
         }
     }
 

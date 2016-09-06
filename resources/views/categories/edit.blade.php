@@ -32,7 +32,7 @@
                                 <div class="col-lg-10">
                                     <select name="parent_id" class="form-control select2" id="parent_id"> <?php $cats=\App\Category::all();?>
 
-                                        {!! selectBoxOptionsBuilder([''=>'Please Select']+groupedSelectBoxArrayBuilder(\App\Category::with('children')->get(), 'children'), old('parent_id', $item->parent_id)) !!}
+                                        {!! selectBoxOptionsBuilder([''=>'Please Select']+groupedSelectBoxArrayBuilder_brands(\App\Category::$BRANDS, \App\Category::whereNull('parent_id')->get()), old('category_id', $item->category_id)) !!}
                                     </select>
                                 </div>
                             </div>
