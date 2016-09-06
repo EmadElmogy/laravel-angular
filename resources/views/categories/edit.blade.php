@@ -30,8 +30,9 @@
                             <div class="form-group">
                                 <label class="control-label col-lg-2">Parent Category</label>
                                 <div class="col-lg-10">
-                                    <select name="parent_id" class="form-control select2" id="parent_id">
-                                        {!! selectBoxOptionsBuilder(['null'=>'Please Select']+\App\Category::whereNull('parent_id')->pluck('name','id')->toArray(), old('parent_id', $item->parent_id)) !!}
+                                    <select name="parent_id" class="form-control select2" id="parent_id"> <?php $cats=\App\Category::all();?>
+
+                                        {!! selectBoxOptionsBuilder([''=>'Please Select']+groupedSelectBoxArrayBuilder(\App\Category::with('children')->get(), 'children'), old('parent_id', $item->parent_id)) !!}
                                     </select>
                                 </div>
                             </div>

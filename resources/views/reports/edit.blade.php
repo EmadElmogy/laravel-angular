@@ -1,6 +1,6 @@
 @extends('common.base')
 
-@section('browser_subtitle', 'reports')
+@section('browser_subtitle', 'Reports')
 
 @section('body')
 
@@ -26,7 +26,7 @@
 
 
 
-                    <div class="form-group">
+                    {{--<div class="form-group">
                         <label class="control-label col-lg-2">Door<span class="text-danger">*</span></label>
                         <div class="col-lg-10">
                             <select name="door_id" class="form-control select2" required="required">
@@ -50,6 +50,15 @@
                             <select name="customer_id" class="form-control select2" required="required">
                                 {!! selectBoxOptionsBuilder([''=>'Please Select']+\App\Customer::pluck('name','id')->toArray(), old('customer_id', $item->customer_id)) !!}
                             </select>
+                        </div>
+                    </div>--}}
+
+                     {{dd($item->variations)}}
+
+                    <div class="form-group">
+                        <label class="control-label col-lg-2">Link</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control"   name="link" value="{{$item->link ?: old('link')}}">
                         </div>
                     </div>
 

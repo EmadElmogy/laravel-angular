@@ -1,6 +1,6 @@
 @extends('common.base')
 
-@section('browser_subtitle', 'Doors')
+@section('browser_subtitle', 'stock')
 
 @section('body')
 
@@ -11,23 +11,23 @@
     </div>
 
     <div class="content">
-        <div class="row mb-20">
-            <form action="">
-                <div class="col-md-2">
-                    <input type="text" class="form-control" name="filters[name]" placeholder="Name" value="{{request('filters.name')}}">
-                </div>
-                <div class="col-md-2">
-                    <select name="filters[parent_id]" class="form-control select2">
-                        {!! selectBoxOptionsBuilder([''=>'Parent']+\App\Category::whereNull('parent_id')->pluck('name','id')->toArray(), request('filters.parent_id')) !!}
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <button class="btn btn-info btn-sm">
-                        <i class="icon-filter3 position-left"></i> Filter
-                    </button>
-                </div>
-            </form>
-        </div>
+        {{--<div class="row mb-20">--}}
+            {{--<form action="">--}}
+                {{--<div class="col-md-2">--}}
+                    {{--<input type="text" class="form-control" name="filters[name]" placeholder="Name" value="{{request('filters.name')}}">--}}
+                {{--</div>--}}
+                {{--<div class="col-md-2">--}}
+                    {{--<select name="filters[parent_id]" class="form-control select2">--}}
+                        {{--{!! selectBoxOptionsBuilder([''=>'Parent']+\App\Category::whereNull('parent_id')->pluck('name','id')->toArray(), request('filters.parent_id')) !!}--}}
+                    {{--</select>--}}
+                {{--</div>--}}
+                {{--<div class="col-md-2">--}}
+                    {{--<button class="btn btn-info btn-sm">--}}
+                        {{--<i class="icon-filter3 position-left"></i> Filter--}}
+                    {{--</button>--}}
+                {{--</div>--}}
+            {{--</form>--}}
+        {{--</div>--}}
 
         <div class="row">
             <div class="col-md-12">

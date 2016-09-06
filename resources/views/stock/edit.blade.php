@@ -1,6 +1,6 @@
 @extends('common.base')
 
-@section('browser_subtitle', 'Doors')
+@section('browser_subtitle', 'stock')
 
 @section('body')
 
@@ -64,6 +64,39 @@
                                                    value="{{ @$stock->where('variation_id', $item->id)->where('door_id', $door->id)->first()->stock ?: 0}}">
                                         </td>
                                     </tr>
+
+                                    @if(@$stock->where('variation_id', $item->id)->where('door_id', $door->id)->first()->stock < 3)
+                                         <?php
+                                         $emails=\App\Setting::whereKey('reports_emails')->first()->value;
+                                         $quantity=$stock->where('variation_id', $item->id)->where('door_id', $door->id)->first()->stock;
+                                         $variation_stocks=\DB::table('variations_stock')
+                                                 ->where('stock','<','3')
+                                                 ->join('doors','variations_stock.door_id','=','doors.id')
+                                                 ->join('variations','variations_stock.variation_id','=','variations.id')
+                                                 ->select('*','doors.name as door_name','variations.name as variation_name')
+                                                 ->get();
+                                              if($variation_stocks) {
+                                         $string = str_replace(' ', '"', $emails); // Replaces all spaces with hyphens.
+                                        $emails_trimmed= preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+                                            //dd($emails_trimmed);
+                                         $matches = array();
+                                         $pattern = '/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i';
+                                         $emails_clair=preg_match_all($pattern,$emails,$matches);
+                                                 //$matches_str=implode(",",$matches);
+                                                 //$wew=unserialize($matches_str);
+                                                //dd($matches[0]);
+                                         \Mail::send('emails.email', ['variation_stocks'=>$variation_stocks], function ($m) use ($item,$matches) {
+                                             $m->from('mobile@bluecrunch.com', "Out of Stock {{$item->product->name}} ");
+                                                foreach ($matches[0] as $match){
+                                             $m->to($match)->subject("Out of Stock {{$item->product->name}} ");
+                                                    }
+
+                                         });
+                                        // var_dump( \Mail:: failures()); exit;
+                                                }
+                                          ?>
+                                        @endif
+
                                 @empty
                                     <tr>
                                         <td colspan="41" class="text-center">No records were found.</td>

@@ -10,7 +10,9 @@
         "themsaid/laravel-model-transformers": "^1.0",
         "mnapoli/front-yaml": "^1.5",
         "laravelcollective/bus": "^5.2",
-        "maatwebsite/excel": "~2.1.0"
+        "maatwebsite/excel": "~2.1.0",
+        "laravelcollective/html": "5.2.*",
+        "guzzlehttp/guzzle": "^6.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

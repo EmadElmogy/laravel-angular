@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Repos\CustomerRepo;
+use Excel;
 
 
 class customersController extends BaseController
@@ -32,7 +33,22 @@ class customersController extends BaseController
         return view('customers.index', compact('items'));
     }
 
-public function show_orders($item_id = null){
+    public function customer_excel(){
+        $filters = request('filters', []);
+
+        $results = $this->repo->findAll($filters);
+
+        Excel::create('customers', function($excel) use($results) {
+            $excel->sheet('Sheet 1', function($sheet) use($results) {
+                foreach ($results as &$result) {
+                    $result = (array)$result;
+                }
+                $sheet->fromArray($results);
+            });
+        })->export('xls');
+    }
+
+   public function show_orders($item_id = null){
       $item1 = $this->bringOrNew($this->repo, $item_id);
       $items=\DB::table('reports')->where('customer_id','=',$item_id)
                   ->join('doors','reports.door_id','=','doors.id')

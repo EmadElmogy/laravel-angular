@@ -30,4 +30,13 @@ class SettingsController extends Controller
 
         return redirect('settings')->with('success', true);
     }
+
+    public function mail(){
+        $user=['hi','lol'];
+        \Mail::send('emails.email', ['user' => $user], function ($m) use ($user) {
+            $m->from('mobile@bluecrunch.com', 'Your Application');
+
+            $m->to('emadelmogy619@gmail.com', 'emad')->subject('Your Reminder!');
+        });
+    }
 }

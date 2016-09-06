@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('categories/item/{item_id?}', 'CategoriesController@deleteItem');
 
     Route::get('customers', 'customersController@index');
+    Route::get('customers/excel', 'customersController@customer_excel')->name('customerExcel');
     Route::get('customers/item/{item_id}', 'customersController@item');
     Route::get('customers/show_orders/{item_id}', 'customersController@show_orders');
     Route::post('customers/item/{item_id?}', 'customersController@store');
@@ -79,7 +80,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('reports/excelindex', 'ReportsController@excelindex')->name('excelindex');
     Route::get('reports/item/{item_id?}', 'ReportsController@item');
     Route::get('reports/show_item/{item_id?}', 'ReportsController@show_item');
-    Route::post('reports/item/{item_id?}', 'ReportsController@store');
+    Route::patch('reports/item/{item_id?}', 'ReportsController@store');
     Route::delete('reports/item/{item_id?}', 'ReportsController@deleteItem');
     Route::get('reports/sales/products', 'ReportsController@byProducts');
     Route::get('reports/sales/categories', 'ReportsController@byCategories');
@@ -95,6 +96,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('stock/{branchId}', 'StockController@store');
 
     Route::get('settings', 'SettingsController@index');
+    Route::get('settings/mail', 'SettingsController@mail');
     Route::post('settings', 'SettingsController@save');
 });
 

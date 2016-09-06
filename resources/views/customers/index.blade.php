@@ -17,6 +17,36 @@
     </div>
 
     <div class="content">
+        <div class="row mb-20">
+            <form action="">
+                {{--<div class="col-md-2">--}}
+                    {{--<select name="filters[door_id]" class="form-control select2">--}}
+                        {{--{!! selectBoxOptionsBuilder([''=>'Name']+\App\Customer::pluck('name','id')->toArray(), request('filters.customer_id')) !!}--}}
+                    {{--</select>--}}
+                {{--</div>--}}
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="filters[name]" placeholder="Name" value="{{request('filters.name')}}">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="filters[mobile]" placeholder="Mobile" value="{{request('filters.mobile')}}">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="filters[area]" placeholder="Area" value="{{request('filters.area')}}">
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control" name="filters[email]" placeholder="Email" value="{{request('filters.email')}}">
+                </div>
+
+                <div class="col-md-2">
+                    <button class="btn btn-info btn-sm">
+                        <i class="icon-filter3 position-left"></i> Filter
+                    </button>
+                </div>
+            </form>
+            <div class="col-md-1" style="padding-left: 4em;">
+                <a href="{{route('customerExcel')}}" class="btn btn-success">Export to csv</a>
+            </div>
+        </div>
 
         <div class="row">
             <div class="col-md-12">

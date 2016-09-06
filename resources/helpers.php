@@ -76,6 +76,52 @@ function selectBoxOptionsBuilder($options, $selected)
     return $output;
 }
 
+function selectBoxOptionsBuilder_parent($options, $selected,$brands='')
+{
+    $isMultiLevel = count(array_filter($options, 'is_array')) > 0;
+
+    $output = '';
+    foreach ($options as $key => $value) {
+
+        if ($isMultiLevel) {
+            if (! is_array($value)) {
+
+                $output .= "<option value=\"$key\">$value </option>";
+                continue;
+            }
+
+            $output .= "<optgroup label=\"$key\">";
+
+            foreach ($value as $subKey => $subValue) {
+                if (is_array($selected)) {
+                    $selectionMarkup = in_array($subKey, $selected) ? 'selected="selected"' : '';
+                } else {
+                    $selectionMarkup = $selected != '' && $selected == $subKey ? 'selected="selected"' : '';
+                }
+
+                $output .= "<option $selectionMarkup value=\"$subKey\">$subValue</option>";
+            }
+
+            $output .= "</optgroup>";
+
+        } else {
+            if (is_array($selected)) {
+                $selectionMarkup = in_array($key, $selected) ? 'selected="selected"' : '';
+            } else {
+                $selectionMarkup = $selected != '' && $selected == $key ? 'selected="selected"' : '';
+            }
+//                foreach ($brands as $brand) {
+//                    if ($brand)
+//                    $brand_id = \App\Category::$BRANDS[$brand->brand];
+
+                    $output .= "<option $selectionMarkup value=\"$key\">$value $brands</option>";
+              //  }
+        }
+
+    }
+
+    return $output;
+}
 function startQueryLog()
 {
     DB::enableQueryLog();

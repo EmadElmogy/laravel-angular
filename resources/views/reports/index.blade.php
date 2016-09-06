@@ -48,10 +48,12 @@
                                 <i class="icon-filter3 position-left"></i> Filter
                             </button>
                         </div>
+                        <div class="col-md-1" style="padding-left: 4px;">
+                            <a href="{{route('excelindex')}}" class="btn btn-success">Export to csv</a>
+                        </div>
                     </form>
-                    <div style="line-height: 2em;">
-                        <a href="{{route('excelindex')}}" class="btn btn-success">Export to csv</a>
-                    </div>
+
+
                 </div>
 
                 <div class="panel panel-flat">
@@ -76,28 +78,17 @@
                                 <?php $report_products=\DB::table('report_products')->where('report_id','=',$item->id)->get(); $basket_value=0; ?>
                                 @foreach($report_products as $report_product)
                                     <?php $product_variations=\DB::table('variations')->where('id','=',$report_product->variation_id)->first(); ?>
-                                            {{--@foreach($product_variations as $product_variation)--}}
                                                 <?php $prices=\DB::table('products')->where('id','=',$product_variations->product_id)->first(); ?>
-                                                {{--@foreach($prices as $price)--}}
-                                                    {{--{{dd($price)}}--}}
                                                     <?php
                                                     $basket_size_items=\DB::table('report_products')->where('report_id','=',$item->id)
                                                                             ->where('variation_id','=',$report_product->variation_id)
                                                                             ->first();
                                                     ?>
 
-                                                    {{--@foreach($basket_size_items as $basket_size_item)--}}
-                                                        {{--{{dd($price->price*$basket_size_item->sales)}}--}}
                                                         <?php
                                                         $basket_value=$basket_value+($prices->price*$basket_size_items->sales);
-                                                                //dd($basket_value);
 
                                                         ?>
-                                                    {{--@endforeach--}}
-                                                    {{--@endforeach--}}
-                                            {{--@endforeach--}}
-
-                                    {{--{{dd($basket_size_items->sales)}}--}}
                                 @endforeach
                                 <tr>
                                     <td class="v-align-middle semi-bold">
@@ -110,11 +101,17 @@
                                     <td class="v-align-middle semi-bold">{{$basket_value}}</td>
                                     <td class="v-align-middle text-right text-nowrap">
                                         <a href="{{url('reports/show_item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-file-eye"></i></a>
-                                        <a href="{{url('reports/item/'.$item->id)}}" class="btn btn-success btn-xs"><i class="icon-pencil5"></i></a>
+                                        {{--<a href="{{url('reports/item/'.$item->id)}}" class="btn btn-success btn-xs"><i class="icon-pencil5"></i></a>--}}
                                         <a href="{{url('reports/item/'.$item->id)}}" class="btn btn-danger btn-xs deleter"><i class="icon-trash"></i></a>
 
                                     </td>
                                 </tr>
+                                <?php
+                                       // dd($basket_value);
+                                \DB::table('reports')
+                                        ->where('id', $item->id)
+                                        ->update(['basket_size' =>$basket_size->sum,'basket_value'=> $basket_value]);
+                                ?>
                             @empty
                                 <tr>
                                     <td colspan="41" class="text-center">No records were found.</td>

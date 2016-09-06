@@ -40,17 +40,12 @@ class ReportsController extends BaseController
 
        // $results = $this->repo->findAll($filters=[], ['door.site', 'advisor'], false)->paginate(40);
        // $results = Report::all();
-        $results = DB::table('reports')
+        $items = DB::table('reports')
             ->join('advisors', 'advisors.id', '=', 'reports.advisor_id')
             ->join('doors', 'doors.id', '=', 'reports.door_id')
            ->join('customers', 'customers.id', '=', 'reports.customer_id')
-            //->groupBy('variation_id')
-            ->select('advisors.name as advisor_name', 'doors.name as door_name', 'customers.name as customer_name')
-           // ->selectRaw('SUM(sales) as sales')
+            ->select('advisors.name as advisor_name', 'doors.name as door_name', 'customers.name as customer_name','reports.basket_size','reports.basket_value',DB::raw('DATE_FORMAT(reports.date,\'%Y-%m-%d\') as Date'))
             ->orderBy('reports.id', 'DESC')
-           /* ->when(request('barcode'), function ($q) {
-                return $q->where('variations.barcode', request('barcode'));
-            })*/
             ->when(request('door_id'), function ($q) {
                 return $q->where('reports.door_id', request('door_id'));
             })
@@ -61,13 +56,14 @@ class ReportsController extends BaseController
                 return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
             })
             ->get();
-
-        Excel::create('orders', function($excel) use($results) {
-            $excel->sheet('Sheet 1', function($sheet) use($results) {
-                foreach ($results as &$result) {
-                    $result = (array)$result;
+        Excel::create('orders', function($excel) use($items) {
+            $excel->sheet('Sheet 1', function($sheet) use($items) {
+                foreach ($items as &$item) {
+                    $item = (array)$item;
                 }
-                $sheet->fromArray($results);
+                $sheet->fromArray($items);
+                //$sheet->loadView('reports.index')->with('items',$items);
+
             });
         })->export('xls');
 
@@ -81,7 +77,7 @@ class ReportsController extends BaseController
     {
         $item = $this->bringOrNew($this->repo, $item_id);
 
-        return view('reports.show', compact('item'));
+        return view('reports.show', compact('item','item_id'));
     }
 
     /**
@@ -319,15 +315,20 @@ class ReportsController extends BaseController
     }
 
 
-    public function store($item_id = null)
+    public function store(\Request $request ,$item_id = null)
     {
-        $item = $this->bringOrNew($this->repo, $item_id);
+//        $report_id=\DB::table('report_products')
+           // ->where('variation_id', $item_id)->first();
+//        dd(request()->report_id);
+//
+//        $item = $this->bringOrNew($this->repo, $item_id);
+        \DB::table('report_products')
+            ->where('variation_id', $item_id)
+            ->where('report_id', request()->report_id)
+            ->update(['sales' => request()->sales]);
 
-        $data = request()->all();
-//dd($data);
-        $item = $this->repo->update($item, $data);
 
-        return redirect('reports')->with('success', true);
+        return redirect()->back()->with('success', true);
     }
 
 

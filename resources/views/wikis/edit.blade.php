@@ -73,11 +73,15 @@
     <script>
         $('#type_id').change(function() {
            var select_option= $('#type_id').find(":selected").text();
-            console.log(select_option);
+            //console.log(select_option);
             if(select_option == 'Youtube Video') {
+                document.getElementById("link_id").disabled = false;
                 document.getElementById("file_id").disabled = true;
+                //select_option=null;
             }else if(select_option == 'PDF File'){
+                document.getElementById("file_id").disabled = false;
                 document.getElementById("link_id").disabled = true;
+               // select_option=null;
             }
         });
 
