@@ -354,13 +354,13 @@ class ApiController extends Controller
                  ->get();*/
              $variation_stocks=$current;
              if ($variation_stocks) {
-                 $string = str_replace(' ', '"', $emails); // Replaces all spaces with hyphens.
+                 $string = str_replace(' ', '"', $emails); // Replaces all spaces with quotes.
                  $emails_trimmed = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
                  //dd($emails_trimmed);
                  $matches = array();
                  $pattern = '/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i';
                  $emails_clair = preg_match_all($pattern, $emails, $matches);
-                 \Mail::send('emails.email', ['variation_stocks' => $variation_stocks], function ($m) use ($item, $matches) {
+                 \Mail::send('emails.email', ['variation_stocks' => $variation_stocks,'quantity'=>$quantity], function ($m) use ($item, $matches) {
                      $m->from('mobile@bluecrunch.com', "Out of Stock {{$item->product->name}} ");
                      foreach ($matches[0] as $match) {
                          $m->to($match)->subject("Out of Stock {{$item->product->name}} ");
