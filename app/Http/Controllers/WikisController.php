@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Repos\WikisRepo;
+use Illuminate\Support\Facades\URL;
 
 class WikisController extends BaseController
 {
@@ -53,7 +54,7 @@ class WikisController extends BaseController
         if (request()->file('file') && request()->file('file') != null) {
             request()->file('file')->move('uploads', $file = uniqid().'.'.request()->file('file')->getClientOriginalExtension());
 
-            $data['file'] = $file;
+            $data['file'] = URL::to('/').'/uploads/'.$file;
         }
 
         $item = $this->repo->update($item, $data);
