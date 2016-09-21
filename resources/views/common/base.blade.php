@@ -125,16 +125,8 @@
                             <li class="{{request()->is('reports') ? 'active' : ''}}">
                                 <a href="{{url('reports')}}"><i class="icon-cart2"></i><span>Orders</span></a>
                             </li>
-                            <li class="{{request()->is('stock/*') ? 'active' : ''}}">
-                                <a href="#"><i class="icon-table"></i> <span>Stock</span></a>
-                                <ul>
-                            <li class="{{request()->is('stock') ? 'active' : ''}}">
-                                <a href="{{url('stock')}}"><span>By Door</span></a>
-                            </li>
-                                    {{--<li class="{{request()->is('stock/product') ? 'active' : ''}}">--}}
-                                        {{--<a href="{{url('stock/product')}}"><span>By product</span></a>--}}
-                                    {{--</li>--}}
-                                </ul>
+                             <li class="{{request()->is('stock*') ? 'active' : ''}}">
+                                <a href="{{url('stock')}}"><i class="icon-table"></i><span>Stock</span></a>
                             </li>
                             <li class="{{request()->is('reports/*') ? 'active' : ''}}">
                                 <a href="#"><i class="icon-pie-chart3"></i> <span>Reports</span></a>
