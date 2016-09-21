@@ -92,7 +92,7 @@
                                 @endforeach
                                 <tr>
                                     <td class="v-align-middle semi-bold">
-                                        <a href="{{url('reports/item/'.$item->id)}}">{{$item->date->toDateString()}}</a>
+                                        {{$item->date->toDateString()}}
                                     </td>
                                     <td class="v-align-middle semi-bold">{{@$item->door->name}}</td>
                                     <td class="v-align-middle semi-bold">{{@$item->advisor->name}}</td>
