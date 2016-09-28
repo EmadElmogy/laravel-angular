@@ -44,13 +44,21 @@
                             <tr>
                                 <th>Advisor</th>
                                 <th>Sales</th>
+                                <th>Target</th>
+                                <th>Sell Out</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($results as $item)
                                 <tr>
                                     <td>{{$item->advisor_name}}</td>
-                                    <td>{{$item->sales}}</td>
+                                    @if($item->target <= $item->sell_out)
+                                    <td><span style="color:green">{{$item->sales}}</span></td>
+                                    @elseif($item->target >= $item->sell_out)
+                                    <td><span style="color:red">{{$item->sales}}</span></td>
+                                    @endif
+                                    <td>{{$item->target}}</td>
+                                    <td>{{$item->sell_out}}</td>
                                 </tr>
                             @endforeach
                             </tbody>

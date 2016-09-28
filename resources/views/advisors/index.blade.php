@@ -64,6 +64,7 @@
                                 <th style="width:20%">Door</th>
                                 <th style="width:20%">Phone</th>
                                 <th style="width:20%">Username</th>
+                                <th style="width:20%">Target</th>
                                 <th style="width:20%">Day Off</th>
                                 <th></th>
                             </tr>
@@ -75,6 +76,7 @@
                                     <td class="v-align-middle semi-bold">{{$item->door->site->name}}: {{$item->door->name}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->phone}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->username}}</td>
+                                    <td class="v-align-middle semi-bold">{{$item->target}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->dayName}}</td>
                                     <td class="v-align-middle text-right text-nowrap">
                                         <a href="{{url('advisors/item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-pencil5"></i></a>

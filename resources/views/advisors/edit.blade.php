@@ -82,6 +82,13 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label class="control-label col-lg-2">Target<span class="text-danger">*</span></label>
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" required="required" name="target" value="{{$item->target ?: old('target')}}">
+                            </div>
+                        </div>
+
 
                     </fieldset>
 

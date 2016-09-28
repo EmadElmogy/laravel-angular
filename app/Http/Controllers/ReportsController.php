@@ -211,7 +211,7 @@ class ReportsController extends BaseController
             ->join('reports', 'reports.id', '=', 'report_products.report_id')
             ->join('advisors', 'advisors.id', '=', 'reports.advisor_id')
             ->groupBy('reports.advisor_id')
-            ->select('advisors.name as advisor_name')
+            ->select('advisors.name as advisor_name','advisors.target')
             ->selectRaw('SUM(sales) as sales')
             ->orderBy('sales', 'DESC')
             ->when(request('from_date') && ! request('to_date'), function ($q) {
@@ -293,8 +293,8 @@ class ReportsController extends BaseController
             ->join('reports', 'reports.id', '=', 'report_products.report_id')
             ->join('advisors', 'advisors.id', '=', 'reports.advisor_id')
             ->groupBy('reports.advisor_id')
-            ->select('advisors.name as advisor_name')
-            ->selectRaw('SUM(sales) as sales')
+            ->select('advisors.name as advisor_name','advisors.target')
+            ->selectRaw('SUM(sales) as sales , SUM(basket_value) as sell_out')
             ->orderBy('sales', 'DESC')
             ->when(request('from_date') && ! request('to_date'), function ($q) {
                 return $q->whereDate('reports.date', '=', request('from_date'));
