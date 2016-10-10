@@ -78,6 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('reports', 'ReportsController@index');
     Route::get('reports/excelindex', 'ReportsController@excelindex')->name('excelindex');
+    Route::get('reports/importexcel', 'ReportsController@importexcel')->name('importexcel');
     Route::get('reports/item/{item_id?}', 'ReportsController@item');
     Route::get('reports/show_item/{item_id?}', 'ReportsController@show_item');
     Route::patch('reports/item/{item_id?}', 'ReportsController@store');

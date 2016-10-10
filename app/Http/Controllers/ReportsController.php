@@ -9,6 +9,7 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use Excel;
 
+
 class ReportsController extends BaseController
 {
     /**
@@ -230,6 +231,9 @@ class ReportsController extends BaseController
             });
         })->export('xls');
     }
+
+
+
     /**
      *
      * @return \Illuminate\Http\Response
