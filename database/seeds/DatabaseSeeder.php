@@ -8,7 +8,7 @@ class DatabaseSeeder extends CsvSeeder
   public function __construct()
     {
         $this->table = 'variations';
-        $this->filename = base_path().'/database/seeds/csvs/variations.csv';
+        $this->filename = base_path().'/database/seeds/csvs/Maybeline-NewProductsOct.csv';
     }
 
     public function run()

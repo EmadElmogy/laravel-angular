@@ -10,7 +10,7 @@ class Variationseeder extends CsvSeeder
   public function __construct()
     {
         $this->table = 'variations';
-        $this->filename = base_path().'/database/seeds/csvs/variations.csv';
+        $this->filename = base_path().'/database/seeds/csvs/new_products.csv';
     }
 
     public function run()
