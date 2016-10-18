@@ -68,8 +68,8 @@
                                     <td class="v-align-middle semi-bold">{{$item->typeName}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->comment}}</td>
                                     <td class="v-align-middle text-right text-nowrap">
-                                        <a href="{{url('categories/item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-pencil5"></i></a>
-                                        <a href="{{url('categories/item/'.$item->id)}}" class="btn btn-danger btn-xs deleter"><i class="icon-trash"></i></a>
+                                        <!-- <a href="{{url('complains/item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-pencil5"></i></a> -->
+                                        <a href="{{url('complains/item/'.$item->id)}}" class="btn btn-danger btn-xs deleter"><i class="icon-trash"></i></a>
                                     </td>
                                 </tr>
                             @empty

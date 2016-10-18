@@ -70,6 +70,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('variations/item/{item_id?}', 'VariationsController@deleteItem');
 
     Route::get('complains', 'ComplainsController@index');
+    Route::get('complains/item/{item_id?}', 'ComplainsController@item');
+    Route::post('complains/item/{item_id?}', 'ComplainsController@store');
+    Route::delete('complains/item/{item_id?}', 'ComplainsController@deleteItem');
+
 
     Route::get('wikis', 'WikisController@index');
     Route::get('wikis/item/{item_id?}', 'WikisController@item');

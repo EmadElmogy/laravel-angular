@@ -71,7 +71,7 @@
 
 
                             @forelse($items as $item)
-                                
+
                                 <tr>
                                     <td class="v-align-middle semi-bold">{{@$item->advisor->name}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->door->site->name}}: {{$item->door->name}}</td>
