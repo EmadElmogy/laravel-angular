@@ -22,6 +22,8 @@ use App\Transformers\WikiTransformer;
 use App\Wiki;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use AnthonyMartin\GeoLocation\GeoLocation as GeoLocation;
+
 
 class ApiController extends Controller
 {
@@ -52,14 +54,25 @@ class ApiController extends Controller
 
             $door_lat=$door->door_lat;
             $door_lng=$door->door_lng;
-            if ($door_lng === request()->lng && $door_lat === request()->lat){
-               // echo "equal"; die;
-                $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '1']);
-            }elseif ($door_lng === "0" && $door_lat === "0"){
-                $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '2']);
-            }elseif ($door_lng != request()->lng || $door_lat != request()->lat){
+            //var_dump((float)$door_lat); die;
+            $door_location = GeoLocation::fromDegrees((float)$door_lng,(float)$door_lat);
+            $advisor_location = GeoLocation::fromDegrees((float)request('lng'),(float)request('lat'));
+            $distance=$door_location->distanceTo($advisor_location, 'kilometers');
+            // var_dump($distance); die;
+            if ($distance < 2.0) {
+               $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '1']);
+            }elseif ($distance > 2.0){
                 $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '0']);
             }
+
+            // if ($door_lng == request('lng') && $door_lat == request('lat')){
+            //    // echo "equal"; die;
+            //     $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '1']);
+            // }elseif ($door_lng == "0" && $door_lat == "0"){
+            //     $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '2']);
+            // }elseif ($door_lng != request('lng') || $door_lat != request('lat')){
+            //     $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '0']);
+            // }
 
 
         return response([
@@ -89,14 +102,24 @@ class ApiController extends Controller
         $door_lat=$door->door_lat;
         $door_lng=$door->door_lng;
         //dd(auth()->guard('api')->user());
-        if ($door_lng === request()->lng && $door_lat === request()->lat){
-            // echo "equal"; die;
-            auth()->guard('api')->user()->attendance()->where('advisor_id','=',auth()->guard('api')->user()->id)->update(['sign_out_range' => '1']);
-        }elseif ($door_lng === "0" && $door_lat === "0"){
-            auth()->guard('api')->user()->attendance()->where('advisor_id','=',auth()->guard('api')->user()->id)->update(['sign_out_range' => '2']);
-        }elseif ($door_lng != request()->lng || $door_lat != request()->lat){
-            auth()->guard('api')->user()->attendance()->where('advisor_id','=',auth()->guard('api')->user()->id)->update(['sign_out_range' => '0']);
+        $door_location = GeoLocation::fromDegrees((float)$door_lng,(float)$door_lat);
+        $advisor_location = GeoLocation::fromDegrees((float)request('lng'),(float)request('lat'));
+        $distance=$door_location->distanceTo($advisor_location, 'kilometers');
+        // var_dump($distance); die;
+        if ($distance < 2.0) {
+              auth()->guard('api')->user()->attendance()->where('advisor_id','=',auth()->guard('api')->user()->id)->update(['sign_out_range' => '1']);
+        }elseif ($distance > 2.0){
+             auth()->guard('api')->user()->attendance()->where('advisor_id','=',auth()->guard('api')->user()->id)->update(['sign_out_range' => '0']);
         }
+
+        // if ($door_lng === request()->lng && $door_lat === request()->lat){
+        //     // echo "equal"; die;
+        //     auth()->guard('api')->user()->attendance()->where('advisor_id','=',auth()->guard('api')->user()->id)->update(['sign_out_range' => '1']);
+        // }elseif ($door_lng === "0" && $door_lat === "0"){
+        //     auth()->guard('api')->user()->attendance()->where('advisor_id','=',auth()->guard('api')->user()->id)->update(['sign_out_range' => '2']);
+        // }elseif ($door_lng != request()->lng || $door_lat != request()->lat){
+        //     auth()->guard('api')->user()->attendance()->where('advisor_id','=',auth()->guard('api')->user()->id)->update(['sign_out_range' => '0']);
+        // }
 
 
         return response(['logged_out' => true]);

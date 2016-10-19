@@ -14,7 +14,8 @@
         "laravelcollective/html": "5.2.*",
         "guzzlehttp/guzzle": "^6.2",
         "doctrine/dbal": "^2.5",
-        "flynsarmy/csv-seeder": "1.*"
+        "flynsarmy/csv-seeder": "1.*",
+        "anthonymartin/geo-location": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

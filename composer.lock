@@ -4,9 +4,54 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1812ba6ffd228d6d8faf4f1879b329e7",
-    "content-hash": "ccbfda62b75222832307bcf5d14b43e2",
+    "hash": "f115f86e0f9a13633e5ebbcdf5566ba7",
+    "content-hash": "31bc4c341048029c7484c6bd37994cd0",
     "packages": [
+        {
+            "name": "anthonymartin/geo-location",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/anthonymartin/GeoLocation.php.git",
+                "reference": "50bf026f069296dfae11aa195d987854b2e75855"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/anthonymartin/GeoLocation.php/zipball/50bf026f069296dfae11aa195d987854b2e75855",
+                "reference": "50bf026f069296dfae11aa195d987854b2e75855",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "class",
+            "autoload": {
+                "psr-0": {
+                    "AnthonyMartin": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "CC 3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Anthony Martin",
+                    "email": "anthony@replaycreative.com",
+                    "homepage": "http://replaycreative.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Retrieve bounding coordinates, distances, longitude and latitude with GeoLocation.class.php",
+            "homepage": "https://github.com/anthonymartin/GeoLocation.php",
+            "keywords": [
+                "bounding coordinates",
+                "distances",
+                "geocoding",
+                "geolocation"
+            ],
+            "time": "2016-09-17 18:05:14"
+        },
         {
             "name": "classpreloader/classpreloader",
             "version": "3.0.0",
