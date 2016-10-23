@@ -62,15 +62,15 @@ class ApiController extends Controller
             $distance=$door_location->distanceTo($advisor_location, 'kilometers');
             // var_dump($distance); die;
             if ((float)$door_lng == null || (float)$door_lat == null ) {
-              $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '-1']);
+              $advisor->attendance()->where('advisor_id','=',$advisor->id)->where('login_time','=', Carbon::now())->update(['sign_in_range' => '-1']);
             }
             if ((float)request('lng') == 0.0 || (float)request('lat') == 0.0) {
-              $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '-1']);
+              $advisor->attendance()->where('advisor_id','=',$advisor->id)->where('login_time','=', Carbon::now())->update(['sign_in_range' => '-1']);
             }
             if ($distance < 2.0 ) {
-               $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '1']);
+               $advisor->attendance()->where('advisor_id','=',$advisor->id)->where('login_time','=', Carbon::now())->update(['sign_in_range' => '1']);
             }elseif ($distance > 2.0){
-                $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '0']);
+                $advisor->attendance()->where('advisor_id','=',$advisor->id)->where('login_time','=', Carbon::now())->update(['sign_in_range' => '0']);
             }
 
             // if ($door_lng == request('lng') && $door_lat == request('lat')){
@@ -115,9 +115,9 @@ class ApiController extends Controller
         $distance=$door_location->distanceTo($advisor_location, 'kilometers');
         // var_dump($distance); die;
         if ($distance < 2.0) {
-              auth()->guard('api')->user()->attendance()->where('advisor_id','=',auth()->guard('api')->user()->id)->update(['sign_out_range' => '1']);
+              auth()->guard('api')->user()->attendance()->where('advisor_id','=',auth()->guard('api')->user()->id)->where('logout_time','=', Carbon::now())->update(['sign_out_range' => '1']);
         }elseif ($distance > 2.0){
-             auth()->guard('api')->user()->attendance()->where('advisor_id','=',auth()->guard('api')->user()->id)->update(['sign_out_range' => '0']);
+             auth()->guard('api')->user()->attendance()->where('advisor_id','=',auth()->guard('api')->user()->id)->where('logout_time','=', Carbon::now())->update(['sign_out_range' => '0']);
         }
 
         // if ($door_lng === request()->lng && $door_lat === request()->lat){
