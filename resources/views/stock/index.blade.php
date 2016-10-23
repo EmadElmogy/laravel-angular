@@ -30,6 +30,10 @@
         {{--</div>--}}
 
         <div class="row">
+          <div class="col-md-12" style="float:right;margin-top:3px;">
+            <a href="{{route('reset')}}" class="btn btn-danger"><i class="icon-pencil icon-large"> Reset</i></a>
+          </div>
+
             <div class="col-md-12">
 
                 @if(session('success'))

@@ -98,6 +98,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('stock', 'StockController@index');
     Route::get('stock/{branchId}', 'StockController@item');
+    Route::get('reset_all', 'StockController@reset_all')->name('reset');
     Route::post('stock/{branchId}', 'StockController@store');
 
     Route::get('settings', 'SettingsController@index');

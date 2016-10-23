@@ -22,6 +22,7 @@ class StockController extends BaseController
         return view('stock.index', compact('doors'));
     }
 
+
     /**
      *
      * @return \Illuminate\Http\Response
@@ -76,4 +77,11 @@ class StockController extends BaseController
 
         return redirect('stock')->with('success', true);
     }
+
+    public function reset_all(){
+      DB::table('variations_stock')->truncate();
+    //  return "success";
+      return redirect()->back()->with('success', true);
+    }
+
 }
