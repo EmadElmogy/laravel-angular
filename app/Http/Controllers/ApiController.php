@@ -328,8 +328,9 @@ class ApiController extends Controller
     {
         validate(request()->all(), [
             'product_variations' => 'required|array|min:1',
-            'product_variations.*.variation_id' => 'required|exists:variations,id',
+            'product_variations.*.variation_id' => 'required|exists:variations,id|exists:variations_stock,variation_id',
             'product_variations.*.sales' => 'required|numeric',
+            // 'variation_id'=>'exists:variations_stock,variation_id'
         ]);
 
         $newCustomerData = request('new_customer');
