@@ -41,7 +41,9 @@ class ApiController extends Controller
         $advisor = Advisor::where(request()->only('username', 'password'))->with('door')->first();
         //dd($advisor->id);
         if (! $advisor) {
-            return response('Unauthorized.', 401);
+            // return response('Unauthorized.', 401);
+            return response()
+            ->json(['success' => 'false','message'=>'Unauthorized']);
         }
 
         $advisor->attendance()->whereNull('logout_time')->update(['logout_time' => Carbon::now()]);
