@@ -64,6 +64,9 @@ class ApiController extends Controller
             if ((float)$door_lng == null || (float)$door_lat == null ) {
               $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '-1']);
             }
+            if ((float)request('lng') == 0.0 || (float)request('lat') == 0.0) {
+              $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '-1']);
+            }
             if ($distance < 2.0 ) {
                $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '1']);
             }elseif ($distance > 2.0){
