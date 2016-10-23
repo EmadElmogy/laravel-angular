@@ -61,7 +61,7 @@ class ApiController extends Controller
             $advisor_location = GeoLocation::fromDegrees((float)request('lng'),(float)request('lat'));
             $distance=$door_location->distanceTo($advisor_location, 'kilometers');
             // var_dump($distance); die;
-            if ($distance < 2.0) {
+            if ($distance < 2.0 && $distance != '0.0') {
                $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '1']);
             }elseif ($distance > 2.0){
                 $advisor->attendance()->where('advisor_id','=',$advisor->id)->update(['sign_in_range' => '0']);
