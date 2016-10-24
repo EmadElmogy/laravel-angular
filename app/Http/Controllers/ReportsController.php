@@ -93,7 +93,7 @@ class ReportsController extends BaseController
             ->join('reports', 'reports.id', '=', 'report_products.report_id')
             ->groupBy('variation_id')
             ->select('products.name as product_name', 'variations.name as variation_name', 'variations.barcode as barcode')
-            ->selectRaw('SUM(sales) as sales')
+            ->selectRaw('SUM(sales) as sales , SUM(basket_value) as sell_out')
             ->orderBy('sales', 'DESC')
             ->when(request('barcode'), function ($q) {
                 return $q->where('variations.barcode', request('barcode'));
@@ -129,7 +129,7 @@ class ReportsController extends BaseController
               ->join('reports', 'reports.id', '=', 'report_products.report_id')
               ->groupBy('variation_id')
               ->select('products.name as product_name', 'variations.name as variation_name', 'variations.barcode as barcode')
-              ->selectRaw('SUM(sales) as sales')
+              ->selectRaw('SUM(sales) as sales , SUM(basket_value) as sell_out')
               ->orderBy('sales', 'DESC')
               ->when(request('barcode'), function ($q) {
                   return $q->where('variations.barcode', request('barcode'));
@@ -189,7 +189,7 @@ class ReportsController extends BaseController
             ->join('doors', 'doors.id', '=', 'reports.door_id')
             ->groupBy('reports.door_id')
             ->select('doors.name as door_name')
-            ->selectRaw('SUM(sales) as sales')
+            ->selectRaw('SUM(sales) as sales , SUM(basket_value) as sell_out')
             ->orderBy('sales', 'DESC')
             ->when(request('from_date') && ! request('to_date'), function ($q) {
                 return $q->whereDate('reports.date', '=', request('from_date'));
@@ -247,7 +247,7 @@ class ReportsController extends BaseController
             ->join('reports', 'reports.id', '=', 'report_products.report_id')
             ->groupBy('categories.id')
             ->select('categories.name as category_name')
-            ->selectRaw('SUM(sales) as sales')
+            ->selectRaw('SUM(sales) as sales , SUM(basket_value) as sell_out')
             ->orderBy('sales', 'DESC')
             ->when(request('door_id'), function ($q) {
                 return $q->where('reports.door_id', request('door_id'));
@@ -274,7 +274,7 @@ class ReportsController extends BaseController
             ->join('doors', 'doors.id', '=', 'reports.door_id')
             ->groupBy('reports.door_id')
             ->select('doors.name as door_name')
-            ->selectRaw('SUM(sales) as sales')
+            ->selectRaw('SUM(sales) as sales, SUM(basket_value) as sell_out')
             ->orderBy('sales', 'DESC')
             ->when(request('from_date') && ! request('to_date'), function ($q) {
                 return $q->whereDate('reports.date', '=', request('from_date'));

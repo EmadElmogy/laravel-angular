@@ -55,7 +55,7 @@
                                     <td>{{$item->door_name}}</td>
                                     <td>{{$item->sales}}</td>
                                     <td>
-                                      
+                                      {{$item->sell_out}}
                                     </td>
                                 </tr>
                             @endforeach
