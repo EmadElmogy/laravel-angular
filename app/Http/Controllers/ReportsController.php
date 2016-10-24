@@ -162,7 +162,7 @@ class ReportsController extends BaseController
             ->join('reports', 'reports.id', '=', 'report_products.report_id')
             ->groupBy('categories.id')
             ->select('categories.name as category_name')
-            ->selectRaw('SUM(sales) as sales')
+            ->selectRaw('SUM(sales) as sales , SUM(basket_value) as sell_out')
             ->orderBy('sales', 'DESC')
             ->when(request('door_id'), function ($q) {
                 return $q->where('reports.door_id', request('door_id'));

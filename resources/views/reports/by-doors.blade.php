@@ -43,7 +43,10 @@
                             <thead>
                             <tr>
                                 <th>Door</th>
-                                <th>Sales</th>
+                                <th>Sales By Unit</th>
+                                <th>
+                                  Sales By Value
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -51,6 +54,9 @@
                                 <tr>
                                     <td>{{$item->door_name}}</td>
                                     <td>{{$item->sales}}</td>
+                                    <td>
+                                      
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>

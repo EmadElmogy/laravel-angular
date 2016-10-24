@@ -49,7 +49,8 @@
                             <thead>
                             <tr>
                                 <th>Category</th>
-                                <th>Sales</th>
+                                <th>Sales By Unit</th>
+                                <th>Sales By Value</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -57,6 +58,7 @@
                                 <tr>
                                     <td>{{$item->category_name}}</td>
                                     <td>{{$item->sales}}</td>
+                                    <td>{{$item->sell_out}}</td>
                                 </tr>
                             @endforeach
                             </tbody>

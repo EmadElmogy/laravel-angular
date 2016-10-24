@@ -43,9 +43,9 @@
                             <thead>
                             <tr>
                                 <th>Advisor</th>
-                                <th>Sales</th>
+                                <th>Sales By Unit</th>
                                 <th>Target</th>
-                                <th>Sell Out</th>
+                                <th>Sales By Value</th>
                             </tr>
                             </thead>
                             <tbody>

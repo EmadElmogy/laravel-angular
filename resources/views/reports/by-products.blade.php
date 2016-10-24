@@ -57,7 +57,7 @@
                                 <th>SKU</th>
                                 <th>Product</th>
                                 <th>Barcode</th>
-                                <th>Sales</th>
+                                <th>Sales By Unit</th>
                             </tr>
                             </thead>
                             <tbody>
