@@ -35,7 +35,9 @@ class ApiController extends Controller
     {
         validate(request()->all(), [
             'username' => 'required',
-            'password' => 'required',
+            'password' => 'required'
+            // 'lng' => 'regex:/^[-]?\d*(\.\d+)?$/',
+            // 'lat' => 'regex:/^[-]?\d*(\.\d+)?$/'
         ]);
 
         $advisor = Advisor::where(request()->only('username', 'password'))->with('door')->first();

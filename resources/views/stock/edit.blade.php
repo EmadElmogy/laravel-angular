@@ -30,6 +30,10 @@
                         <i class="icon-filter3 position-left"></i> Filter
                     </button>
                 </div>
+                <div style="">
+                    <a href='{{URL("/excel_stock/$door->id")}}' class="btn btn-success">Export to csv</a>
+                </div>
+
             </form>
         </div>
 
@@ -67,7 +71,7 @@
 
                                     @if(@$stock->where('variation_id', $item->id)->where('door_id', $door->id)->first()->stock < 3)
                                          <?php
-                                               /*       
+                                               /*
                                          $emails=\App\Setting::whereKey('reports_emails')->first()->value;
                                          $quantity=$stock->where('varia1tion_id', $item->id)->where('door_id', $door->id)->first()->stock;
                                          $variation_stocks=\DB::table('variations_stock')

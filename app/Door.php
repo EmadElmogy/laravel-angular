@@ -18,6 +18,8 @@ class Door extends Model
     public $validationRules = [
         'name' => 'required',
         'site_id' => 'required',
+        'door_lng' => 'regex:/^[-]?\d*(\.\d+)$/',
+        'door_lat' => 'regex:/^[-]?\d*(\.\d+)$/'
     ];
 
     public function site()
