@@ -8,17 +8,29 @@ use App\Http\Requests;
 use App\Product;
 use App\Variation;
 use Illuminate\Support\Facades\DB;
+use App\Repos\DoorsRepo;
 use Excel;
 
 class StockController extends BaseController
 {
+
+  public function __construct(DoorsRepo $repo)
+  {
+
+      $this->repo = $repo;
+  }
+
     /**
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $doors = Door::all();
+      $filters = request('filters', []);
+//dd($filters);
+      $doors = $this->repo->findAll($filters, []);
+
+      //  $doors = Door::all();
 
         return view('stock.index', compact('doors'));
     }
