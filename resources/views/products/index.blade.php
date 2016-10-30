@@ -66,7 +66,7 @@
                                         <img src="{{url('uploads/'.$item->image)}}" style="width:100%">
                                     </td>
                                     <td class="v-align-middle semi-bold">{{$item->name}}</td>
-                                    <td class="v-align-middle semi-bold">{{$item->category->parent->name}}: {{$item->category->name}}</td>
+                                    <td class="v-align-middle semi-bold">{{@$item->category->parent->name}}: {{@$item->category->name}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->price}}</td>
                                     <td class="v-align-middle text-right text-nowrap">
                                         <a href="{{url('products/item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-pencil5"></i></a>
