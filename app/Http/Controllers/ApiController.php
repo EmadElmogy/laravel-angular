@@ -426,7 +426,7 @@ class ApiController extends Controller
         ]);
 
       }else{
-        return \Response::json(['message'=>'stock should has value more than sales']);
+        return \Response::json(['data'=>null,'error'=>'stock should has value more than sales']);
       }
     }
 
