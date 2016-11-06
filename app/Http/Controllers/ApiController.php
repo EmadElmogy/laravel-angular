@@ -340,8 +340,14 @@ class ApiController extends Controller
         $customer = request('customer_id')
             ? Customer::findOrFail(request('customer_id'))
             : ($newCustomerData ? Customer::create(request('new_customer')) : null);
-
-      //  $stock_data = collect(DB::table('variations_stock')->get());
+   foreach(request('product_variations') as $product_variation){
+     $var_id=$product_variation['variation_id'];
+     $sales_value=$product_variation['sales'];
+   }
+    $stock_data = DB::table('variations_stock')
+                          ->where('variation_id','=',$var_id)
+                          ->where('door_id','=',auth()->guard('api')->user()->door_id)->first();
+      if($sales_value <= $stock_data->stock ){
         $item = Report::create(
             [
                 'customer_id' => $customer ? $customer->id : null,
@@ -350,6 +356,7 @@ class ApiController extends Controller
                 'date' => Carbon::now()->toDateTimeString()
             ]
         );
+
 
         $doorId = auth()->guard('api')->user()->door_id;
 
@@ -417,6 +424,10 @@ class ApiController extends Controller
         return response([
             'report' => ReportTransformer::transform($item)
         ]);
+
+      }else{
+        return \Response::json(['message'=>'stock should has value more than sales']);
+      }
     }
 
     /**
