@@ -25,7 +25,7 @@
                         {!! selectBoxOptionsBuilder([''=>'Product']+\App\Product::pluck('name','id')->toArray(), request('filters.product_id')) !!}
                     </select>
                 </div>
-                
+
                 <div class="col-md-2">
                     <button class="btn btn-info btn-sm">
                         <i class="icon-filter3 position-left"></i> Filter
@@ -66,7 +66,7 @@
                                         <td>
                                             <input type="text" class="form-control"
                                                    name="variation[{{$item->id}}]"
-                                                   value="{{ @$stock->where('variation_id', $item->id)->where('door_id', $door->id)->first()->stock ?: 0}}">
+                                                   value="{{ @$item->stock ?: 0}}">
                                         </td>
                                     </tr>
 
