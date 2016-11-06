@@ -332,7 +332,7 @@ class ApiController extends Controller
             'product_variations' => 'required|array|min:1',
             'product_variations.*.variation_id' => 'required|exists:variations,id|exists:variations_stock,variation_id',
             'product_variations.*.sales' => 'required|numeric',
-            // 'variation_id'=>'exists:variations_stock,variation_id'
+            //'customer_id'=>'exists:customers,id'
         ]);
 
         $newCustomerData = request('new_customer');
