@@ -330,7 +330,7 @@ class ApiController extends Controller
     {
         validate(request()->all(), [
             'product_variations' => 'required|array|min:1',
-            'product_variations.*.variation_id' => 'required|exists:variations,id|exists:variations_stock,variation_id',
+            'product_variations.*.variation_id' => 'required|exists:variations,id|exists:variations_stock,variation_id,stock,!0',
             'product_variations.*.sales' => 'required|numeric',
             //'customer_id'=>'exists:customers,id'
         ]);
@@ -341,6 +341,7 @@ class ApiController extends Controller
             ? Customer::findOrFail(request('customer_id'))
             : ($newCustomerData ? Customer::create(request('new_customer')) : null);
 
+      //  $stock_data = collect(DB::table('variations_stock')->get());
         $item = Report::create(
             [
                 'customer_id' => $customer ? $customer->id : null,
