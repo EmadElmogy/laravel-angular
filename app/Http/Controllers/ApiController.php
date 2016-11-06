@@ -330,7 +330,7 @@ class ApiController extends Controller
     {
         validate(request()->all(), [
             'product_variations' => 'required|array|min:1',
-            'product_variations.*.variation_id' => 'required|exists:variations,id|exists:variations_stock,variation_id,stock,!0',
+            'product_variations.*.variation_id' => 'required|exists:variations,id|exists:variations_stock,variation_id,stock,!null',
             'product_variations.*.sales' => 'required|numeric',
             //'customer_id'=>'exists:customers,id'
         ]);
