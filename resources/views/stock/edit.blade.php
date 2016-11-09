@@ -66,7 +66,7 @@
                                         <td>
                                             <input type="text" class="form-control"
                                                    name="variation[{{$item->id}}]"
-                                                   value="{{ @$item->stock ?: 0}}">
+                                                   value="{{ @$stock->where('variation_id', $item->id)->where('door_id', $door->id)->first()->stock ?: 0}}">
                                         </td>
                                     </tr>
 
