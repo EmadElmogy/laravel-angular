@@ -53,7 +53,7 @@ class StockController extends BaseController
                 return $q->where('variations.product_id', request('filters.product_id'));
             })
             ->join('variations_stock','variations.id','=','variations_stock.variation_id')
-            ->where('variations_stock.door_id','=',$item_id)
+            //->where('variations_stock.door_id','=',$item_id)
             ->get();
 
         $stock = collect(DB::table('variations_stock')->get());
