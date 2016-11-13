@@ -65,8 +65,8 @@
                                         <td>{{$item->barcode}}</td>
                                         <td>
                                             <input type="text" class="form-control"
-                                                   name="variation[{{$item->id}}]"
-                                                   value="{{ @$stock->where('variation_id', $item->id)->where('door_id', $door->id)->first()->stock ?: 0}}">
+                                                name="variation[{{$item->id}}]"
+                                                value="{{ @$stock->where('variation_id', $item->id)->where('door_id', $door->id)->first()->stock ?: 0}}">
                                         </td>
                                     </tr>
 
