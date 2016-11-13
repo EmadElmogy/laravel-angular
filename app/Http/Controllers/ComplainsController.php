@@ -31,7 +31,12 @@ class ComplainsController extends BaseController
 
     public function show_image($item_id=null){
       $item = $this->bringOrNew($this->repo, $item_id);
-      dd($item->image);
+      //dd($item->image);
+        $image = base64_decode(request('image'));
+        $imagePath = 'uploads/' . md5(time()) . '.jpg';
+        file_put_contents(public_path() . '/' . $imagePath, $image);
+        \DB::table('complains')->where('id','=',$item_id)->update(['image'=>$imagePath]);
+        return "updated";
     }
 
     /**
