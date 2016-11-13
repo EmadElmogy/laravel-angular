@@ -353,7 +353,7 @@ class ApiController extends Controller
                 'customer_id' => $customer ? $customer->id : null,
                 'advisor_id' => auth()->guard('api')->user()->id,
                 'door_id' => auth()->guard('api')->user()->door_id,
-                'date' => Carbon::now()->toDateTimeString()
+                'date' => date('m-d-Y',strtotime(Carbon::now()->toDateTimeString()))
             ]
         );
 

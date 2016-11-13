@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Report;
 use App\Repos\ReportsRepo;
+use Carbon\Carbon;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +29,7 @@ class ReportsController extends BaseController
     public function index()
     {
         $filters = request('filters', []);
+      //  var_dump(date('m-d-Y',strtotime(Carbon::now()->toDateTimeString()))); die;
 
         $items = $this->repo->findAll($filters, ['door.site', 'advisor'], false)->paginate(40);
 
