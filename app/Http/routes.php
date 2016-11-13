@@ -71,6 +71,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('complains', 'ComplainsController@index');
     Route::get('complains/item/{item_id?}', 'ComplainsController@item');
+    Route::get('complains/show_image/{item_id?}', 'ComplainsController@show_image');
     Route::post('complains/item/{item_id?}', 'ComplainsController@store');
     Route::delete('complains/item/{item_id?}', 'ComplainsController@deleteItem');
 

@@ -25,8 +25,13 @@ class ComplainsController extends BaseController
         $filters = request('filters', []);
 
         $items = $this->repo->findAll($filters, ['advisor', 'door']);
-        dd($items);
+        //dd($items);
         return view('complains.index', compact('items'));
+    }
+
+    public function show_image($item_id=null){
+      $item = $this->bringOrNew($this->repo, $item_id);
+      dd($item->image);
     }
 
     /**
