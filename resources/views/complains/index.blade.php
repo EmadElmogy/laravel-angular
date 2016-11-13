@@ -56,6 +56,7 @@
                                 <th style="width:15%">Date</th>
                                 <th>Type</th>
                                 <th>Comment</th>
+                                <th>image</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -67,6 +68,7 @@
                                     <td class="v-align-middle semi-bold">{{$item->date}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->typeName}}</td>
                                     <td class="v-align-middle semi-bold">{{$item->comment}}</td>
+                                    <td class="v-align-middle semi-bold"><img src="{{url($item->image)}}" style="width:30%"></td>
                                     <td class="v-align-middle text-right text-nowrap">
                                         <!-- <a href="{{url('complains/item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-pencil5"></i></a> -->
                                         <a href="{{url('complains/item/'.$item->id)}}" class="btn btn-danger btn-xs deleter"><i class="icon-trash"></i></a>
