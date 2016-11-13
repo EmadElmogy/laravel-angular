@@ -239,10 +239,13 @@ class ApiController extends Controller
     public function newComplain()
     {
         validate(request()->all(), (new Complain)->validationRules);
+        $image = base64_decode(request('image'));
+          $imagePath = 'uploads/' . md5(time()) . '.jpg';
+          file_put_contents(public_path() . '/' . $imagePath, $image);
 
         $item = Complain::create(
             [
-                'image' => request('image'),
+                'image' => $imagePath,
                 'type' => request('type'),
                 'comment' => request('comment'),
                 'advisor_id' => auth()->guard('api')->user()->id,
