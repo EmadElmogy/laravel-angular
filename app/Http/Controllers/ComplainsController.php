@@ -25,7 +25,7 @@ class ComplainsController extends BaseController
         $filters = request('filters', []);
 
         $items = $this->repo->findAll($filters, ['advisor', 'door']);
-
+        dd($items);
         return view('complains.index', compact('items'));
     }
 
