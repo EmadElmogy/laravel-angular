@@ -73,16 +73,17 @@ class StockController extends BaseController
               return $q->where('variations.product_id', request('filters.product_id'));
           })
           ->join('variations_stock','variations.id','=','variations_stock.variation_id')
-        //  ->where('variations_stock.door_id','=',$item_id)
+          ->where('variations_stock.door_id','=',$item_id)
           ->select('product_id','variations.name','barcode','stock')->get();
 
       $stock = collect(DB::table('variations_stock')->get());
       Excel::create('Stock', function($excel) use($items,$stock) {
-          $excel->sheet('Sheet 1', function($sheet) use($items) {
+          $excel->sheet('Sheet 1', function($sheet) use($items,$stock) {
               foreach ($items as &$item) {
                   $item = (array)$item;
               }
-              $sheet->fromArray($items);
+
+              $sheet->fromArray($items,null,'A1',true,true);
           });
       })->export('xls');
     }
