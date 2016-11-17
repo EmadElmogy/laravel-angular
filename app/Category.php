@@ -27,7 +27,7 @@ class Category extends Model
     ];
 
     public static $BRANDIMAGES = [
-        1 => 'http://104.131.10.200/uploads/loreal_paris.png',
+        1 => 'http://104.131.10.200/uploads/loreal_paris2.png',
         2 => 'http://104.131.10.200/uploads/maybe.png',
         3=> 'http://104.131.10.200/uploads/hair_care.png',
     ];
