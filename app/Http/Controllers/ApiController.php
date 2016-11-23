@@ -261,6 +261,16 @@ class ApiController extends Controller
             'door'
         ]);
 
+        $advisor_data = DB::table("advisors")->where('id','=',auth()->guard('api')->user()->id)->first();
+
+        \Mail::send('emails.complain_email', ['item' => $item], function ($m) use ($item) {
+            $m->from($advisor_data->email, "New Complain Alert");
+            // foreach ($matches[0] as $match) {
+                $m->to("emadelmogy619@gmail.com")->subject("New Complain Alert");
+            // }
+
+        });
+
         return response([
             'complain' => ComplainTransformer::transform($item)
         ]);
