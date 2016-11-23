@@ -260,7 +260,7 @@ class ApiController extends Controller
             },
             'door'
         ]);
-        $emails = \App\Setting::whereKey('reports_emails')->first()->value;
+        $emails = \App\Setting::whereKey('complains_emails_1')->first()->value;
         $string = str_replace(' ', '"', $emails); // Replaces all spaces with quotes.
         $emails_trimmed = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
         //dd($emails_trimmed);
