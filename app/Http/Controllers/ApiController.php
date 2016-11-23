@@ -272,7 +272,7 @@ class ApiController extends Controller
         \Mail::send('emails.complain_email', ['item' => $item], function ($m) use ($item,$advisor_data) {
             $m->from("mobile@bluecrunch.com", "New Complain Alert");
              foreach ($matches[0] as $match) {
-                $m->to("emadelmogy619@gmail.com")->subject("New Complain Alert");
+                $m->to($match)->subject("New Complain Alert");
              }
 
         });
