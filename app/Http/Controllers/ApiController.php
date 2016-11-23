@@ -263,7 +263,7 @@ class ApiController extends Controller
 
         $advisor_data = DB::table("advisors")->where('id','=',auth()->guard('api')->user()->id)->first();
 
-        \Mail::send('emails.complain_email', ['item' => $item], function ($m) use ($item) {
+        \Mail::send('emails.complain_email', ['item' => $item], function ($m) use ($item,$advisor_data) {
             $m->from($advisor_data->email, "New Complain Alert");
             // foreach ($matches[0] as $match) {
                 $m->to("emadelmogy619@gmail.com")->subject("New Complain Alert");
