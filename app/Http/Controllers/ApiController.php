@@ -260,14 +260,20 @@ class ApiController extends Controller
             },
             'door'
         ]);
-
+        $emails = \App\Setting::whereKey('reports_emails')->first()->value;
+        $string = str_replace(' ', '"', $emails); // Replaces all spaces with quotes.
+        $emails_trimmed = preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+        //dd($emails_trimmed);
+        $matches = array();
+        $pattern = '/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i';
+        $emails_clair = preg_match_all($pattern, $emails, $matches);
         $advisor_data = DB::table("advisors")->where('id','=',auth()->guard('api')->user()->id)->first();
 
         \Mail::send('emails.complain_email', ['item' => $item], function ($m) use ($item,$advisor_data) {
             $m->from("mobile@bluecrunch.com", "New Complain Alert");
-            // foreach ($matches[0] as $match) {
+             foreach ($matches[0] as $match) {
                 $m->to("emadelmogy619@gmail.com")->subject("New Complain Alert");
-            // }
+             }
 
         });
 
