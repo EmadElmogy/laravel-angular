@@ -81,19 +81,21 @@
                                   ->get();
                                   //dd($key);
                                ?>
+                               @foreach($brand_items as $brand_item)
+                               <?php $total_unit += @$brand_item->sales; $total_value += @$brand_item->sell_out;?>
+                               @endforeach
+
                                 <tr>
                                    <td>
                                      {{$brand}}
                                    </td>
-                                   @foreach($brand_items as $brand_item)
-                                   <?php $total_unit += @$brand_item->sales; $total_value += @$brand_item->sell_out;?>
+
                                    <td>
                                      {{$total_unit}}
                                    </td>
                                    <td>
                                      {{$total_value}}
                                    </td>
-                                   @endforeach
                                 </tr>
                                 @endforeach
                             </tbody>
