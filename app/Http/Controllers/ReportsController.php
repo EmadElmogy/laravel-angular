@@ -284,7 +284,7 @@ class ReportsController extends BaseController
           ->when(request('from_date') && request('to_date'), function ($q) {
               return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
           })
-          ->groupBy('brand')->distinct()->get();
+          ->get();
 
       return view('reports.bybrand', compact('results'));
     }
