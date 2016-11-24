@@ -66,7 +66,7 @@
                                   ->join('reports', 'reports.id', '=', 'report_products.report_id')
                                   ->where('categories.brand','=',$key)
                                   ->groupBy('categories.id')
-                                  ->select('categories.name as category_name')
+                                  ->select('categories.name as category_name','brand')
                                   ->selectRaw('SUM(sales) as sales ,SUM(basket_value) as sell_out')
                                   ->orderBy('sales', 'DESC')
                                   ->when(request('door_id'), function ($q) {
@@ -83,7 +83,8 @@
                                ?>
                                @foreach($brand_items as $brand_item)
                                <?php $total_unit += @$brand_item->sales; $total_value += @$brand_item->sell_out;?>
-                               @endforeach
+
+
 
                                 <tr>
                                    <td>
@@ -97,6 +98,7 @@
                                      {{$total_value}}
                                    </td>
                                 </tr>
+                                @endforeach
                                 @endforeach
                             </tbody>
                         </table>
