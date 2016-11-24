@@ -338,7 +338,7 @@ class ReportsController extends BaseController
               // foreach ($brand_items as &$brand_item) {
               //     $brand_item = (array)$brand_item;
               // }
-              $sheet->fromArray($sheet_array);
+              $sheet->fromArray($sheet_array, null, 'A1', true);
           });
       })->export('xls');
     }
