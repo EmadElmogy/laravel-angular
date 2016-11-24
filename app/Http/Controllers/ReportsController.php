@@ -290,6 +290,46 @@ class ReportsController extends BaseController
       return view('reports.bybrand', compact('results','Brands'));
     }
 
+    public function brands_excel(){
+      $sheet_array=array();
+      $Brands=\App\Category::$BRANDS;
+      $sheet_array[]=$Brands;
+      foreach ($Brands as $key => $value) {
+        @$brand_items = DB::table('report_products')
+            ->join('variations', 'variations.id', '=', 'report_products.variation_id')
+            ->join('products', 'products.id', '=', 'variations.product_id')
+            ->join('categories', 'categories.id', '=', 'products.category_id')
+            ->join('reports', 'reports.id', '=', 'report_products.report_id')
+          //  ->where('categories.brand','=',$key)
+            ->groupBy('categories.id')
+            ->select('brand')
+            ->selectRaw('SUM(sales) as sales ,SUM(basket_value) as sell_out')
+            ->orderBy('sales', 'DESC')
+            ->when(request('door_id'), function ($q) {
+                return $q->where('reports.door_id', request('door_id'));
+            })
+            ->when(request('from_date') && ! request('to_date'), function ($q) {
+                return $q->whereDate('reports.date', '=', request('from_date'));
+            })
+            ->when(request('from_date') && request('to_date'), function ($q) {
+                return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
+            })
+            ->get();
+            //dd($key);
+            array_push($sheet_array,$brand_items);
+          //  $sheet_array[]=@$brand_items;
+        //  dd($sheet_array);
+      }
+      Excel::create('Brands_report', function($excel) use($brand_items) {
+          $excel->sheet('Sheet 1', function($sheet) use($brand_items) {
+              foreach ($brand_items as &$brand_item) {
+                  $brand_item = (array)$brand_item;
+              }
+              $sheet->fromArray($brand_items);
+          });
+      })->export('xls');
+    }
+
     /**
      *
      * @return \Illuminate\Http\Response
