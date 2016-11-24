@@ -50,22 +50,49 @@
                             <tr>
                                 <th>Brand</th>
                                 <!-- <th>Category</th> -->
-                                <!-- <th>Sales By Unit</th> -->
-                                <!-- <th>Sales By Value</th> -->
+                                <th>Sales By Unit</th>
+                                <th>Sales By Value</th>
                             </tr>
                             </thead>
                             <tbody>
                               <?php $total_value=0; $total_unit=0; ?>
-                                <tr>
-                                  @if($results->brand == "2")
-                                    <td>Maybelline</td>
-                                  @elseif($results->brand == "1")
-                                  <td>L\'Oreal Paris</td>
-                                   @elseif($results->brand == "3")
-                                   <td>HairCare</td>
 
-                                  @endif
+                              @foreach($Brands as $key=>$brand)
+                              <?php
+                              @$brand_items = DB::table('report_products')
+                                  ->join('variations', 'variations.id', '=', 'report_products.variation_id')
+                                  ->join('products', 'products.id', '=', 'variations.product_id')
+                                  ->join('categories', 'categories.id', '=', 'products.category_id')
+                                  ->join('reports', 'reports.id', '=', 'report_products.report_id')
+                                  ->where('categories.brand','=',$key)
+                                  ->groupBy('categories.id')
+                                  ->select('categories.name as category_name')
+                                  ->selectRaw('SUM(sales) as sales ,SUM(basket_value) as sell_out')
+                                  ->orderBy('sales', 'DESC')
+                                  ->when(request('door_id'), function ($q) {
+                                      return $q->where('reports.door_id', request('door_id'));
+                                  })
+                                  ->when(request('from_date') && ! request('to_date'), function ($q) {
+                                      return $q->whereDate('reports.date', '=', request('from_date'));
+                                  })
+                                  ->when(request('from_date') && request('to_date'), function ($q) {
+                                      return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
+                                  })
+                                  ->first();
+                                  //dd($key);
+                               ?>
+                                <tr>
+                                   <td>
+                                     {{$brand}}
+                                   </td>
+                                   <td>
+                                     {{@$brand_items->sales}}
+                                   </td>
+                                   <td>
+                                     {{@$brand_items->sell_out}}
+                                   </td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

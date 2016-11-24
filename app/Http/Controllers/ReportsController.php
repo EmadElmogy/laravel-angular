@@ -266,6 +266,7 @@ class ReportsController extends BaseController
     }
 
     public function byBrand(){
+      $Brands=\App\Category::$BRANDS;
       $results = DB::table('report_products')
           ->join('variations', 'variations.id', '=', 'report_products.variation_id')
           ->join('products', 'products.id', '=', 'variations.product_id')
@@ -285,8 +286,8 @@ class ReportsController extends BaseController
               return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
           })
           ->first();
-
-      return view('reports.bybrand', compact('results'));
+        //dd($Brands);
+      return view('reports.bybrand', compact('results','Brands'));
     }
 
     /**
