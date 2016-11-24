@@ -56,9 +56,7 @@
                             </thead>
                             <tbody>
                               <?php $total_value=0; $total_unit=0; ?>
-                            <!-- @foreach($results as $item) -->
                                 <tr>
-                                  <?php //$total_unit +=$item->sales; $total_value +=$item->sell_out; ?>
                                   @if($results->brand == "2")
                                     <td>Maybelline</td>
                                   @elseif($results->brand == "1")
@@ -67,11 +65,7 @@
                                    <td>HairCare</td>
 
                                   @endif
-                                    <!-- <td>{{$item->category_name}}</td> -->
-                                    <!-- <td>{{$total_unit}}</td> -->
-                                    <!-- <td>{{$total_value}}</td> -->
                                 </tr>
-                            <!-- @endforeach -->
                             </tbody>
                         </table>
                     </div>
