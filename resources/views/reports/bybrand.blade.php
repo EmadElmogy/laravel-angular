@@ -50,28 +50,28 @@
                             <tr>
                                 <th>Brand</th>
                                 <!-- <th>Category</th> -->
-                                <th>Sales By Unit</th>
-                                <th>Sales By Value</th>
+                                <!-- <th>Sales By Unit</th> -->
+                                <!-- <th>Sales By Value</th> -->
                             </tr>
                             </thead>
                             <tbody>
                               <?php $total_value=0; $total_unit=0; ?>
-                            @foreach($results as $item)
+                            <!-- @foreach($results as $item) -->
                                 <tr>
-                                  <?php $total_unit +=$item->sales; $total_value +=$item->sell_out; ?>
-                                  @if($item->brand == "2")
+                                  <?php //$total_unit +=$item->sales; $total_value +=$item->sell_out; ?>
+                                  @if($results->brand == "2")
                                     <td>Maybelline</td>
-                                  @elseif($item->brand == "1")
+                                  @elseif($results->brand == "1")
                                   <td>L\'Oreal Paris</td>
-                                   @elseif($item->brand == "3")
+                                   @elseif($results->brand == "3")
                                    <td>HairCare</td>
 
                                   @endif
                                     <!-- <td>{{$item->category_name}}</td> -->
-                                    <td>{{$total_unit}}</td>
-                                    <td>{{$total_value}}</td>
+                                    <!-- <td>{{$total_unit}}</td> -->
+                                    <!-- <td>{{$total_value}}</td> -->
                                 </tr>
-                            @endforeach
+                            <!-- @endforeach -->
                             </tbody>
                         </table>
                     </div>
