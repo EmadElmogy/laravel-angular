@@ -82,9 +82,9 @@
                                   //dd($key);
                                ?>
                                @foreach($brand_items as $brand_item)
+
                                <?php $total_unit += @$brand_item->sales; $total_value += @$brand_item->sell_out;?>
-
-
+                               @endforeach
 
                                 <tr>
                                    <td>
@@ -98,7 +98,6 @@
                                      {{$total_value}}
                                    </td>
                                 </tr>
-                                @endforeach
                                 @endforeach
                             </tbody>
                         </table>
