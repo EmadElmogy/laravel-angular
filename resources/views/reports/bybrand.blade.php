@@ -78,19 +78,22 @@
                                   ->when(request('from_date') && request('to_date'), function ($q) {
                                       return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
                                   })
-                                  ->first();
+                                  ->get();
                                   //dd($key);
                                ?>
                                 <tr>
                                    <td>
                                      {{$brand}}
                                    </td>
+                                   @foreach($brand_items as $brand_item)
+                                   <?php $total_unit += @$brand_item->sales; $total_value += @$brand_item->sell_out;?>
                                    <td>
-                                     {{@$brand_items->sales}}
+                                     {{$total_unit}}
                                    </td>
                                    <td>
-                                     {{@$brand_items->sell_out}}
+                                     {{$total_value}}
                                    </td>
+                                   @endforeach
                                 </tr>
                                 @endforeach
                             </tbody>
