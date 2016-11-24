@@ -55,7 +55,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                              <?php $total=0; $total_unit=0; ?>
+                              <?php $total_value=0; $total_unit=0; ?>
                             @foreach($results as $item)
                                 <tr>
                                   <?php $total_unit +=$item->sales; $total_value +=$item->sell_out; ?>
