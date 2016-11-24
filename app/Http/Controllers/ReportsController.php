@@ -286,21 +286,24 @@ class ReportsController extends BaseController
               return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
           })
           ->first();
+
+
         //dd($Brands);
       return view('reports.bybrand', compact('results','Brands'));
     }
 
     public function brands_excel(){
       $sheet_array=array();
+      $total_unit=0; $total_value=0;
       $Brands=\App\Category::$BRANDS;
-      $sheet_array[]=$Brands;
+      $sheet_array[]=['Brand','Sales By Unit','Sales By Value'];
       foreach ($Brands as $key => $value) {
         @$brand_items = DB::table('report_products')
             ->join('variations', 'variations.id', '=', 'report_products.variation_id')
             ->join('products', 'products.id', '=', 'variations.product_id')
             ->join('categories', 'categories.id', '=', 'products.category_id')
             ->join('reports', 'reports.id', '=', 'report_products.report_id')
-          //  ->where('categories.brand','=',$key)
+            ->where('categories.brand','=',$key)
             ->groupBy('categories.id')
             ->select('brand')
             ->selectRaw('SUM(sales) as sales ,SUM(basket_value) as sell_out')
@@ -315,17 +318,27 @@ class ReportsController extends BaseController
                 return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
             })
             ->get();
+
+            foreach($brand_items as $brand_item){
+
+                    $total_unit += @$brand_item->sales; $total_value += @$brand_item->sell_out;
+             }
+
+             $temp= [$value, $total_unit, $total_value];
+             $total_unit=0; $total_value=0;
+
             //dd($key);
-            array_push($sheet_array,$brand_items);
+            array_push($sheet_array,$temp);
           //  $sheet_array[]=@$brand_items;
-        //  dd($sheet_array);
       }
-      Excel::create('Brands_report', function($excel) use($brand_items) {
-          $excel->sheet('Sheet 1', function($sheet) use($brand_items) {
-              foreach ($brand_items as &$brand_item) {
-                  $brand_item = (array)$brand_item;
-              }
-              $sheet->fromArray($brand_items);
+      //dd($sheet_array);
+
+      Excel::create('Brands_report', function($excel) use($sheet_array) {
+          $excel->sheet('Sheet 1', function($sheet) use($sheet_array) {
+              // foreach ($brand_items as &$brand_item) {
+              //     $brand_item = (array)$brand_item;
+              // }
+              $sheet->fromArray($sheet_array);
           });
       })->export('xls');
     }
