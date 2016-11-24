@@ -273,7 +273,7 @@ class ReportsController extends BaseController
           ->join('reports', 'reports.id', '=', 'report_products.report_id')
           ->groupBy('categories.id')
           ->select('categories.name as category_name','categories.brand')
-          ->selectRaw('SUM(sales) as sales ,SUM(SUM(basket_value)) as sell_out')
+          ->selectRaw('SUM(sales) as sales ,SUM(basket_value) as sell_out')
           ->orderBy('sales', 'DESC')
           ->when(request('door_id'), function ($q) {
               return $q->where('reports.door_id', request('door_id'));
@@ -284,7 +284,7 @@ class ReportsController extends BaseController
           ->when(request('from_date') && request('to_date'), function ($q) {
               return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
           })
-          ->get();
+          ->distinct()->get();
 
       return view('reports.bybrand', compact('results'));
     }
