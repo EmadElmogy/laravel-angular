@@ -139,6 +139,8 @@
                                         <a href="{{url('reports/sales/doors')}}">By Door</a></li>
                                     <li class="{{request()->is('reports/sales/advisors') ? 'active' : ''}}">
                                         <a href="{{url('reports/sales/advisors')}}">By Advisor</a></li>
+                                        <li class="{{request()->is('reports/sales/brands') ? 'active' : ''}}">
+                                            <a href="{{url('reports/sales/brands')}}">By Brand</a></li>
                                 </ul>
                             </li>
                             <li class="{{request()->is('complains*') ? 'active' : ''}}">

@@ -90,6 +90,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('reports/item/{item_id?}', 'ReportsController@deleteItem');
     Route::get('reports/sales/products', 'ReportsController@byProducts');
     Route::get('reports/sales/categories', 'ReportsController@byCategories');
+    Route::get('reports/sales/brands', 'ReportsController@byBrand');
     Route::get('reports/sales/doors', 'ReportsController@byDoors');
     Route::get('reports/sales/advisors', 'ReportsController@byAdvisors');
     Route::get('reports/sales/product_excel','ReportsController@excelbyProduct')->name('excelbyProduct');
