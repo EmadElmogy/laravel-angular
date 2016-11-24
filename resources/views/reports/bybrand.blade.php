@@ -55,10 +55,10 @@
                             </tr>
                             </thead>
                             <tbody>
-                              <?php $total=0; ?>
+                              <?php $total=0; $total_unit=0; ?>
                             @foreach($results as $item)
                                 <tr>
-                                  <?php $total +=$item->sales; ?>
+                                  <?php $total +=$item->sales; $total_unit +=$item->sell_out; ?>
                                   @if($item->brand == "2")
                                     <td>Maybelline</td>
                                   @elseif($item->brand == "1")
@@ -69,7 +69,7 @@
                                   @endif
                                     <!-- <td>{{$item->category_name}}</td> -->
                                     <td>{{$total}}</td>
-                                    <td>{{$item->sell_out}}</td>
+                                    <td>{{$total_unit}}</td>
                                 </tr>
                             @endforeach
                             </tbody>
