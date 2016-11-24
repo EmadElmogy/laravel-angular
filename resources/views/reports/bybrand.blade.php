@@ -98,6 +98,7 @@
                                      {{$total_value}}
                                    </td>
                                 </tr>
+                                <?php $total_unit=0; $total_value=0; ?>
                                 @endforeach
                             </tbody>
                         </table>
