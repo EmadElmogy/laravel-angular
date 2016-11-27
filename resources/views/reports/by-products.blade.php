@@ -27,6 +27,12 @@
                                 {!! selectBoxOptionsBuilder([''=>'All Doors']+\App\Door::pluck('name','id')->toArray(), request('door_id')) !!}
                             </select>
                         </div>
+                        <div class="col-md-1">
+                            <label>Brand</label>
+                            <select name="brand" class="form-control select2">
+                                {!! selectBoxOptionsBuilder([''=>'All Brands']+\App\Category::$BRANDS, request('brand')) !!}
+                            </select>
+                        </div>
                         <div class="col-md-2">
                             <label>From Date:</label>
                             <input type="date" class="form-control" name="from_date" placeholder="Date" value="{{request('from_date')}}">

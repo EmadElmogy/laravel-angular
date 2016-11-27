@@ -92,6 +92,7 @@ class ReportsController extends BaseController
         $results = DB::table('report_products')
             ->join('variations', 'variations.id', '=', 'report_products.variation_id')
             ->join('products', 'products.id', '=', 'variations.product_id')
+            ->join('categories', 'products.category_id', '=', 'categories.id')
             ->join('reports', 'reports.id', '=', 'report_products.report_id')
             ->groupBy('variation_id')
             ->select('products.name as product_name', 'variations.name as variation_name', 'variations.barcode as barcode')
@@ -102,6 +103,9 @@ class ReportsController extends BaseController
             })
             ->when(request('door_id'), function ($q) {
                 return $q->where('reports.door_id', request('door_id'));
+            })
+            ->when(request('brand'), function ($q) {
+                return $q->where('categories.brand', request('brand'));
             })
             ->when(request('from_date') && ! request('to_date'), function ($q) {
                 return $q->whereDate('reports.date', '=', request('from_date'));
