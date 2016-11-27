@@ -17,10 +17,16 @@
 
                 <div class="row mb-20">
                     <form action="">
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <label>Door</label>
                             <select name="door_id" class="form-control select2">
                                 {!! selectBoxOptionsBuilder([''=>'All Doors']+\App\Door::pluck('name','id')->toArray(), request('door_id')) !!}
+                            </select>
+                        </div>
+                        <div class="col-md-1">
+                            <label>Brand</label>
+                            <select name="brand" class="form-control select2">
+                                {!! selectBoxOptionsBuilder([''=>'All Brands']+\App\Category::$BRANDS, request('brand')) !!}
                             </select>
                         </div>
                         <div class="col-md-3">
