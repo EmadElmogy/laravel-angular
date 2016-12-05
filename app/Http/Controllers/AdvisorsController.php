@@ -73,8 +73,8 @@ class AdvisorsController extends BaseController
             })
             ->when(request('from_date') && request('to_date'), function ($q) {
                 return $q->whereBetween('attendance.login_time', [request('from_date'), request('to_date')]);
-            })->orderBy('attendance.login_time','desc')
-            paginate(20);
+            })->orderBy('attendance.login_time','desc')->paginate(20);
+
            // dd($items);
         return view('advisors.attendance', compact('items'));
     }
