@@ -71,6 +71,7 @@
                         </table>
                     </div>
                 </div>
+                {!!$results->render()!!}
 
             </div>
         </div>

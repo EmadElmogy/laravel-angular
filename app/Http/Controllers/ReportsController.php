@@ -267,7 +267,7 @@ class ReportsController extends BaseController
             ->when(request('from_date') && request('to_date'), function ($q) {
                 return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
             })
-            ->get();
+            ->paginate(20);
 
         return view('reports.by-categories', compact('results'));
     }
@@ -369,7 +369,7 @@ class ReportsController extends BaseController
             ->when(request('from_date') && request('to_date'), function ($q) {
                 return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
             })
-            ->get();
+            ->paginate(20);
 
         return view('reports.by-doors', compact('results'));
     }
@@ -393,7 +393,7 @@ class ReportsController extends BaseController
             ->when(request('from_date') && request('to_date'), function ($q) {
                 return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
             })
-            ->get();
+            ->paginate(20);
 
         return view('reports.by-advisors', compact('results'));
     }
