@@ -113,7 +113,7 @@ class ReportsController extends BaseController
             ->when(request('from_date') && request('to_date'), function ($q) {
                 return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
             })
-            ->get();
+            ->paginate(20);
 //        Excel::create('reports', function($excel) use($results) {
 //            $excel->sheet('Sheet 1', function($sheet) use($results) {
 //                foreach ($results as &$result) {
