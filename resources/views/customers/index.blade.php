@@ -97,7 +97,7 @@
                         </table>
                     </div>
                 </div>
-
+                {!!$items->render()!!}
             </div>
         </div>
 

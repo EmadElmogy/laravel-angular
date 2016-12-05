@@ -28,7 +28,7 @@ class customersController extends BaseController
     {
         $filters = request('filters', []);
 
-        $items = $this->repo->findAll($filters);
+        $items = $this->repo->findAll($filters)->paginate(40);
 
         return view('customers.index', compact('items'));
     }
