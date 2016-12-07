@@ -362,7 +362,7 @@ class ApiController extends Controller
     foreach(request('product_variations') as $product_variation){
       $var_id=$product_variation['variation_id'];
       $sales_value=$product_variation['sales'];
-    }
+
     $stock_data = DB::table('variations_stock')
                           ->where('variation_id','=',$var_id)
                           ->where('door_id','=',auth()->guard('api')->user()->door_id)->first();
@@ -407,7 +407,7 @@ class ApiController extends Controller
             'customer',
             'variations.product',
         ]);
-
+      }
         $record2 = DB::table('variations_stock')->where([
             'variation_id' => $variation['variation_id'],
             'door_id' => $doorId,
