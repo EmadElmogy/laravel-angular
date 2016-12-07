@@ -455,11 +455,13 @@ class ApiController extends Controller
         $stock_data = DB::table('variations_stock')
                               ->where('variation_id','=',$var_id)
                               ->where('door_id','=',auth()->guard('api')->user()->door_id)->first();
-          }
+          if($sales_value > $stock_data->stock){
         return \Response::json([
           'data'=>null,
           'error'=>'stock should has value more than sales',
           'variation'=>DB::table('variations')->where('id','=',$var_id)->select('id','name')->first()]);
+        }
+        }
       }
     }
 
