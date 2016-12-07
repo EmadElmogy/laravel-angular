@@ -448,10 +448,18 @@ class ApiController extends Controller
         ]);
 
       }else{
+        foreach(request('product_variations') as $product_variation){
+          $var_id=$product_variation['variation_id'];
+          $sales_value=$product_variation['sales'];
+        // }
+        $stock_data = DB::table('variations_stock')
+                              ->where('variation_id','=',$var_id)
+                              ->where('door_id','=',auth()->guard('api')->user()->door_id)->first();
         return \Response::json([
           'data'=>null,
           'error'=>'stock should has value more than sales',
-          'variation_id'=>DB::table('variations')->where('id','=',$var_id)->select('id','name')->first()]);
+          'variation'=>DB::table('variations')->where('id','=',$var_id)->select('id','name')->first()]);
+        }
       }
     }
 
