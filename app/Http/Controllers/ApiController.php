@@ -447,7 +447,7 @@ class ApiController extends Controller
         ]);
 
       }else{
-        return \Response::json(['data'=>null,'error'=>'stock should has value more than sales','variation_id'=>$var_id]);
+        return \Response::json(['data'=>null,'error'=>'stock should has value more than sales','variation_id'=>request('product_variations')]);
       }
     }
 
