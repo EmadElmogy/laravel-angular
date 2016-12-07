@@ -349,9 +349,8 @@ class ApiController extends Controller
     {
         validate(request()->all(), [
             'product_variations' => 'required|array|min:1',
-            'product_variations.*.variation_id' => 'required|exists:variations,id|exists:variations_stock,variation_id,stock,!null',
+            'product_variations.*.variation_id' => 'required|exists:variations,id|exists:variations_stock,variation_id',
             'product_variations.*.sales' => 'required|numeric',
-            //'customer_id'=>'exists:customers,id'
         ]);
 
         $newCustomerData = request('new_customer');
@@ -359,46 +358,47 @@ class ApiController extends Controller
         $customer = request('customer_id')
             ? Customer::findOrFail(request('customer_id'))
             : ($newCustomerData ? Customer::create(request('new_customer')) : null);
+      $no_errors=true;
+      $errors_array=[];
     foreach(request('product_variations') as $product_variation){
       $var_id=$product_variation['variation_id'];
       $sales_value=$product_variation['sales'];
-    }
-    $stock_data = DB::table('variations_stock')
-                          ->where('variation_id','=',$var_id)
-                          ->where('door_id','=',auth()->guard('api')->user()->door_id)->first();
+      $stock_data = DB::table('variations_stock')
+                            ->where('variation_id','=',$var_id)
+                            ->where('door_id','=',auth()->guard('api')->user()->door_id)->first();
 
-      if($sales_value <= $stock_data->stock ){
-        $item = Report::create(
+      if($sales_value > $stock_data->stock ){
+        array_push($errors_array,$var_id);
+        $no_errors=false;
+    }
+
+  }
+  if ($no_errors == true) {
+
+    $item = Report::create(
             [
                 'customer_id' => $customer ? $customer->id : null,
                 'advisor_id' => auth()->guard('api')->user()->id,
                 'door_id' => auth()->guard('api')->user()->door_id,
               //  'date' => date('m-d-Y',strtotime(Carbon::now()->toDateTimeString()))
               'date' => Carbon::now()->toDateTimeString()
-
             ]
         );
-
-
         $doorId = auth()->guard('api')->user()->door_id;
-
         foreach (request('product_variations') as $variation) {
             $item->variations()->attach($variation['variation_id'], [
                 'sales' => $variation['sales']
             ]);
-
             $record = DB::table('variations_stock')->where([
                 'variation_id' => $variation['variation_id'],
                 'door_id' => $doorId,
             ]);
-
             if ($current = $record->first()) {
                 $record->update([
                     'stock' => $current->stock - $variation['sales']
                 ]);
             }
         }
-
         $item->load([
             'advisor' => function ($q) {
                 $q->select('id', 'name');
@@ -407,7 +407,6 @@ class ApiController extends Controller
             'customer',
             'variations.product',
         ]);
-
         $record2 = DB::table('variations_stock')->where([
             'variation_id' => $variation['variation_id'],
             'door_id' => $doorId,
@@ -438,7 +437,6 @@ class ApiController extends Controller
                      foreach ($matches[0] as $match) {
                          $m->to($match)->subject("Stock Notification Alert");
                      }
-
                  });
                  // var_dump( \Mail:: failures()); exit;
              }
@@ -447,19 +445,18 @@ class ApiController extends Controller
             'report' => ReportTransformer::transform($item)
         ]);
 
-      }else{
-        // foreach(request('product_variations') as $product_variation){
-        //   $var_id=$product_variation['variation_id'];
-        //   $sales_value=$product_variation['sales'];
-        // }
-        // $stock_data = DB::table('variations_stock')
-        //                       ->where('variation_id','=',$var_id)
-        //                       ->where('door_id','=',auth()->guard('api')->user()->door_id)->first();
-        return \Response::json([
-          'data'=>null,
-          'error'=>'stock should has value more than sales',
-          'variation'=>DB::table('variations')->where('id','=',$var_id)->select('id','name')->first()]);
-      }
+
+
+
+
+
+
+  }else{
+    return response(['data'=>null,'error'=>'stock should has value more than sales','errors_array'=>$errors_array]);
+  }
+
+
+
     }
 
     /**
