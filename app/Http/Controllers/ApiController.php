@@ -359,14 +359,14 @@ class ApiController extends Controller
         $customer = request('customer_id')
             ? Customer::findOrFail(request('customer_id'))
             : ($newCustomerData ? Customer::create(request('new_customer')) : null);
-
+    foreach(request('product_variations') as $product_variation){
+      $var_id=$product_variation['variation_id'];
+      $sales_value=$product_variation['sales'];
+    }
     $stock_data = DB::table('variations_stock')
                           ->where('variation_id','=',$var_id)
                           ->where('door_id','=',auth()->guard('api')->user()->door_id)->first();
-      foreach(request('product_variations') as $product_variation){
-        $var_id=$product_variation['variation_id'];
-        $sales_value=$product_variation['sales'];
-      }
+
       if($sales_value <= $stock_data->stock ){
         $item = Report::create(
             [
