@@ -422,5 +422,25 @@ class ReportsController extends BaseController
         return redirect()->back()->with('success', true);
     }
 
+    public function customer_sales(){
+      $results = DB::table('report_products')
+          ->join('reports', 'reports.id', '=', 'report_products.report_id')
+          ->join('doors', 'doors.id', '=', 'reports.door_id')
+          ->join('customers', 'customers.id', '=', 'reports.customer_id')
+          ->groupBy('reports.door_id')
+          ->select('doors.name as door_name', 'customers.name as customer_name','email','mobile','area')
+          ->selectRaw('SUM(sales) as sales, SUM(basket_value) as sell_out')
+          ->orderBy('sales', 'DESC')
+          ->when(request('from_date') && ! request('to_date'), function ($q) {
+              return $q->whereDate('reports.date', '=', request('from_date'));
+          })
+          ->when(request('from_date') && request('to_date'), function ($q) {
+              return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
+          })
+          ->paginate(20);
+          dd($results);
+      return view('reports.customer_sales', compact('results'));
+    }
+
 
 }

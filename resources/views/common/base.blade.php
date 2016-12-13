@@ -152,6 +152,14 @@
                             <li class="{{request()->is('settings*') ? 'active' : ''}}">
                                 <a href="{{url('settings')}}"><i class="icon-cogs"></i><span>Settings</span></a>
                             </li>
+                            <li class="{{request()->is('sales_reports/*') ? 'active' : ''}}">
+                                <a href="#"><i class="icon-pie-chart2"></i> <span>Sales Reports</span></a>
+                                <ul>
+                                    <li class="{{request()->is('sales_reports/customer_sales') ? 'active' : ''}}">
+                                        <a href="{{url('sales_reports/customer_sales')}}">Customer Sales</a></li>
+
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>

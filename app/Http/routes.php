@@ -99,6 +99,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('reports/sales/excelbyDoor','ReportsController@excelbyDoor')->name('excelbyDoor');
     Route::get('reports/sales/excelbyAdvisor','ReportsController@excelbyAdvisor')->name('excelbyAdvisor');
 
+
+    Route::get('sales_reports/customer_sales', 'ReportsController@customer_sales');
+
+
     Route::get('stock', 'StockController@index');
     Route::get('stock/{branchId}', 'StockController@item');
     Route::get('excel_stock/{branchId}', 'StockController@excel_stock');
