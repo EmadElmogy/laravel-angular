@@ -442,5 +442,32 @@ class ReportsController extends BaseController
       return view('reports.customer_sales', compact('results'));
     }
 
+    public function customer_sales_excel(){
+      $results = DB::table('report_products')
+          ->join('reports', 'reports.id', '=', 'report_products.report_id')
+          ->join('doors', 'doors.id', '=', 'reports.door_id')
+          ->join('customers', 'customers.id', '=', 'reports.customer_id')
+          ->groupBy('reports.customer_id')
+          ->select('doors.name as door_name', 'customers.name as customer_name','email','mobile','area')
+          ->selectRaw('SUM(sales) as sales, SUM(basket_value) as sell_out')
+          ->orderBy('sales', 'DESC')
+          ->when(request('from_date') && ! request('to_date'), function ($q) {
+              return $q->whereDate('reports.date', '=', request('from_date'));
+          })
+          ->when(request('from_date') && request('to_date'), function ($q) {
+              return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
+          })
+          ->get();
+
+          Excel::create('Customer_Sales', function($excel) use($results) {
+              $excel->sheet('Sheet 1', function($sheet) use($results) {
+                  foreach ($results as &$result) {
+                      $result = (array)$result;
+                  }
+                  $sheet->fromArray($results);
+              });
+          })->export('xls');
+    }
+
 
 }

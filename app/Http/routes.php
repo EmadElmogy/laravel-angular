@@ -101,6 +101,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::get('sales_reports/customer_sales', 'ReportsController@customer_sales');
+    Route::get('sales_reports/customer_sales_excel', 'ReportsController@customer_sales_excel')->name('customer_sales');
 
 
     Route::get('stock', 'StockController@index');

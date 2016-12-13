@@ -33,7 +33,7 @@
                         </div>
                     </form>
                     <div style="line-height: 6em;">
-                        <a href="{{route('excelbyDoor')}}" class="btn btn-success">Export to csv</a>
+                        <a href="{{route('customer_sales')}}" class="btn btn-success">Export to csv</a>
                     </div>
                 </div>
 
@@ -47,9 +47,9 @@
                                 <th>Customer Mobile</th>
                                 <th>Customer Area</th>
                                 <th>Door</th>
-                                <th>Sales By Unit</th>
+                                <th>Basket Size</th>
                                 <th>
-                                  Sales By Value
+                                  Basket Value
                                 </th>
                             </tr>
                             </thead>
