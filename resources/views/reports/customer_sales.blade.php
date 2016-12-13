@@ -61,9 +61,9 @@
                                     <td>{{$item->mobile}}</td>
                                     <td>{{$item->area}}</td>
                                     <td>{{$item->door_name}}</td>
-                                    <td>{{$item->sales}}</td>
+                                    <td>{{$item->basket_size}}</td>
                                     <td>
-                                      {{$item->sell_out}}
+                                      {{$item->basket_value}}
                                     </td>
                                 </tr>
                             @endforeach
