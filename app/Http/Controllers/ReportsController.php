@@ -219,15 +219,15 @@ class ReportsController extends BaseController
             //         return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
             //     })
             //     ->avg('sales');
-        Excel::create('Door_reports', function($excel) use($results,$avg_results) {
-            $excel->sheet('Sheet 1', function($sheet) use($results,$avg_results) {
+        Excel::create('Door_reports', function($excel) use($results) {
+            $excel->sheet('Sheet 1', function($sheet) use($results) {
                 // $sum_sales=0;
                 foreach ($results as &$result) {
                     $result = (array)$result;
                     // $sum_sales += $result->sales;
                 }
                 $sheet->fromArray($results);
-                
+
             });
         })->export('xls');
     }
