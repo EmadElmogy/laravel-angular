@@ -126,4 +126,10 @@ class StockController extends BaseController
       return redirect()->back()->with('success', true);
     }
 
+    public function reset_door($door_id){
+      DB::table('variations_stock')->where('door_id','=',$door_id)->delete();
+      return redirect()->back()->with('success', true);
+
+    }
+
 }

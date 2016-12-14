@@ -49,10 +49,19 @@
                     <div class="table-responsive">
                         <table class="table table-hover table-striped">
                             <tbody>
+                              <th>
+                                Door Name
+                              </th>
+                              <th>
+
+                              </th>
                             @forelse($doors as $door)
                                 <tr>
                                     <td class="v-align-middle semi-bold">
                                         <a href="{{url('stock/'.$door->id)}}">{{$door->name}}</a>
+                                    </td>
+                                    <td class="v-align-middle semi-bold">
+                                      <a href="{{URL('/reset_door/'.$door->id)}}" class="btn btn-primary"><i class="icon-trash"> Reset</i></a>
                                     </td>
                                 </tr>
                             @empty

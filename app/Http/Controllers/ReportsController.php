@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
 use Excel;
-
+use Illuminate\Support\Facades\Input as Input;
 
 class ReportsController extends BaseController
 {
@@ -443,6 +443,7 @@ class ReportsController extends BaseController
     }
 
     public function customer_sales_excel(){
+      dd(Input::get('from_date'));
       $results = DB::table('report_products')
           ->join('reports', 'reports.id', '=', 'report_products.report_id')
           ->join('doors', 'doors.id', '=', 'reports.door_id')

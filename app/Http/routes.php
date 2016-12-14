@@ -108,6 +108,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('stock/{branchId}', 'StockController@item');
     Route::get('excel_stock/{branchId}', 'StockController@excel_stock');
     Route::get('reset_all', 'StockController@reset_all')->name('reset');
+    Route::get('reset_door/{door_id}', 'StockController@reset_door')->name('reset_door');
     Route::post('stock/{branchId}', 'StockController@store');
 
     Route::get('settings', 'SettingsController@index');
