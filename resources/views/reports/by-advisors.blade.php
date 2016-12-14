@@ -60,7 +60,13 @@
                                     <td><span style="color:red">{{$item->sales}}</span></td>
                                     @endif
                                     <td>{{$item->target}}</td>
-                                    <td>{{$item->brand == "2" ? 'Maybelline' : 'L\'Oreal Paris' }}</td>
+                                    @if($item->brand == '2')
+                                    <td>Maybelline</td>
+                                    @elseif($item->brand == '1')
+                                    <td>L\'Oreal Paris</td>
+                                    @else
+                                    <td>HairCare</td>
+                                    @endif
                                     <td>{{$item->sell_out}}</td>
                                 </tr>
                             @endforeach
