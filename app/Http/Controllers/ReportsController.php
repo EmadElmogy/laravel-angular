@@ -236,9 +236,10 @@ class ReportsController extends BaseController
     public function excelbyAdvisor(){
         $results = DB::table('report_products')
             ->join('reports', 'reports.id', '=', 'report_products.report_id')
+            ->join('doors', 'doors.id', '=', 'reports.door_id')
             ->join('advisors', 'advisors.id', '=', 'reports.advisor_id')
             ->groupBy('reports.advisor_id')
-            ->select('advisors.name as advisor_name','advisors.target')
+            ->select('advisors.name as advisor_name','advisors.target','doors.name as door_name')
             ->selectRaw('SUM(sales) as sales , SUM(basket_value) as sell_out')
             ->orderBy('sales', 'DESC')
             ->when(request('from_date') && ! request('to_date'), function ($q) {
