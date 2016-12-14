@@ -46,6 +46,7 @@
                                 <th>Advisor</th>
                                 <th>Sales By Unit</th>
                                 <th>Target</th>
+                                <th>Brand</th>
                                 <th>Sales By Value</th>
                             </tr>
                             </thead>
@@ -59,6 +60,7 @@
                                     <td><span style="color:red">{{$item->sales}}</span></td>
                                     @endif
                                     <td>{{$item->target}}</td>
+                                    <td>{{$item->brand == "2" ? 'Maybelline' : 'L\'Oreal Paris' }}</td>
                                     <td>{{$item->sell_out}}</td>
                                 </tr>
                             @endforeach
