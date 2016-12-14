@@ -31,10 +31,11 @@
                                 <i class="icon-filter3 position-left"></i> Filter
                             </button>
                         </div>
+                        <div style="line-height: 6em;">
+                            <a href="{{URL('reports/sales/excelbyDoor?from_date='.request('from_date').'&to_date='.request('to_date'))}}" class="btn btn-success">Export to csv</a>
+                        </div>
                     </form>
-                    <div style="line-height: 6em;">
-                        <a href="{{route('excelbyDoor')}}" class="btn btn-success">Export to csv</a>
-                    </div>
+
                 </div>
 
                 <div class="panel panel-flat">
