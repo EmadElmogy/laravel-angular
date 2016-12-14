@@ -19,11 +19,11 @@
                     <form action="">
                         <div class="col-md-3">
                             <label>From Date:</label>
-                            <input type="date" class="form-control" name="from_date" placeholder="Date" value="{{request('from_date')}}">
+                            <input type="date" class="form-control" required name="from_date" placeholder="Date" value="{{request('from_date')}}">
                         </div>
                         <div class="col-md-3">
                             <label>To Date:</label>
-                            <input type="date" class="form-control" name="to_date" placeholder="Date" value="{{request('to_date')}}">
+                            <input type="date" class="form-control" required name="to_date" placeholder="Date" value="{{request('to_date')}}">
                         </div>
                         <div class="col-md-2">
                             <label>Filter</label>
@@ -32,7 +32,7 @@
                             </button>
                         </div>
                         <div style="line-height: 6em;">
-                            <a href="{{route('customer_sales')}}" class="btn btn-success">Export to csv</a>
+                            <a href="{{URL('sales_reports/customer_sales_excel?from_date='.request('from_date').'&to_date='.request('to_date'))}}" class="btn btn-success">Export to csv</a>
                         </div>
                     </form>
 

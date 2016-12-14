@@ -442,8 +442,8 @@ class ReportsController extends BaseController
       return view('reports.customer_sales', compact('results'));
     }
 
-    public function customer_sales_excel(){
-      dd(Input::get('from_date'));
+    public function customer_sales_excel($from_date=null,$to_date=null){
+    //  dd(request('from_date'));
       $results = DB::table('report_products')
           ->join('reports', 'reports.id', '=', 'report_products.report_id')
           ->join('doors', 'doors.id', '=', 'reports.door_id')
@@ -451,6 +451,7 @@ class ReportsController extends BaseController
           ->groupBy('reports.customer_id')
           ->select('doors.name as door_name', 'customers.name as customer_name','email','mobile','area')
           ->selectRaw('SUM(sales) as basket_size, SUM(basket_value) as basket_value')
+          // ->whereBetween('reports.date', [$from_date, $to_date])
           ->orderBy('sales', 'DESC')
           ->when(request('from_date') && ! request('to_date'), function ($q) {
               return $q->whereDate('reports.date', '=', request('from_date'));
