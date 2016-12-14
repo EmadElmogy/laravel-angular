@@ -195,7 +195,7 @@ class ReportsController extends BaseController
             ->join('doors', 'doors.id', '=', 'reports.door_id')
             ->groupBy('reports.door_id')
             ->select('doors.name as door_name')
-            ->selectRaw('SUM(sales) as sales , SUM(basket_value) as basket_value , AVG(sales) as average_basket_size')
+            ->selectRaw('SUM(sales) as sales , SUM(basket_value) as basket_value , AVG(sales) as average_basket_size , SUM(customer_id) AS Customers')
             ->orderBy('sales', 'DESC')
             ->when(request('from_date') && ! request('to_date'), function ($q) {
                 return $q->whereDate('reports.date', '=', request('from_date'));
