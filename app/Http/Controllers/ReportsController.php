@@ -195,7 +195,7 @@ class ReportsController extends BaseController
             ->join('doors', 'doors.id', '=', 'reports.door_id')
             ->groupBy('reports.door_id')
             ->select('doors.name as door_name')
-            ->selectRaw('SUM(sales) as sales , SUM(basket_value) as basket_value')
+            ->selectRaw('SUM(sales) as sales , SUM(basket_value) as basket_value , AVG(sales) as average_basket_size')
             ->orderBy('sales', 'DESC')
             ->when(request('from_date') && ! request('to_date'), function ($q) {
                 return $q->whereDate('reports.date', '=', request('from_date'));
@@ -205,20 +205,20 @@ class ReportsController extends BaseController
             })
             ->get();
 
-            $avg_results = DB::table('report_products')
-                ->join('reports', 'reports.id', '=', 'report_products.report_id')
-                ->join('doors', 'doors.id', '=', 'reports.door_id')
-                ->groupBy('reports.door_id')
-                ->select('doors.name as door_name')
-                ->selectRaw('SUM(sales) as sales , SUM(basket_value) as basket_value')
-                ->orderBy('sales', 'DESC')
-                ->when(request('from_date') && ! request('to_date'), function ($q) {
-                    return $q->whereDate('reports.date', '=', request('from_date'));
-                })
-                ->when(request('from_date') && request('to_date'), function ($q) {
-                    return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
-                })
-                ->avg('sales');
+            // $avg_results = DB::table('report_products')
+            //     ->join('reports', 'reports.id', '=', 'report_products.report_id')
+            //     ->join('doors', 'doors.id', '=', 'reports.door_id')
+            //     ->groupBy('reports.door_id')
+            //     ->select('doors.name as door_name')
+            //     ->selectRaw('SUM(sales) as sales , SUM(basket_value) as basket_value')
+            //     ->orderBy('sales', 'DESC')
+            //     ->when(request('from_date') && ! request('to_date'), function ($q) {
+            //         return $q->whereDate('reports.date', '=', request('from_date'));
+            //     })
+            //     ->when(request('from_date') && request('to_date'), function ($q) {
+            //         return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
+            //     })
+            //     ->avg('sales');
         Excel::create('Door_reports', function($excel) use($results,$avg_results) {
             $excel->sheet('Sheet 1', function($sheet) use($results,$avg_results) {
                 // $sum_sales=0;
@@ -227,9 +227,7 @@ class ReportsController extends BaseController
                     // $sum_sales += $result->sales;
                 }
                 $sheet->fromArray($results);
-                $sheet->appendRow(array(
-                    '', '','Average Basket Size',$avg_results
-                ));
+                
             });
         })->export('xls');
     }
