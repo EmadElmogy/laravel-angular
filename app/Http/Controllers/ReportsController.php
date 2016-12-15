@@ -232,12 +232,19 @@ class ReportsController extends BaseController
         })->export('xls');
     }
     public function excelbyAdvisor(){
+      $sheet_array=array();
+      $Brands=\App\Category::$BRANDS;
+      $sheet_array[]=['Advisor Name','Door Name','Brand','Target','Sales By Unit','Sales By Value'];
+
         $results = DB::table('report_products')
             ->join('reports', 'reports.id', '=', 'report_products.report_id')
+            ->join('variations', 'variations.id', '=', 'report_products.variation_id')
+            ->join('products', 'products.id', '=', 'variations.product_id')
+            ->join('categories', 'categories.id', '=', 'products.category_id')
             ->join('doors', 'doors.id', '=', 'reports.door_id')
             ->join('advisors', 'advisors.id', '=', 'reports.advisor_id')
             ->groupBy('reports.advisor_id')
-            ->select('advisors.name as advisor_name','advisors.target','doors.name as door_name')
+            ->select('advisors.name as advisor_name','advisors.target','doors.name as door_name','categories.brand')
             ->selectRaw('SUM(sales) as sales , SUM(basket_value) as sell_out')
             ->orderBy('sales', 'DESC')
             ->when(request('from_date') && ! request('to_date'), function ($q) {
@@ -247,12 +254,26 @@ class ReportsController extends BaseController
                 return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
             })
             ->get();
-        Excel::create('Advisor_reports', function($excel) use($results) {
-            $excel->sheet('Sheet 1', function($sheet) use($results) {
-                foreach ($results as &$result) {
-                    $result = (array)$result;
-                }
-                $sheet->fromArray($results);
+
+            foreach($results as $result){
+              //foreach ($Brands as $key => $value) {
+              if($result->brand == '1'){
+              $temp= [$result->advisor_name,$result->door_name,$Brands[1], $result->target,$result->sales, $result->sell_out];
+            }elseif ($result->brand == '2') {
+              $temp= [$result->advisor_name,$result->door_name,$Brands[2], $result->target,$result->sales, $result->sell_out];
+            }else{
+              $temp= [$result->advisor_name,$result->door_name,$Brands[3], $result->target,$result->sales, $result->sell_out];
+            }
+            // }
+            array_push($sheet_array,$temp);
+           }
+
+        Excel::create('Advisor_reports', function($excel) use($sheet_array) {
+            $excel->sheet('Sheet 1', function($sheet) use($sheet_array) {
+                // foreach ($sheet_array as &$sheet_array_one) {
+                //     $sheet_array_one = (array)$sheet_array_one;
+                // }
+                $sheet->fromArray($sheet_array);
             });
         })->export('xls');
     }
