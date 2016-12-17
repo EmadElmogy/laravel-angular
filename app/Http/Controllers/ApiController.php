@@ -287,12 +287,16 @@ class ApiController extends Controller
      */
     public function customers()
     {
+      $skip = request('skip', 0);
+      $take = request('per_page', 100);
         return response([
             'customers' => CustomerTransformer::transform(
                 Customer::select('*')
                     ->when(request('mobile'), function ($q) {
                         return $q->where('mobile', 'LIKE', '%'.request('mobile').'%');
                     })
+                    ->skip($skip)
+                    ->take($take)
                     ->get()
             )
         ]);
