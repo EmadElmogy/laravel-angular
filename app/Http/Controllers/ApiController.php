@@ -367,11 +367,11 @@ class ApiController extends Controller
     foreach(request('product_variations') as $product_variation){
       $var_id=$product_variation['variation_id'];
       $sales_value=$product_variation['sales'];
-      $stock_data = DB::table('variations_stock')
+      @$stock_data = DB::table('variations_stock')
                             ->where('variation_id','=',$var_id)
                             ->where('door_id','=',auth()->guard('api')->user()->door_id)->first();
-
-      if($sales_value > $stock_data->stock ){
+      //dd($stock_data);
+      if($sales_value > @$stock_data->stock ){
         array_push($errors_array,$var_id);
         $no_errors=false;
     }
