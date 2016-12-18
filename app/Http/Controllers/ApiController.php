@@ -456,7 +456,7 @@ class ApiController extends Controller
 
 
   }else{
-    return response(['data'=>null,'error'=>'stock should has value more than sales','errors_array'=>$errors_array]);
+    return response(['report'=>null,'error'=>'stock should has value more than sales','errors_array'=>$errors_array]);
   }
 
 
