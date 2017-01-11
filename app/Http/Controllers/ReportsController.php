@@ -291,7 +291,7 @@ class ReportsController extends BaseController
             ->join('products', 'products.id', '=', 'variations.product_id')
             ->join('categories', 'categories.id', '=', 'products.category_id')
             ->join('reports', 'reports.id', '=', 'report_products.report_id')
-            ->groupBy('categories.id')
+            ->groupBy('categories.id','categories.name','report_products.sales','reports.basket_value')
             ->select('categories.name as category_name')
             ->selectRaw('SUM(sales) as sales , SUM(basket_value) as sell_out')
             ->orderBy('sales', 'DESC')
