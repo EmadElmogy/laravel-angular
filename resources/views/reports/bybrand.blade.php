@@ -61,14 +61,14 @@
                               @foreach($Brands as $key=>$brand)
                               <?php
                               @$brand_items = DB::table('report_products')
+                                  ->select('categories.name as category_name','brand')
+                                  ->selectRaw('SUM(sales) as sales , SUM(basket_value) as sell_out')
                                   ->join('variations', 'variations.id', '=', 'report_products.variation_id')
                                   ->join('products', 'products.id', '=', 'variations.product_id')
                                   ->join('categories', 'categories.id', '=', 'products.category_id')
                                   ->join('reports', 'reports.id', '=', 'report_products.report_id')
                                   ->where('categories.brand','=',$key)
-                                  ->groupBy('categories.id')
-                                  ->select('categories.name as category_name','brand')
-                                  ->selectRaw('SUM(sales) as sales , basket_value as sell_out')
+                                  ->groupBy('categories.brand')
                                   ->orderBy('sales', 'DESC')
                                   ->when(request('door_id'), function ($q) {
                                       return $q->where('reports.door_id', request('door_id'));
@@ -84,7 +84,8 @@
                                ?>
                                @foreach($brand_items as $brand_item)
 
-                               <?php $total_unit += @$brand_item->sales; $total_value += @$brand_item->sell_out;?>
+                               <?php $total_unit += @$brand_item->sales;
+                              //  $total_value += @$brand_item->sell_out;?>
                                @endforeach
 
                                 <tr>
@@ -96,10 +97,11 @@
                                      {{$total_unit}}
                                    </td>
                                    <td>
-                                     {{$total_value}}
+                                     {{$brand_item->sell_out}}
                                    </td>
                                 </tr>
-                                <?php $total_unit=0; $total_value=0; ?>
+                                <?php $total_unit=0;
+                                // $total_value=0; ?>
                                 @endforeach
                             </tbody>
                         </table>
