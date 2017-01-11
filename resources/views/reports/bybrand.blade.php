@@ -62,7 +62,7 @@
                               <?php
                               @$brand_items = DB::table('report_products')
                                   ->select('categories.name as category_name','brand')
-                                  ->selectRaw('SUM(sales) as sales , SUM(basket_value) as sell_out')
+                                  ->selectRaw('SUM(sales) as sales , basket_value as sell_out')
                                   ->join('variations', 'variations.id', '=', 'report_products.variation_id')
                                   ->join('products', 'products.id', '=', 'variations.product_id')
                                   ->join('categories', 'categories.id', '=', 'products.category_id')
