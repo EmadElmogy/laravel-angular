@@ -68,7 +68,7 @@
                                     @else
                                     <td>HairCare</td>
                                     @endif
-                                    <td>{{$basket_value_x}}</td>
+                                    <td>{{$item->advisor_id}}</td>
                                 </tr>
                             @endforeach
                             </tbody>
