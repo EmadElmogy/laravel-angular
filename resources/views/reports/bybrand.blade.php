@@ -65,7 +65,7 @@
                                   ->join('products', 'products.id', '=', 'variations.product_id')
                                   ->join('categories', 'categories.id', '=', 'products.category_id')
                                   ->join('reports', 'reports.id', '=', 'report_products.report_id')
-                                  ->where('categories.brand','=',$key)
+                                  ->where('categories.brand','=','1')
                                   ->groupBy('reports.id')
                                   ->select('categories.name as category_name','brand')
                                   ->selectRaw('SUM(sales) as sales ,basket_value as sell_out')
