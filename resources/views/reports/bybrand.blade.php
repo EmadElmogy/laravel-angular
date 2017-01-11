@@ -87,7 +87,7 @@
                                       ->join('categories', 'categories.id', '=', 'products.category_id')
                                       ->join('reports', 'reports.id', '=', 'report_products.report_id')
                                       ->where('categories.brand','=',$key)
-                                      ->selectRaw('basket_value as total_sell_out')->get(); dd($basket);
+                                      ->selectRaw('basket_value as total_sell_out')->get(); dd($brand_items);
                                ?>
                                @foreach($brand_items as $brand_item)
 
