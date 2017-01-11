@@ -66,9 +66,9 @@
                                   ->join('categories', 'categories.id', '=', 'products.category_id')
                                   ->join('reports', 'reports.id', '=', 'report_products.report_id')
                                   ->where('categories.brand','=',$key)
-                                  ->groupBy('categories.id')
+                                  ->groupBy('categories.brand')
                                   ->select('categories.name as category_name','brand')
-                                  ->selectRaw('SUM(sales) as sales ,SUM(basket_value) as sell_out')
+                                  ->selectRaw('SUM(sales) as sales ,basket_value as sell_out')
                                   ->orderBy('sales', 'DESC')
                                   ->when(request('door_id'), function ($q) {
                                       return $q->where('reports.door_id', request('door_id'));
