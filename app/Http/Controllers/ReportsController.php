@@ -308,7 +308,7 @@ class ReportsController extends BaseController
                 return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
             })
             ->paginate(20);
-
+        dd($results);    
         return view('reports.by-categories', compact('results'));
     }
 
