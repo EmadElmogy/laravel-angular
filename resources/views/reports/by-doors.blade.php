@@ -52,11 +52,12 @@
                             </thead>
                             <tbody>
                             @foreach($results as $item)
+                            <?php $basket_value_x=\DB::table('reports')->where('door_id','=',$item->door_id)->selectRaw('SUM(basket_value) as total_basket,SUM(basket_size) as total_size')->first(); ?>
                                 <tr>
                                     <td>{{$item->door_name}}</td>
-                                    <td>{{$item->sales}}</td>
+                                    <td> {{$basket_value_x->total_size}}</td>
                                     <td>
-                                      {{$item->sell_out}}
+                                      {{$basket_value_x->total_basket}}
                                     </td>
                                 </tr>
                             @endforeach
