@@ -31,9 +31,33 @@ class ReportsController extends BaseController
         $filters = request('filters', []);
       //  var_dump(date('m-d-Y',strtotime(Carbon::now()->toDateTimeString()))); die;
 
-        $items = $this->repo->findAll($filters, ['door.site', 'advisor'], false)->paginate(40);
+        // $items = $this->repo->findAll($filters, ['door.site', 'advisor'], false)->paginate(40);
+        $items = DB::table('report_products')
+            ->join('variations', 'variations.id', '=', 'report_products.variation_id')
+            ->join('products', 'products.id', '=', 'variations.product_id')
+            ->join('reports', 'reports.id', '=', 'report_products.report_id')
+            ->join('advisors', 'advisors.id', '=', 'reports.advisor_id')
+            ->join('doors', 'doors.id', '=', 'reports.door_id')
+            ->join('customers', 'customers.id', '=', 'reports.customer_id')
+            ->groupBy('reports.id')
+             ->select('advisors.name as advisor_name', 'doors.name as door_name', 'customers.name as customer_name','customers.mobile as customer_mobile','reports.id as report_id')
+            ->selectRaw('DATE_FORMAT(reports.date,\'%Y-%m-%d\') as Date,SUM(sales) as basket_size , SUM(report_products.sales*products.price) as basket_value')
+            ->orderBy('reports.date', 'DESC')
+            ->when(request('door_id'), function ($q) {
+              return $q->where('reports.door_id', request('door_id'));
+             })
+             ->when(request('advisor_id'), function ($q) {
+               return $q->where('reports.advisor_id', request('advisor_id'));
+              })
+              ->when(request('customer_id'), function ($q) {
+                return $q->where('reports.customer_id', request('customer_id'));
+               })
+             ->when(request('date'), function ($q) {
+                 return $q->whereDate('reports.date', '=', request('date'));
+             })
+             ->paginate(20);
 
-
+            //  dd($items);
 
         return view('reports.index', compact('items'));
     }
@@ -43,22 +67,51 @@ class ReportsController extends BaseController
 
        // $results = $this->repo->findAll($filters=[], ['door.site', 'advisor'], false)->paginate(40);
        // $results = Report::all();
-        $items = DB::table('reports')
+        // $items = DB::table('reports')
+        //     ->join('advisors', 'advisors.id', '=', 'reports.advisor_id')
+        //     ->join('doors', 'doors.id', '=', 'reports.door_id')
+        //     ->join('report_products', 'report_products.report_id', '=', 'reports.id')
+        //     ->join('variations', 'variations.id', '=', 'report_products.variation_id')
+        //     ->join('products', 'products.id', '=', 'variations.product_id')
+        //     ->join('customers', 'customers.id', '=', 'reports.customer_id')
+        //     ->select('advisors.name as advisor_name', 'doors.name as door_name', 'customers.name as customer_name',DB::raw('DATE_FORMAT(reports.date,\'%Y-%m-%d\') as Date'))
+        //     ->groupBy('reports.id')
+        //     ->orderBy('reports.id', 'DESC')
+        //     ->when(request('door_id'), function ($q) {
+        //         return $q->where('reports.door_id', request('door_id'));
+        //     })
+        //     ->when(request('from_date') && ! request('to_date'), function ($q) {
+        //         return $q->whereDate('reports.date', '=', request('from_date'));
+        //     })
+        //     ->when(request('from_date') && request('to_date'), function ($q) {
+        //         return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
+        //     })
+        //     ->get();
+
+        $items = DB::table('report_products')
+            ->join('variations', 'variations.id', '=', 'report_products.variation_id')
+            ->join('products', 'products.id', '=', 'variations.product_id')
+            ->join('reports', 'reports.id', '=', 'report_products.report_id')
             ->join('advisors', 'advisors.id', '=', 'reports.advisor_id')
             ->join('doors', 'doors.id', '=', 'reports.door_id')
-           ->join('customers', 'customers.id', '=', 'reports.customer_id')
-            ->select('advisors.name as advisor_name', 'doors.name as door_name', 'customers.name as customer_name','reports.basket_size','reports.basket_value',DB::raw('DATE_FORMAT(reports.date,\'%Y-%m-%d\') as Date'))
-            ->orderBy('reports.id', 'DESC')
+            ->join('customers', 'customers.id', '=', 'reports.customer_id')
+            ->groupBy('reports.id')
+             ->select('advisors.name as advisor_name', 'doors.name as door_name', 'customers.name as customer_name')
+            ->selectRaw('DATE_FORMAT(reports.date,\'%Y-%m-%d\') as Date,SUM(sales) as basket_size , SUM(report_products.sales*products.price) as basket_value')
+            ->orderBy('reports.date', 'DESC')
             ->when(request('door_id'), function ($q) {
-                return $q->where('reports.door_id', request('door_id'));
-            })
-            ->when(request('from_date') && ! request('to_date'), function ($q) {
-                return $q->whereDate('reports.date', '=', request('from_date'));
-            })
-            ->when(request('from_date') && request('to_date'), function ($q) {
-                return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
-            })
-            ->get();
+              return $q->where('reports.door_id', request('door_id'));
+             })
+             ->when(request('advisor_id'), function ($q) {
+               return $q->where('reports.advisor_id', request('advisor_id'));
+              })
+              ->when(request('customer_id'), function ($q) {
+                return $q->where('reports.customer_id', request('customer_id'));
+               })
+               ->when(request('date'), function ($q) {
+                   return $q->whereDate('reports.date', '=', request('date'));
+               })
+               ->get();
         Excel::create('orders', function($excel) use($items) {
             $excel->sheet('Sheet 1', function($sheet) use($items) {
                 foreach ($items as &$item) {

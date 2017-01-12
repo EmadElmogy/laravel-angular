@@ -26,22 +26,22 @@
                 <div class="row mb-20">
                     <form action="">
                         <div class="col-md-2">
-                            <select name="filters[door_id]" class="form-control select2">
+                            <select name="door_id" class="form-control select2">
                                 {!! selectBoxOptionsBuilder([''=>'Door']+\App\Door::pluck('name','id')->toArray(), request('filters.door_id')) !!}
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <select name="filters[advisor_id]" class="form-control select2">
+                            <select name="advisor_id" class="form-control select2">
                                 {!! selectBoxOptionsBuilder([''=>'Advisor']+\App\Advisor::pluck('name','id')->toArray(), request('filters.advisor_id')) !!}
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <select name="filters[customer_id]" class="form-control select2">
+                            <select name="customer_id" class="form-control select2">
                                 {!! selectBoxOptionsBuilder([''=>'Customer']+\App\Customer::pluck('name','id')->toArray(), request('filters.customer_id')) !!}
                             </select>
                         </div>
                         <div class="col-md-3">
-                            <input type="date" class="form-control" name="filters[date]" placeholder="Date" value="{{request('filters.date')}}">
+                            <input type="date" class="form-control" name="date" placeholder="Date" value="{{request('filters.date')}}">
                         </div>
                         <div class="col-md-2">
                             <button class="btn btn-info btn-sm">
@@ -72,45 +72,28 @@
                             </thead>
                             <tbody>
                             @forelse($items as $item)
-                                <?php $basket_size=\DB::table('report_products')->where('report_id','=',$item->id)->selectRaw('sum(sales) as sum')->first(); ?>
 
-
-                                <?php $report_products=\DB::table('report_products')->where('report_id','=',$item->id)->get(); $basket_value=0; ?>
-                                @foreach($report_products as $report_product)
-                                    <?php $product_variations=\DB::table('variations')->where('id','=',$report_product->variation_id)->first(); ?>
-                                                <?php $prices=\DB::table('products')->where('id','=',$product_variations->product_id)->first(); ?>
-                                                    <?php
-                                                    $basket_size_items=\DB::table('report_products')->where('report_id','=',$item->id)
-                                                                            ->where('variation_id','=',$report_product->variation_id)
-                                                                            ->first();
-                                                    ?>
-
-                                                        <?php
-                                                        $basket_value=$basket_value+($prices->price*$basket_size_items->sales);
-
-                                                        ?>
-                                @endforeach
                                 <tr>
                                     <td class="v-align-middle semi-bold">
-                                        {{$item->date->toDateString()}}
+                                        {{$item->Date}}
                                     </td>
-                                    <td class="v-align-middle semi-bold">{{@$item->door->name}}</td>
-                                    <td class="v-align-middle semi-bold">{{@$item->advisor->name}}</td>
-                                    <td class="v-align-middle semi-bold">{{$item->customer ? "{$item->customer->name} ({$item->customer->mobile})" : ''}}</td>
-                                    <td class="v-align-middle semi-bold">{{$basket_size->sum}}</td>
-                                    <td class="v-align-middle semi-bold">{{$basket_value}}</td>
+                                    <td class="v-align-middle semi-bold">{{@$item->door_name}}</td>
+                                    <td class="v-align-middle semi-bold">{{@$item->advisor_name}}</td>
+                                    <td class="v-align-middle semi-bold">{{$item->customer_name ? "{$item->customer_name} ({$item->customer_mobile})" : ''}}</td>
+                                    <td class="v-align-middle semi-bold">{{@$item->basket_size}}</td>
+                                    <td class="v-align-middle semi-bold">{{@$item->basket_value}}</td>
                                     <td class="v-align-middle text-right text-nowrap">
-                                        <a href="{{url('reports/show_item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-file-eye"></i></a>
-                                        {{--<a href="{{url('reports/item/'.$item->id)}}" class="btn btn-success btn-xs"><i class="icon-pencil5"></i></a>--}}
-                                        <a href="{{url('reports/item/'.$item->id)}}" class="btn btn-danger btn-xs deleter"><i class="icon-trash"></i></a>
+                                        <a href="{{url('reports/show_item/'.$item->report_id)}}" class="btn btn-primary btn-xs"><i class="icon-file-eye"></i></a>
+                                        {{--<a href="{{url('reports/item/'.$item->report_id)}}" class="btn btn-success btn-xs"><i class="icon-pencil5"></i></a>--}}
+                                        <a href="{{url('reports/item/'.$item->report_id)}}" class="btn btn-danger btn-xs deleter"><i class="icon-trash"></i></a>
 
                                     </td>
                                 </tr>
                                 <?php
                                        // dd($basket_value);
-                                \DB::table('reports')
-                                        ->where('id', $item->id)
-                                        ->update(['basket_size' =>$basket_size->sum,'basket_value'=> $basket_value]);
+                                // \DB::table('reports')
+                                //         ->where('id', $item->id)
+                                //         ->update(['basket_size' =>$basket_size->sum,'basket_value'=> $basket_value]);
                                 ?>
                             @empty
                                 <tr>
