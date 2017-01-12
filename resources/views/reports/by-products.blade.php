@@ -19,7 +19,7 @@
                     <form action="">
                         <div class="col-md-2">
                             <label>Barcode</label>
-                            <input type="barcode" class="form-control" name="barcode" value="{{request('barcode')}}">
+                            <input type="text" class="form-control" name="barcode" value="{{request('barcode')}}">
                         </div>
                         <div class="col-md-2">
                             <label>Door</label>
