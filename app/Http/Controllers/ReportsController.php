@@ -197,6 +197,9 @@ class ReportsController extends BaseController
               ->when(request('door_id'), function ($q) {
                   return $q->where('reports.door_id', request('door_id'));
               })
+              ->when(request('brand'), function ($q) {
+                  return $q->where('categories.brand', request('brand'));
+              })
               ->when(request('from_date') && ! request('to_date'), function ($q) {
                   return $q->whereDate('reports.date', '=', request('from_date'));
               })
