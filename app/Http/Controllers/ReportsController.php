@@ -154,18 +154,18 @@ class ReportsController extends BaseController
             ->when(request('barcode'), function ($q) {
                 return $q->where('variations.barcode','=',request('barcode'));
             })
-            ->when(request('door_id'), function ($q) {
-                return $q->where('reports.door_id', request('door_id'));
-            })
-            ->when(request('brand'), function ($q) {
-                return $q->where('categories.brand', request('brand'));
-            })
-            ->when(request('from_date') && ! request('to_date'), function ($q) {
-                return $q->whereDate('reports.date', '=', request('from_date'));
-            })
-            ->when(request('from_date') && request('to_date'), function ($q) {
-                return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
-            })
+            // ->when(request('door_id'), function ($q) {
+            //     return $q->where('reports.door_id', request('door_id'));
+            // })
+            // ->when(request('brand'), function ($q) {
+            //     return $q->where('categories.brand', request('brand'));
+            // })
+            // ->when(request('from_date') && ! request('to_date'), function ($q) {
+            //     return $q->whereDate('reports.date', '=', request('from_date'));
+            // })
+            // ->when(request('from_date') && request('to_date'), function ($q) {
+            //     return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
+            // })
             ->paginate(20);
 //        Excel::create('reports', function($excel) use($results) {
 //            $excel->sheet('Sheet 1', function($sheet) use($results) {
