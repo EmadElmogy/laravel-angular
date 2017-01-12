@@ -153,7 +153,7 @@ class ReportsController extends BaseController
             ->orderBy('sales', 'DESC')
           //  ->where('variations.barcode','=','3600530737581')
             ->when(request('barcode'), function ($q) {
-                return $q->where('variations.barcode','=','%'.request('barcode').'%');
+                return $q->where('variations.barcode','=',request('barcode'));
             })
             ->when(request('door_id'), function ($q) {
                 return $q->where('reports.door_id', request('door_id'));
