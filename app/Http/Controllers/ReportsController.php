@@ -196,7 +196,7 @@ class ReportsController extends BaseController
             ->join('reports', 'reports.id', '=', 'report_products.report_id')
             ->join('doors', 'doors.id', '=', 'reports.door_id')
             ->groupBy('reports.door_id')
-            ->select('doors.name as door_name','doors.id as door_id')
+            ->select('doors.name as door_name')
             ->selectRaw('SUM(sales) as sales , SUM(report_products.sales*products.price) as basket_value , COUNT(`reports`.`customer_id`) AS Customers , AVG(sales) as average_basket_size ')
             ->orderBy('sales', 'DESC')
             ->when(request('from_date') && ! request('to_date'), function ($q) {
@@ -355,7 +355,7 @@ class ReportsController extends BaseController
             ->where('categories.brand','=',$key)
             ->groupBy('categories.id')
             ->select('brand')
-            ->selectRaw('SUM(sales) as sales ,SUM(basket_value) as sell_out')
+            ->selectRaw('SUM(sales) as sales ,SUM(report_products.sales*products.price) as sell_out')
             ->orderBy('sales', 'DESC')
             ->when(request('door_id'), function ($q) {
                 return $q->where('reports.door_id', request('door_id'));
@@ -470,6 +470,8 @@ class ReportsController extends BaseController
     public function customer_sales(){
       $results = DB::table('report_products')
           ->join('reports', 'reports.id', '=', 'report_products.report_id')
+          ->join('variations', 'variations.id', '=', 'report_products.variation_id')
+          ->join('products', 'products.id', '=', 'variations.product_id')
           ->join('doors', 'doors.id', '=', 'reports.door_id')
           ->join('customers', 'customers.id', '=', 'reports.customer_id')
           ->groupBy('reports.customer_id')
@@ -491,6 +493,8 @@ class ReportsController extends BaseController
     //  dd(request('from_date'));
       $results = DB::table('report_products')
           ->join('reports', 'reports.id', '=', 'report_products.report_id')
+          ->join('variations', 'variations.id', '=', 'report_products.variation_id')
+          ->join('products', 'products.id', '=', 'variations.product_id')
           ->join('doors', 'doors.id', '=', 'reports.door_id')
           ->join('customers', 'customers.id', '=', 'reports.customer_id')
           ->groupBy('reports.customer_id')
