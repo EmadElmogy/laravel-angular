@@ -183,31 +183,32 @@ class ReportsController extends BaseController
     }
 
       public function excelbyProduct(){
-          $results = DB::table('report_products')
-              ->join('variations', 'variations.id', '=', 'report_products.variation_id')
-              ->join('products', 'products.id', '=', 'variations.product_id')
-              ->join('categories', 'products.category_id', '=', 'categories.id')
-              ->join('reports', 'reports.id', '=', 'report_products.report_id')
-              ->groupBy('variation_id')
-              ->select('products.name as product_name', 'variations.name as variation_name', 'variations.barcode as barcode')
-              ->selectRaw('SUM(sales) as sales , SUM(report_products.sales*products.price) as sell_out')
-              ->orderBy('sales', 'DESC')
-              ->when(request('barcode'), function ($q) {
-                  return $q->where('variations.barcode', request('barcode'));
-              })
-              ->when(request('door_id'), function ($q) {
-                  return $q->where('reports.door_id', request('door_id'));
-              })
-              ->when(request('brand'), function ($q) {
-                  return $q->where('categories.brand', request('brand'));
-              })
-              ->when(request('from_date') && ! request('to_date'), function ($q) {
-                  return $q->whereDate('reports.date', '=', request('from_date'));
-              })
-              ->when(request('from_date') && request('to_date'), function ($q) {
-                  return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
-              })
-              ->get();
+        $results = DB::table('report_products')
+            ->join('variations', 'variations.id', '=', 'report_products.variation_id')
+            ->join('products', 'products.id', '=', 'variations.product_id')
+            ->join('categories', 'products.category_id', '=', 'categories.id')
+            ->join('reports', 'reports.id', '=', 'report_products.report_id')
+            ->groupBy('report_products.variation_id')
+            ->select('products.name as product_name', 'variations.name as variation_name', 'variations.barcode as barcode')
+            ->selectRaw('SUM(sales) as sales , SUM(report_products.sales*products.price) as sell_out')
+            ->orderBy('sales', 'DESC')
+          //  ->where('variations.barcode','=','3600530737581')
+            ->when(request('barcode'), function ($q) {
+                return $q->where('variations.barcode','=',request('barcode'));
+            })
+            ->when(request('door_id'), function ($q) {
+                return $q->where('reports.door_id', request('door_id'));
+            })
+            ->when(request('brand'), function ($q) {
+                return $q->where('categories.brand', request('brand'));
+            })
+            ->when(request('from_date') && ! request('to_date'), function ($q) {
+                return $q->whereDate('reports.date', '=', request('from_date'));
+            })
+            ->when(request('from_date') && request('to_date'), function ($q) {
+                return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
+            })
+            ->get();
           Excel::create('Product_reports', function($excel) use($results) {
               $excel->sheet('Sheet 1', function($sheet) use($results) {
                   foreach ($results as &$result) {

@@ -50,7 +50,7 @@
 
                     </form>
                     <div style="line-height: 6em;">
-                    <a href="{{URL('reports/sales/product_excel?from_date='.request('from_date').'&to_date='.request('to_date').'&door_id='.request('door_id').'&brand='.request('brand').'$barcode='.request('barcode'))}}" class="btn btn-success">Export to csv</a>
+                    <a href="{{URL('reports/sales/product_excel?from_date='.request('from_date').'&to_date='.request('to_date').'&door_id='.request('door_id').'&brand='.request('brand').'&barcode='.request('barcode'))}}" class="btn btn-success">Export to csv</a>
                     </div>
                 </div>
 
