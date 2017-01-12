@@ -45,7 +45,7 @@
                         </div>
                     </form>
                     <div style="line-height: 6em;">
-                        <a href="{{route('excelbyCategory')}}" class="btn btn-success">Export to csv</a>
+                        <a href="{{URL('reports/sales/excelbyCategory?from_date='.request('from_date').'&to_date='.request('to_date').'&door_id='.request('door_id').'&brand='.request('brand'))}}" class="btn btn-success">Export to csv</a>
                     </div>
                 </div>
 
