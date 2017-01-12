@@ -49,7 +49,7 @@
                             </button>
                         </div>
                         <div class="col-md-1" style="padding-left: 4px;">
-                            <a href="{{route('excelindex')}}" class="btn btn-success">Export to csv</a>
+                            <a href="{{URL('reports/excelindex?date='.request('date').'&door_id='.request('door_id').'&advisor_id='.request('advisor_id').'&customer_id='.request('customer_id'))}}" class="btn btn-success">Export to csv</a>
                         </div>
                     </form>
 
