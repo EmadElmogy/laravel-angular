@@ -177,7 +177,7 @@ class ReportsController extends BaseController
 //            });
 //        })->export('xls');
 
-          dd($results);
+        //  dd($results);
 
         return view('reports.by-products', compact('results'));
     }
