@@ -52,12 +52,11 @@
                             </thead>
                             <tbody>
                             @foreach($results as $item)
-                            <?php $basket_value_x=\DB::table('reports')->where('advisor_id','=',$item->advisor_id)->selectRaw('SUM(basket_value) as total_basket')->first(); ?>
                                 <tr>
                                     <td>{{$item->advisor_name}}</td>
-                                    @if($item->target <= $basket_value_x->total_basket)
+                                    @if($item->target <= $item->sell_out)
                                     <td><span style="color:green">{{$item->sales}}</span></td>
-                                    @elseif($item->target >= $basket_value_x->total_basket)
+                                    @elseif($item->target >= $item->sell_out)
                                     <td><span style="color:red">{{$item->sales}}</span></td>
                                     @endif
                                     <td>{{$item->target}}</td>
@@ -68,7 +67,7 @@
                                     @else
                                     <td>HairCare</td>
                                     @endif
-                                    <td>{{$basket_value_x->total_basket}}</td>
+                                    <td>{{$item->sell_out}}</td>
                                 </tr>
                             @endforeach
                             </tbody>

@@ -353,7 +353,7 @@ class ReportsController extends BaseController
             ->join('categories', 'categories.id', '=', 'products.category_id')
             ->join('reports', 'reports.id', '=', 'report_products.report_id')
             ->where('categories.brand','=',$key)
-            ->groupBy('categories.id')
+            ->groupBy('categories.brand')
             ->select('brand')
             ->selectRaw('SUM(sales) as sales ,SUM(report_products.sales*products.price) as sell_out')
             ->orderBy('sales', 'DESC')
@@ -400,10 +400,12 @@ class ReportsController extends BaseController
     {
         $results = DB::table('report_products')
             ->join('reports', 'reports.id', '=', 'report_products.report_id')
+            ->join('variations', 'variations.id', '=', 'report_products.variation_id')
+            ->join('products', 'products.id', '=', 'variations.product_id')
             ->join('doors', 'doors.id', '=', 'reports.door_id')
             ->groupBy('reports.door_id')
             ->select('doors.name as door_name','doors.id as door_id')
-            ->selectRaw('SUM(sales) as sales, SUM(basket_value) as sell_out')
+            ->selectRaw('SUM(sales) as sales, SUM(report_products.sales*products.price) as sell_out')
             ->orderBy('sales', 'DESC')
             ->when(request('from_date') && ! request('to_date'), function ($q) {
                 return $q->whereDate('reports.date', '=', request('from_date'));
