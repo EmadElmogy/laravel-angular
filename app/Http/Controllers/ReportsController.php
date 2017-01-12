@@ -148,25 +148,25 @@ class ReportsController extends BaseController
             ->join('categories', 'products.category_id', '=', 'categories.id')
             ->join('reports', 'reports.id', '=', 'report_products.report_id')
             ->groupBy('report_products.variation_id')
-            ->select('products.name as product_name', 'variations.name as variation_name', 'variations.barcode as barcode')
+            ->select('products.name as product_name', 'variations.name as variation_name', 'variations.barcode as barcode','reports.report_id')
             ->selectRaw('SUM(sales) as sales , SUM(report_products.sales*products.price) as sell_out')
             ->orderBy('sales', 'DESC')
-            ->where('variations.barcode','=','3600530737581')
-            // ->when(request('barcode'), function ($q) {
-            //     return $q->where('variations.barcode','=',request('barcode'));
-            // })
-            // ->when(request('door_id'), function ($q) {
-            //     return $q->where('reports.door_id', request('door_id'));
-            // })
-            // ->when(request('brand'), function ($q) {
-            //     return $q->where('categories.brand', request('brand'));
-            // })
-            // ->when(request('from_date') && ! request('to_date'), function ($q) {
-            //     return $q->whereDate('reports.date', '=', request('from_date'));
-            // })
-            // ->when(request('from_date') && request('to_date'), function ($q) {
-            //     return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
-            // })
+          //  ->where('variations.barcode','=','3600530737581')
+            ->when(request('barcode'), function ($q) {
+                return $q->where('variations.barcode','=',request('barcode'));
+            })
+            ->when(request('door_id'), function ($q) {
+                return $q->where('reports.door_id', request('door_id'));
+            })
+            ->when(request('brand'), function ($q) {
+                return $q->where('categories.brand', request('brand'));
+            })
+            ->when(request('from_date') && ! request('to_date'), function ($q) {
+                return $q->whereDate('reports.date', '=', request('from_date'));
+            })
+            ->when(request('from_date') && request('to_date'), function ($q) {
+                return $q->whereBetween('reports.date', [request('from_date'), request('to_date')]);
+            })
             ->paginate(20);
 //        Excel::create('reports', function($excel) use($results) {
 //            $excel->sheet('Sheet 1', function($sheet) use($results) {
@@ -177,7 +177,7 @@ class ReportsController extends BaseController
 //            });
 //        })->export('xls');
 
-
+          dd($results);
 
         return view('reports.by-products', compact('results'));
     }
