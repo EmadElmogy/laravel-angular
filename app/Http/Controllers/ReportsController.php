@@ -151,9 +151,10 @@ class ReportsController extends BaseController
             ->select('products.name as product_name', 'variations.name as variation_name', 'variations.barcode as barcode')
             ->selectRaw('SUM(sales) as sales , SUM(report_products.sales*products.price) as sell_out')
             ->orderBy('sales', 'DESC')
-            ->when(request('barcode'), function ($q) {
-                return $q->where('variations.barcode','=',request('barcode'));
-            })
+            ->where('variations.barcode','=','3600530737581')
+            // ->when(request('barcode'), function ($q) {
+            //     return $q->where('variations.barcode','=',request('barcode'));
+            // })
             // ->when(request('door_id'), function ($q) {
             //     return $q->where('reports.door_id', request('door_id'));
             // })
