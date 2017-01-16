@@ -17,6 +17,12 @@
 
                 <div class="row mb-20">
                     <form action="">
+                      <div class="col-md-3">
+                          <label>Brand</label>
+                          <select name="brand" class="form-control select2">
+                              {!! selectBoxOptionsBuilder([''=>'All Brands']+\App\Category::$BRANDS, request('brand')) !!}
+                          </select>
+                      </div>
                         <div class="col-md-3">
                             <label>From Date:</label>
                             <input type="date" class="form-control" name="from_date" placeholder="Date" value="{{request('from_date')}}">

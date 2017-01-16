@@ -311,6 +311,9 @@ class ReportsController extends BaseController
             ->select('advisors.name as advisor_name','advisors.target','doors.name as door_name','categories.brand')
             ->selectRaw('SUM(sales) as sales , SUM(report_products.sales*products.price) as sell_out')
             ->orderBy('sales', 'DESC')
+            ->when(request('brand'), function ($q) {
+                return $q->where('categories.brand', request('brand'));
+            })
             ->when(request('from_date') && ! request('to_date'), function ($q) {
                 return $q->whereDate('reports.date', '=', request('from_date'));
             })
@@ -496,6 +499,9 @@ class ReportsController extends BaseController
             ->select('advisors.name as advisor_name','advisors.id as advisor_id','advisors.target','categories.brand')
             ->selectRaw('SUM(sales) as sales , SUM(report_products.sales*products.price) as sell_out')
             ->orderBy('sales', 'DESC')
+            ->when(request('brand'), function ($q) {
+                return $q->where('categories.brand', request('brand'));
+            })
             ->when(request('from_date') && ! request('to_date'), function ($q) {
                 return $q->whereDate('reports.date', '=', request('from_date'));
             })
