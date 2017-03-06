@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Attendance;
 use App\Repos\AdvisorsRepo;
 use App\Http\Requests;
+use Excel;
 
 class AdvisorsController extends BaseController
 {
