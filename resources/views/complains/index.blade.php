@@ -35,7 +35,7 @@
                         </div>
                         <div class="col-md-2">
                             <select name="filters[door_id]" class="form-control select2">
-                                {!! selectBoxOptionsBuilder([''=>'Door']+\App\Advisor::pluck('name','id')->toArray(), request('filters.door_id')) !!}
+                                {!! selectBoxOptionsBuilder([''=>'Door']+\App\Door::pluck('name','id')->toArray(), request('filters.door_id')) !!}
                             </select>
                         </div>
                         <div class="col-md-2">
