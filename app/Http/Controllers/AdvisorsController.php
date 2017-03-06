@@ -6,7 +6,7 @@ use App\Attendance;
 use App\Repos\AdvisorsRepo;
 use App\Http\Requests;
 use Excel;
-
+use DB;
 class AdvisorsController extends BaseController
 {
     /**
@@ -81,7 +81,10 @@ class AdvisorsController extends BaseController
     }
 
     public function attendance_sheet(){
-      $items = Attendance::select('*')
+      $items = DB::table('attendance')
+          ->join('doors', 'doors.id', '=', 'attendance.door_id')
+          ->join('advisors', 'advisors.id', '=', 'attendance.advisor_id')
+          ->select('advisors.name as advisor_name','doors.name as door_name','login_time','logout_time','sign_in_range','sign_out_range')
           ->when(request('door_id'), function ($q) {
               return $q->where('attendance.door_id', request('door_id'));
           })
