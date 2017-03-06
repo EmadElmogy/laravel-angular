@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('advisors/item/{item_id?}', 'AdvisorsController@store');
     Route::delete('advisors/item/{item_id?}', 'AdvisorsController@deleteItem');
     Route::get('advisors/attendance', 'AdvisorsController@attendance');
+    Route::get('advisors/attendance_sheet', 'AdvisorsController@attendance_sheet');
 
     Route::get('categories', 'CategoriesController@index');
     Route::get('categories/item/{item_id?}', 'CategoriesController@item');

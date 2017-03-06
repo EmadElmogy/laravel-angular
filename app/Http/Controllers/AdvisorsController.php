@@ -78,4 +78,29 @@ class AdvisorsController extends BaseController
            // dd($items);
         return view('advisors.attendance', compact('items'));
     }
+
+    public function attendance_sheet(){
+      $items = Attendance::select('*')
+          ->when(request('door_id'), function ($q) {
+              return $q->where('attendance.door_id', request('door_id'));
+          })
+          ->when(request('advisor_id'), function ($q) {
+              return $q->where('attendance.advisor_id', request('advisor_id'));
+          })
+          ->when(request('from_date') && ! request('to_date'), function ($q) {
+              return $q->whereDate('attendance.login_time', '=', request('from_date'));
+          })
+          ->when(request('from_date') && request('to_date'), function ($q) {
+              return $q->whereBetween('attendance.login_time', [request('from_date'), request('to_date')]);
+          })->orderBy('attendance.login_time','desc')->get();
+
+      Excel::create('attendance_sheet', function($excel) use($items) {
+          $excel->sheet('Sheet 1', function($sheet) use($items) {
+              foreach ($items as &$item) {
+                  $item = (array)$item;
+              }
+              $sheet->fromArray($items);
+          });
+      })->export('xls');
+    }
 }

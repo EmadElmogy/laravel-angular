@@ -51,6 +51,9 @@
                                 <i class="icon-filter3 position-left"></i> Filter
                             </button>
                         </div>
+                        <div style="line-height: 6em;">
+                            <a href="{{URL('advisors/attendance_sheet?from_date='.request('from_date').'&to_date='.request('to_date').'&door_id='.request('door_id').'&advisor_id='.request('advisor_id'))}}" class="btn btn-success">Export to csv</a>
+                        </div>
                     </form>
                 </div>
 
