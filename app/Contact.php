@@ -4,12 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Site extends Model
+class Contact extends Model
 {
-    protected $table = 'sites';
+    protected $table = 'contacts';
     protected $guarded = ['id'];
     protected $hidden = [];
-    protected $dates = [];
+    protected $dates = ['date'];
     public $timestamps = false;
     protected $casts = [
         'id' => 'integer',
@@ -17,10 +17,11 @@ class Site extends Model
 
     public $validationRules = [
         'name' => 'required',
+        'mobile' => 'required',
     ];
 
-    public function doors()
+    public function apartments()
     {
-        return $this->hasMany(Door::class, 'site_id');
+        return $this->hasMany(Apartment::class, 'contact_id');
     }
 }
