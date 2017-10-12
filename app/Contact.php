@@ -17,7 +17,7 @@ class Contact extends Model
 
     public $validationRules = [
         'name' => 'required',
-        'mobile' => 'required',
+        'email' => 'required',
     ];
 
     public function apartments()

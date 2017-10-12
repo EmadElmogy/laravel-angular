@@ -2,14 +2,15 @@
 
 namespace App\Repos;
 
-use App\Category;
+use App\Apartment;
+use App\Filter;
 use Illuminate\Database\Eloquent\Model;
 
-class CategoriesRepo extends AbstractRepo
+class ApartmentsRepo extends AbstractRepo
 {
     public function __construct()
     {
-        $this->model = new Category();
+        $this->model = new Apartment();
     }
 
     /**

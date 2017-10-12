@@ -1,16 +1,16 @@
 @extends('common.base')
 
-@section('browser_subtitle', 'Categories')
+@section('browser_subtitle', 'Apartments')
 
 @section('body')
 
     <div class="page-header">
         <div class="page-header-content">
-            <div class="page-title"><h4>Categories Management</h4></div>
+            <div class="page-title"><h4>Apartments Management</h4></div>
 
             <div class="heading-elements">
                 <div class="heading-btn-group">
-                    <a href="{{url('categories/item')}}" class="btn btn-link btn-float has-text"><i class="icon-plus-circle2 text-primary"></i><span>Add New</span></a>
+                    <a href="{{url('apartments/item')}}" class="btn btn-link btn-float has-text"><i class="icon-plus-circle2 text-primary"></i><span>Add New</span></a>
                 </div>
             </div>
         </div>
@@ -32,11 +32,8 @@
                 <div class="row mb-20">
                     <form action="">
                         <div class="col-md-2">
-                            <input type="text" class="form-control" name="filters[name]" placeholder="Name" value="{{request('filters.name')}}">
-                        </div>
-                        <div class="col-md-2">
-                            <select name="filters[parent_id]" class="form-control select2">
-                                {!! selectBoxOptionsBuilder([''=>'Parent']+\App\Category::whereNull('parent_id')->pluck('name','id')->toArray(), request('filters.parent_id')) !!}
+                            <select name="filters[contact_id]" class="form-control select2">
+                                {!! selectBoxOptionsBuilder([''=>'Contact Email']+\App\Contact::pluck('email','id')->toArray(), request('filters.contact_id')) !!}
                             </select>
                         </div>
                         <div class="col-md-2">
@@ -52,19 +49,27 @@
                         <table class="table table-hover table-striped">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Parent Category</th>
+                                <th>Move In Date</th>
+                                <th>Street</th>
+                                <th>Postcode</th>
+                                <th>Town</th>
+                                <th>Country</th>
+                                <th>Contact Email</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($items as $item)
                                 <tr>
-                                    <td class="v-align-middle semi-bold">{{$item->name}}</td>
-                                    <td class="v-align-middle semi-bold">{{$item->parent ? $item->parent->name : ''}}</td>
+                                  <td class="v-align-middle semi-bold">{{$item->move_in_date}}</td>
+                                  <td class="v-align-middle semi-bold">{{$item->street}}</td>
+                                  <td class="v-align-middle semi-bold">{{$item->postcode}}</td>
+                                  <td class="v-align-middle semi-bold">{{$item->town}}</td>
+                                    <td class="v-align-middle semi-bold">{{$item->country}}</td>
+                                    <td class="v-align-middle semi-bold">{{$item->contact ? $item->contact->email : ''}}</td>
                                     <td class="v-align-middle text-right text-nowrap">
-                                        <a href="{{url('categories/item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-pencil5"></i></a>
-                                        <a href="{{url('categories/item/'.$item->id)}}" class="btn btn-danger btn-xs deleter"><i class="icon-trash"></i></a>
+                                        <a href="{{url('apartments/item/'.$item->id)}}" class="btn btn-primary btn-xs"><i class="icon-pencil5"></i></a>
+                                        <a href="{{url('apartments/item/'.$item->id)}}" class="btn btn-danger btn-xs deleter"><i class="icon-trash"></i></a>
                                     </td>
                                 </tr>
                             @empty

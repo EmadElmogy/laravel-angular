@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard - L'Oréal Group</title>
+    <title>Dashboard - Laravel Angular Task</title>
 
     <!-- Global stylesheets -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
@@ -43,7 +43,7 @@
         <div class="content-wrapper" style="background: #000">
 
             <div class="text-center mb-20">
-                <img src="assets/images/logo_light.png" alt="">
+                <!-- <img src="assets/images/logo_light.png" alt=""> -->
             </div>
 
             <!-- Simple login form -->

@@ -2,15 +2,15 @@
 
 namespace App\Repos;
 
-use App\Advisor;
+use App\Contact;
 use App\Filter;
 use Illuminate\Database\Eloquent\Model;
 
-class AdvisorsRepo extends AbstractRepo
+class ContactsRepo extends AbstractRepo
 {
     public function __construct()
     {
-        $this->model = new Advisor();
+        $this->model = new Contact();
     }
 
     /**
@@ -40,7 +40,7 @@ class AdvisorsRepo extends AbstractRepo
      */
     public function create($data)
     {
-        $data['api_token'] = str_random(40);
+        $data['contact_token'] = str_random(40);
 
         return parent::create($data);
     }
@@ -52,7 +52,7 @@ class AdvisorsRepo extends AbstractRepo
      */
     public function prepareData($data, $item = null)
     {
-        validate($data, ['username' => 'required|unique:advisors,username'.($item ? ",$item->id" : '')]);
+        validate($data, ['email' => 'required|unique:contacts,email'.($item ? ",$item->id" : '')]);
 
         return $data;
     }

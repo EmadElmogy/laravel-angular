@@ -14,7 +14,7 @@ class HomeController extends Controller
     public function index()
     {
         if (auth()->check()) {
-            return redirect('reports');
+            return redirect('admins');
         }
 
         return redirect('login');
