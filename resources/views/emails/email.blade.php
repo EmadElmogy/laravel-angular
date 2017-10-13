@@ -1,9 +1,8 @@
 
+Hello {{$contact->name}} ,<br>
 
- @foreach($variation_stocks as $variation_stock)
-     Product : {{$variation_stock->product_name}} <br>
-     Sku : {{$variation_stock->barcode}} <br>
-     Door : {{$variation_stock->door_name}} <br>
-     Current Stock : {{$variation_stock->stock}}
+You can use the Link below to update your apartment <br><br>
 
-     @endforeach
+{{url('apartments/item/'.$item->apartment_token)}} <br><br>
+
+Regards,

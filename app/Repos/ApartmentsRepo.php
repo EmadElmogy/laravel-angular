@@ -36,6 +36,8 @@ class ApartmentsRepo extends AbstractRepo
      */
     public function create($data)
     {
+        $data['apartment_token'] = str_random(40);
+
         return parent::create($data);
     }
 }
